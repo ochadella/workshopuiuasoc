@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Panduan Lengkap Menulis Novel – NovelCraft</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ============================================
+   NOVELCRAFT — style.css
+   Dark Literary Magazine Aesthetic
+   ============================================ */
+
+/* ---- RESET & VARIABLES ---- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-dark:     #0a0608;
+  --bg-deep:     #120d10;
+  --bg-card:     #1a1018;
+  --bg-card2:    #221628;
+  --gold:        #d4a847;
+  --gold-light:  #f0c96a;
+  --gold-dim:    #8a6a22;
+  --purple:      #7c3fa0;
+  --purple-light:#a855d4;
+  --purple-pale: #3d1a54;
+  --crimson:     #c0293a;
+  --crimson-dim: #7a1520;
+  --teal:        #2bbfa8;
+  --white:       #f5f0ea;
+  --white-dim:   #b0a090;
+  --white-muted: #6a5a50;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'Playfair Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  --transition: .3s cubic-bezier(.4,0,.2,1);
+  --radius:     12px;
+  --radius-lg:  20px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-dark);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; gap: 2rem;
+  padding: .9rem 4vw;
+  background: rgba(10,6,8,.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(212,168,71,.15);
+  transition: var(--transition);
+}
+.navbar.scrolled { padding: .6rem 4vw; background: rgba(10,6,8,.97); }
+
+.nav-brand a {
+  display: flex; align-items: baseline; gap: .2rem;
+  font-family: var(--font-display);
+  font-size: 2rem; color: var(--gold); line-height: 1;
+  letter-spacing: .05em;
+}
+.nav-brand a span { color: var(--white); font-size: 1.15rem; font-family: var(--font-serif); font-weight: 700; }
+
+.nav-links { display: flex; gap: 2rem; margin-left: auto; }
+.nav-links a {
+  font-size: .85rem; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--white-dim); transition: var(--transition); position: relative;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0;
+  width:0; height:2px; background:var(--gold); transition: var(--transition);
+}
+.nav-links a:hover, .nav-links a.active { color: var(--white); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+.btn-nav {
+  padding: .5rem 1.4rem;
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  border-radius: 4px;
+  font-size: .8rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.btn-nav:hover { background: var(--gold); color: var(--bg-dark); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+.hamburger span { display:block; width:24px; height:2px; background:var(--white); transition:var(--transition); }
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn-primary {
+  display: inline-block;
+  padding: .75rem 2rem;
+  background: var(--gold);
+  color: var(--bg-dark);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: .9rem;
+  letter-spacing: .06em;
+  border-radius: 4px;
+  transition: var(--transition);
+  border: none; cursor: pointer;
+}
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,168,71,.3); }
+
+.btn-ghost {
+  display: inline-block;
+  padding: .75rem 2rem;
+  background: transparent;
+  color: var(--white);
+  font-size: .9rem;
+  letter-spacing: .06em;
+  border: 1.5px solid rgba(255,255,255,.25);
+  border-radius: 4px;
+  transition: var(--transition);
+}
+.btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,.05); }
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 8vw 80px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(124,63,160,.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 30%, rgba(192,41,58,.15) 0%, transparent 50%),
+    var(--bg-dark);
+}
+
+.hero::before {
+  content: 'NOVELCRAFT';
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: clamp(80px, 18vw, 240px);
+  color: rgba(212,168,71,.04);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  letter-spacing: .1em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.hero-eyebrow {
+  font-size: .8rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 9vw, 110px);
+  line-height: .95;
+  letter-spacing: .02em;
+  margin-bottom: 1.5rem;
+  color: var(--white);
+}
+.hero h1 em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--white-dim);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+}
+
+.hero-stats {
+  display: flex; justify-content: center;
+  gap: 0; flex-wrap: wrap;
+  border: 1px solid rgba(212,168,71,.25);
+  border-radius: 8px; width: fit-content; margin: 0 auto;
+  overflow: hidden;
+}
+.hs-item {
+  padding: 1.2rem 2.5rem;
+  border-right: 1px solid rgba(212,168,71,.2);
+  text-align: center;
+}
+.hs-item:last-child { border-right: none; }
+.hs-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.5rem; color: var(--gold);
+  line-height: 1; letter-spacing: .04em;
+}
+.hs-label {
+  display: block;
+  font-size: .7rem; color: var(--white-muted);
+  letter-spacing: .12em; text-transform: uppercase;
+  margin-top: .3rem;
+}
+
+/* ============================================
+   JOURNEY OVERVIEW
+   ============================================ */
+.journey-overview {
+  background: var(--bg-deep);
+  padding: 5rem 4vw;
+  border-top: 1px solid rgba(212,168,71,.1);
+  border-bottom: 1px solid rgba(212,168,71,.1);
+}
+.section-header { text-align: center; margin-bottom: 3.5rem; }
+.eyebrow {
+  font-size: .75rem; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .75rem; display: block;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  letter-spacing: .04em; line-height: 1;
+  color: var(--white);
+}
+.section-title em { font-family: var(--font-serif); font-style: italic; color: var(--gold); }
+
+.overview-steps {
+  display: flex;
+  max-width: 900px; margin: 0 auto;
+  overflow-x: auto; gap: 0;
+  padding-bottom: 1rem;
+}
+.ov-step {
+  flex: 1; min-width: 110px;
+  display: flex; flex-direction: column; align-items: center;
+  position: relative;
+}
+.ov-step::after {
+  content: '→';
+  position: absolute; right: -10px; top: 22px;
+  color: var(--gold-dim); font-size: 1rem;
+  z-index: 1;
+}
+.ov-step:last-child::after { display: none; }
+.ov-dot {
+  width: 48px; height: 48px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  border: 1.5px solid var(--gold-dim);
+  background: var(--bg-card);
+  position: relative; z-index: 2;
+  transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
+}
+.ov-step:hover .ov-dot {
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(212,168,71,.3);
+  border-color: var(--gold);
+}
+.ov-label {
+  font-size: .7rem; font-weight: 400; text-align: center;
+  margin-top: .6rem; color: var(--white-muted);
+  line-height: 1.3; padding: 0 .3rem;
+  letter-spacing: .04em;
+}
+
+/* ============================================
+   PHASE SECTIONS
+   ============================================ */
+.phase {
+  padding: 5rem 8vw;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.phase:nth-child(even) { background: var(--bg-deep); }
+.phase:nth-child(odd) { background: var(--bg-dark); }
+
+.phase-inner { max-width: 860px; margin: 0 auto; }
+
+.phase-badge {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: .35rem 1rem; border-radius: 2px;
+  font-size: .7rem; font-weight: 400; letter-spacing: .15em;
+  text-transform: uppercase; margin-bottom: 1.5rem;
+  border: 1px solid var(--gold-dim); color: var(--gold);
+  background: rgba(212,168,71,.06);
+  font-family: var(--font-body);
+}
+
+.phase-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 400; line-height: .95;
+  margin-bottom: .8rem; letter-spacing: .04em;
+  color: var(--white);
+}
+.phase-title em { font-family: var(--font-serif); font-style: italic; color: var(--gold); }
+
+.phase-desc {
+  font-size: 1rem; color: var(--white-dim);
+  margin-bottom: 2.5rem; max-width: 580px; line-height: 1.75;
+}
+
+/* cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+.card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  transition: var(--transition);
+  cursor: default;
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  opacity: 0; transition: var(--transition);
+}
+.card:hover { border-color: rgba(212,168,71,.3); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.4); }
+.card:hover::before { opacity: 1; }
+.card-icon { font-size: 1.6rem; margin-bottom: .8rem; }
+.card h4 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem; font-weight: 700; font-style: italic;
+  margin-bottom: .5rem; line-height: 1.3; color: var(--white);
+}
+.card p { font-size: .88rem; color: var(--white-dim); line-height: 1.65; }
+
+/* expandable lesson */
+.lesson {
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: var(--radius);
+  margin-bottom: .75rem;
+  overflow: hidden;
+  background: var(--bg-card);
+  transition: var(--transition);
+}
+.lesson:hover { border-color: rgba(212,168,71,.2); }
+.lesson-header {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.1rem 1.5rem;
+  cursor: pointer;
+  transition: background .15s;
+  user-select: none;
+}
+.lesson-header:hover { background: rgba(212,168,71,.05); }
+.lesson-num {
+  width: 28px; height: 28px; border-radius: 2px;
+  background: var(--gold-dim); color: var(--bg-dark);
+  font-size: .75rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-family: var(--font-display); letter-spacing: .05em;
+}
+.lesson-title {
+  flex: 1;
+  font-size: .95rem; color: var(--white);
+  font-weight: 400;
+}
+.lesson-meta {
+  display: flex; align-items: center; gap: .75rem;
+}
+.lesson-time { font-size: .75rem; color: var(--white-muted); }
+.lesson-level {
+  font-size: .65rem; font-weight: 500; padding: .2rem .6rem;
+  border-radius: 2px; text-transform: uppercase; letter-spacing: .08em;
+}
+.lvl-pemula { background: rgba(43,191,168,.1); color: var(--teal); border: 1px solid rgba(43,191,168,.3); }
+.lvl-menengah { background: rgba(212,168,71,.1); color: var(--gold); border: 1px solid var(--gold-dim); }
+.lvl-lanjutan { background: rgba(168,85,212,.1); color: var(--purple-light); border: 1px solid rgba(168,85,212,.3); }
+.lesson-chevron {
+  font-size: .75rem; color: var(--white-muted);
+  transition: transform .3s;
+}
+.lesson.open .lesson-chevron { transform: rotate(180deg); }
+.lesson-body {
+  display: none;
+  padding: 0 1.5rem 1.5rem 4.5rem;
+  font-size: .9rem; line-height: 1.75; color: var(--white-dim);
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.lesson.open .lesson-body { display: block; }
+.lesson-body ul {
+  margin: .75rem 0 .75rem 1.2rem;
+}
+.lesson-body ul li { margin-bottom: .4rem; list-style: disc; }
+.lesson-body .tip-box {
+  background: rgba(212,168,71,.07);
+  border-left: 2px solid var(--gold);
+  padding: .85rem 1.1rem;
+  border-radius: 0 6px 6px 0;
+  margin-top: 1rem;
+  font-size: .875rem;
+  color: var(--white-dim);
+}
+.lesson-body .tip-box strong { color: var(--gold); }
+.lesson-body .example-box {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 6px;
+  padding: 1rem 1.1rem;
+  margin-top: .75rem;
+  font-size: .875rem;
+}
+.lesson-body .example-box h6 {
+  font-size: .7rem; font-weight: 400; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--white-muted);
+  margin-bottom: .6rem;
+}
+.ex-bad { color: #e06060; }
+.ex-good { color: var(--teal); }
+.lesson-body strong { color: var(--white); }
+.lesson-body em { color: var(--gold-light); font-style: italic; }
+
+/* phase nav */
+.phase-nav {
+  display: flex; gap: 1rem; margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   CHECKLIST
+   ============================================ */
+.checklist {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: .6rem;
+  margin: 1.5rem 0;
+}
+.cl-item {
+  display: flex; align-items: flex-start; gap: .75rem;
+  background: var(--bg-card2);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 6px; padding: .85rem 1rem;
+  font-size: .88rem; line-height: 1.5; color: var(--white-dim);
+  cursor: pointer; transition: all .2s;
+  user-select: none;
+}
+.cl-item:hover { border-color: rgba(212,168,71,.3); color: var(--white); }
+.cl-item.checked {
+  background: rgba(43,191,168,.07);
+  border-color: rgba(43,191,168,.35);
+  color: var(--teal);
+}
+.cl-box {
+  width: 18px; height: 18px; border-radius: 2px;
+  border: 1.5px solid rgba(255,255,255,.2); flex-shrink: 0;
+  margin-top: 2px; display: flex; align-items: center;
+  justify-content: center; font-size: .7rem;
+  transition: all .2s;
+}
+.cl-item.checked .cl-box {
+  background: var(--teal); border-color: var(--teal); color: var(--bg-dark);
+}
+
+/* ============================================
+   TIMELINE SUBMIT
+   ============================================ */
+.timeline {
+  position: relative;
+  padding-left: 2.5rem;
+}
+.timeline::before {
+  content: '';
+  position: absolute; left: 0; top: 8px; bottom: 8px;
+  width: 1px; background: rgba(212,168,71,.2);
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+.tl-dot {
+  position: absolute;
+  left: -2.9rem; top: 4px;
+  width: 22px; height: 22px; border-radius: 2px;
+  border: 1px solid rgba(212,168,71,.3);
+  background: var(--bg-card);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .65rem; font-weight: 700;
+  color: var(--white-muted);
+  font-family: var(--font-display);
+}
+.tl-item.done .tl-dot { background: var(--teal); border-color: var(--teal); color: var(--bg-dark); }
+.tl-item.active .tl-dot { background: var(--gold); border-color: var(--gold); color: var(--bg-dark); }
+.tl-days {
+  display: inline-block;
+  font-size: .7rem; font-weight: 400;
+  color: var(--gold); letter-spacing: .15em;
+  text-transform: uppercase; margin-bottom: .35rem;
+}
+.tl-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem; font-weight: 700; font-style: italic;
+  margin-bottom: .35rem; color: var(--white);
+}
+.tl-desc { font-size: .88rem; color: var(--white-dim); line-height: 1.7; }
+
+/* ============================================
+   SUBMIT PANEL
+   ============================================ */
+.submit-panel {
+  background: linear-gradient(135deg, var(--purple-pale), var(--bg-card));
+  border: 1px solid rgba(212,168,71,.25);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  color: var(--white);
+  margin-top: 2rem;
+  position: relative; overflow: hidden;
+}
+.submit-panel::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(ellipse, rgba(212,168,71,.15), transparent 70%);
+  pointer-events: none;
+}
+.submit-panel h3 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 48px); font-weight: 400;
+  margin-bottom: .5rem; letter-spacing: .04em;
+}
+.submit-panel h3 em { font-family: var(--font-serif); font-style: italic; color: var(--gold); }
+.submit-panel p { color: var(--white-dim); margin-bottom: 1.5rem; line-height: 1.7; font-size: .95rem; }
+.submit-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem; margin-bottom: 2rem;
+}
+.ss-item {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 8px; padding: 1rem;
+}
+.ss-num {
+  font-family: var(--font-display);
+  font-size: 2.5rem; font-weight: 400; color: var(--gold);
+  line-height: 1; margin-bottom: .4rem; letter-spacing: .04em;
+}
+.ss-label { font-size: .83rem; color: var(--white-dim); line-height: 1.45; }
+
+.publish-timeline {
+  background: rgba(212,168,71,.07);
+  border: 1px solid rgba(212,168,71,.2);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.pt-title {
+  font-size: .7rem; font-weight: 400; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1rem;
+}
+.pt-row {
+  display: flex; align-items: center; gap: 1rem;
+  font-size: .88rem; color: var(--white-dim);
+  padding: .5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.pt-row:last-child { border-bottom: none; }
+.pt-day {
+  font-weight: 400; color: var(--gold-light);
+  min-width: 70px; font-size: .82rem;
+  font-family: var(--font-display); letter-spacing: .06em;
+}
+.pt-icon { font-size: .9rem; }
+
+/* ============================================
+   FAQ
+   ============================================ */
+.faq-item {
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  padding: 1.25rem 0;
+}
+.faq-q {
+  font-size: .95rem; color: var(--white);
+  cursor: pointer; display: flex;
+  justify-content: space-between; align-items: center;
+  gap: 1rem; transition: color .2s;
+}
+.faq-q:hover { color: var(--gold); }
+.faq-q::after {
+  content: '+'; font-size: 1.4rem; color: var(--gold-dim);
+  transition: transform .2s; flex-shrink: 0;
+}
+.faq-item.open .faq-q { color: var(--gold); }
+.faq-item.open .faq-q::after { content: '−'; }
+.faq-a {
+  display: none; font-size: .9rem; color: var(--white-dim);
+  line-height: 1.75; padding-top: .75rem;
+}
+.faq-item.open .faq-a { display: block; }
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  background: #060406;
+  border-top: 1px solid rgba(212,168,71,.1);
+  padding: 3rem 8vw 1.5rem;
+  text-align: center;
+}
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 2.5rem; font-weight: 400;
+  color: var(--gold); letter-spacing: .08em;
+  margin-bottom: .5rem;
+}
+.footer-brand span { color: var(--white); font-family: var(--font-serif); font-size: 1.2rem; vertical-align: middle; }
+.footer p { font-size: .85rem; color: var(--white-muted); margin-bottom: .25rem; }
+
+/* ============================================
+   PROGRESS STICKY
+   ============================================ */
+.progress-sticky {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  background: var(--bg-card2);
+  border: 1px solid rgba(212,168,71,.3);
+  border-radius: var(--radius);
+  padding: .9rem 1.2rem;
+  color: white; font-size: .8rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  min-width: 180px; z-index: 50;
+  transition: transform .3s;
+}
+.ps-label {
+  color: var(--white-muted); margin-bottom: .4rem;
+  letter-spacing: .12em; text-transform: uppercase; font-size: .65rem;
+}
+.ps-track {
+  background: rgba(255,255,255,.08); border-radius: 99px;
+  height: 3px; margin-bottom: .4rem;
+}
+.ps-fill {
+  background: var(--gold); border-radius: 99px; height: 3px;
+  transition: width .4s ease; width: 0%;
+}
+.ps-text { font-weight: 400; font-size: .8rem; color: var(--white-dim); }
+
+/* ============================================
+   READING PROGRESS BAR
+   ============================================ */
+#reading-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--gold);
+  transform-origin: left; transform: scaleX(0);
+  z-index: 200; transition: transform .1s linear;
+}
+
+/* ============================================
+   SUCCESS TOAST
+   ============================================ */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem;
+  background: var(--bg-card2); border: 1px solid rgba(43,191,168,.4);
+  color: var(--teal); padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  font-size: .9rem;
+  transform: translateY(100px); opacity: 0;
+  transition: var(--transition); z-index: 9999;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .nav-links, .btn-nav { display: none; }
+  .hamburger { display: flex; }
+  .hero { padding: 100px 6vw 60px; }
+  .phase { padding: 3.5rem 6vw; }
+  .submit-panel { padding: 1.75rem 1.25rem; }
+  .progress-sticky { display: none; }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+.fade-in {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.fade-in.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div id="reading-bar"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-brand">
+    <span class="brand-n">N</span><span class="brand-rest">ovelCraft</span>
+    <span class="brand-tag">independently published</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="katalog.html">Katalog</a></li>
+    <li><a href="tips.html" class="active">Tips</a></li>
+    <li><a href="pelatihan.html">Pelatihan</a></li>
+    <li><a href="revisi.html">Revisi</a></li>
+    <li><a href="detail.html">Tentang</a></li>
+  </ul>
+  <a href="#daftar" class="btn-nav">Daftar Sekarang</a>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <p class="hero-eyebrow">Panduan Lengkap · Dari Nol Hingga Terbit</p>
+    <h1>Dari "Gatau Mau<br>Nulis Apa" Sampai<br><em>Novel Terbit</em></h1>
+    <p class="hero-sub">Panduan step-by-step yang jujur, praktis, dan tidak membuang waktumu. Ikuti setiap fase, dan novelmu akan selesai.</p>
+    <div class="hero-stats">
+      <div class="hs-item"><span class="hs-num">7</span><span class="hs-label">Fase Belajar</span></div>
+      <div class="hs-item"><span class="hs-num">47</span><span class="hs-label">Materi Gratis</span></div>
+      <div class="hs-item"><span class="hs-num">14</span><span class="hs-label">Hari Publish</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY OVERVIEW -->
+<section class="journey-overview">
+  <div class="section-header">
+    <span class="eyebrow">Peta Perjalananmu</span>
+    <h2 class="section-title">7 Fase Dari Nol Sampai <em>Terbit</em></h2>
+  </div>
+  <div class="overview-steps">
+    <div class="ov-step s1"><a href="#fase1" style="text-decoration:none"><div class="ov-dot">💡</div><div class="ov-label">Temukan Ide & Genre</div></a></div>
+    <div class="ov-step s2"><a href="#fase2" style="text-decoration:none"><div class="ov-dot">📐</div><div class="ov-label">Struktur & Outline</div></a></div>
+    <div class="ov-step s3"><a href="#fase3" style="text-decoration:none"><div class="ov-dot">✍️</div><div class="ov-label">Menulis Draft</div></a></div>
+    <div class="ov-step s4"><a href="#fase4" style="text-decoration:none"><div class="ov-dot">🎭</div><div class="ov-label">Karakter & Dialog</div></a></div>
+    <div class="ov-step s5"><a href="#fase5" style="text-decoration:none"><div class="ov-dot">✂️</div><div class="ov-label">Revisi & Edit</div></a></div>
+    <div class="ov-step s6"><a href="#fase6" style="text-decoration:none"><div class="ov-dot">📦</div><div class="ov-label">Persiapan Terbit</div></a></div>
+    <div class="ov-step s7"><a href="#submit" style="text-decoration:none"><div class="ov-dot">🚀</div><div class="ov-label">Submit & Publish</div></a></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- FASE 1: TEMUKAN IDE & GENRE -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="phase" id="fase1">
+  <div class="phase-inner fade-in">
+    <div class="phase-badge">💡 Fase 1 · Fondasi</div>
+    <h2 class="phase-title">Temukan Ide &amp; <em>Genre</em>mu</h2>
+    <p class="phase-desc">Belum tahu mau nulis apa? Bagus. Mulai dari sini. Banyak penulis gagal karena skip fase ini dan langsung nulis.</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🤔</div>
+        <h4>Kenapa Kamu Mau Nulis?</h4>
+        <p>Motivasimu menentukan genre, tone, dan ketahananmu di tengah jalan. Novel dari "pengen ekspresi diri" sangat berbeda dari "pengen jual buku".</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧩</div>
+        <h4>Ide dari Mana?</h4>
+        <p>"What if?" adalah pertanyaan ajaib. Ambil 2 hal yang tidak berhubungan, gabungkan. "What if dokter punya kemampuan baca pikiran tapi tidak bisa menyembuhkan dirinya sendiri?"</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📚</div>
+        <h4>Pilih Genre yang Tepat</h4>
+        <p>Genre bukan penjara — genre adalah kontrak dengan pembaca. Pilih genre yang kamu <em>baca</em>, bukan sekadar yang kamu pikir laku.</p>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">1</div>
+        <div class="lesson-title">Menemukan Premis Novelmu dalam 30 Menit</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 8 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Premis adalah benih novelmu. Satu kalimat yang menjawab: <strong>siapa, mau apa, hambatannya apa?</strong></p>
+        <p>Formula premis yang bekerja:</p>
+        <ul>
+          <li><strong>[Karakter dengan ciri khas]</strong> harus <strong>[tujuan spesifik]</strong> tapi <strong>[hambatan besar]</strong> membuatnya hampir mustahil.</li>
+        </ul>
+        <div class="example-box">
+          <h6>Contoh Premis</h6>
+          <p>❌ <span class="ex-bad">"Cerita tentang cinta dan pengkhianatan"</span> — terlalu umum, tidak ada konflik spesifik.</p>
+          <p style="margin-top:.5rem">✅ <span class="ex-good">"Seorang detektif yang lupa ingatan harus mengungkap pembunuhan — yang ternyata dilakukan oleh versi dirinya sendiri 10 tahun lalu."</span></p>
+        </div>
+        <div class="tip-box">
+          <strong>💡 Latihan:</strong> Tulis 5 premis dalam 10 menit. Jangan filter. Premis nomor 4 atau 5 biasanya yang terbaik karena kamu sudah lelah menyensor diri.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">2</div>
+        <div class="lesson-title">Panduan Genre: Mana yang Cocok Untukmu?</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 6 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Tiap genre punya <strong>janji implisit</strong> ke pembaca. Kalau kamu langgar, pembaca akan kecewa meski ceritanya bagus.</p>
+        <ul>
+          <li><strong>Romance:</strong> Happy Ending (HEA) atau Happy for Now (HFN) adalah wajib. Tanpa ini, bukan romance.</li>
+          <li><strong>Misteri/Thriller:</strong> Pembaca harus bisa menebak siapa pelakunya kalau mereka cukup teliti (fair-play). Tidak boleh muncul pelaku tiba-tiba di akhir.</li>
+          <li><strong>Fantasy/SF:</strong> Sistem magis/teknologi harus konsisten. Chekhov's gun berlaku ketat.</li>
+          <li><strong>Literary Fiction:</strong> Karakter > Plot. Transformasi internal lebih penting dari resolusi eksternal.</li>
+          <li><strong>Young Adult (YA):</strong> Protagonis remaja, tema identitas dan belonging. Bisa semua genre di atas.</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Tips:</strong> Baca 3 novel bestseller di genre pilihanmu sebelum mulai menulis. Bukan untuk meniru — tapi untuk merasakan ritme, tone, dan ekspektasi genre tersebut.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">3</div>
+        <div class="lesson-title">Tema vs Plot: Jangan Balik Urutannya</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 5 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Plot adalah apa yang terjadi. Tema adalah apa artinya. Novel yang berkesan punya keduanya.</p>
+        <p>Tapi kamu tidak harus tahu tema sebelum mulai — banyak penulis menemukan tema mereka setelah draft selesai. Yang penting: <strong>jangan memaksakan tema di awal sampai plotmu jadi ceramah.</strong></p>
+        <div class="example-box">
+          <h6>Tema yang Muncul Organik</h6>
+          <p>Kamu nulis tentang detektif yang kehilangan ingatan → tema pengampunan diri muncul sendiri dari journey-nya → kamu perkuat di revisi.</p>
+        </div>
+        <div class="tip-box">
+          <strong>💡 Formula:</strong> Draft Pertama = Temukan Cerita. Revisi = Temukan Tema. Bukan sebaliknya.
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-nav">
+      <a href="#fase2" class="btn-primary">Lanjut ke Fase 2: Struktur →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- FASE 2: STRUKTUR & OUTLINE -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="phase" id="fase2">
+  <div class="phase-inner fade-in">
+    <div class="phase-badge">📐 Fase 2 · Arsitektur</div>
+    <h2 class="phase-title">Struktur &amp; <em>Outline</em></h2>
+    <p class="phase-desc">Outline bukan penjara — ini GPS. Kamu tetap bisa nyasar, tapi kamu tahu harus kembali ke mana.</p>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">1</div>
+        <div class="lesson-title">Struktur Tiga Babak: Satu-satunya Teori yang Perlu Kamu Tahu</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 10 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Hampir semua novel (dan film) yang berhasil mengikuti pola ini, sadar atau tidak:</p>
+        <ul>
+          <li><strong>Babak 1 (25%)</strong> — Setup. Kita kenali siapa protagonis, dunianya, dan apa yang akan berubah. Berakhir dengan Inciting Incident — momen yang memaksa protagonis bergerak.</li>
+          <li><strong>Babak 2 (50%)</strong> — Konfrontasi. Protagonis berjuang menuju tujuan. Rintangan semakin besar. Titik tengah (Midpoint) mengubah arah cerita. Berakhir dengan All Is Lost — titik terendah protagonis.</li>
+          <li><strong>Babak 3 (25%)</strong> — Resolusi. Protagonis bangkit, menghadapi klimaks dengan senjata baru (yang dia pelajari di Babak 2), dan cerita selesai.</li>
+        </ul>
+        <div class="example-box">
+          <h6>Aplikasi di Novel 80.000 Kata</h6>
+          <p>Babak 1 = ~20.000 kata · Babak 2 = ~40.000 kata · Babak 3 = ~20.000 kata</p>
+          <p style="margin-top:.4rem; font-size:.85rem; color: var(--white-muted)">Ini estimasi. Beberapa novel literary fiction punya Babak 2 yang jauh lebih panjang.</p>
+        </div>
+        <div class="tip-box">
+          <strong>💡 Test Cepat:</strong> Ambil novel favoritmu. Buka di halaman 25%, 50%, 75%. Kejadian apa? Hampir pasti Inciting Incident, Midpoint, dan All Is Lost.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">2</div>
+        <div class="lesson-title">Save the Cat Beat Sheet: Template Plotting Profesional</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 12 menit baca</span>
+          <span class="lesson-level lvl-menengah">Menengah</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Dikembangkan Blake Snyder untuk film, tapi bekerja luar biasa untuk novel. 15 "beat" yang memetakan seluruh perjalanan cerita.</p>
+        <ul>
+          <li><strong>Opening Image</strong> — Cuplikan dunia sebelum perubahan</li>
+          <li><strong>Theme Stated</strong> — Seseorang berkata hal yang akan dibuktikan cerita (biasanya orang lain, bukan protagonis)</li>
+          <li><strong>Set-Up</strong> — Kenalkan semua elemen utama</li>
+          <li><strong>Catalyst / Inciting Incident</strong> — Peristiwa yang memulai segalanya</li>
+          <li><strong>Debate</strong> — Protagonis ragu, apakah mau berubah?</li>
+          <li><strong>Break into 2</strong> — Keputusan dibuat, perjalanan dimulai</li>
+          <li><strong>B Story</strong> — Subplot (biasanya hubungan) yang membawa tema</li>
+          <li><strong>Fun and Games</strong> — "Promise of the premise" — alasan kenapa kita baca genre ini</li>
+          <li><strong>Midpoint</strong> — Kesuksesan semu atau kegagalan semu — stakes naik</li>
+          <li><strong>Bad Guys Close In</strong> — Tekanan dari luar dan dalam meningkat</li>
+          <li><strong>All Is Lost</strong> — Titik terendah. Whiff of death.</li>
+          <li><strong>Dark Night of the Soul</strong> — Protagonis hancur, merenungkan</li>
+          <li><strong>Break into 3</strong> — Solusi ditemukan (dari B Story / tema)</li>
+          <li><strong>Finale</strong> — Dunia baru ditegakkan</li>
+          <li><strong>Final Image</strong> — Cermin Opening Image, tapi sudah berubah</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Cara Pakai:</strong> Isi beat sheet sebelum mulai nulis. Tidak harus detail — cukup 1-2 kalimat per beat. Ini peta minimalmu.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">3</div>
+        <div class="lesson-title">Plotter vs Pantser: Kamu yang Mana?</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 5 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p><strong>Plotter</strong> — outline detail sebelum nulis. <strong>Pantser</strong> — nulis mengikuti insting. <strong>Plantser</strong> — gabungan keduanya.</p>
+        <p>Tidak ada yang lebih baik. Tapi ada satu fakta: <strong>90% penulis yang tidak pernah menyelesaikan novel adalah pantser yang murni.</strong> Bukan karena pantsing itu salah — tapi karena tanpa struktur minimal, sangat mudah hilang di babak 2.</p>
+        <div class="tip-box">
+          <strong>💡 Rekomendasi untuk Pemula:</strong> Outline 3 hal saja sebelum mulai: (1) Inciting Incident, (2) Midpoint, (3) Ending. Sisanya boleh ditemukan sambil jalan.
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-nav">
+      <a href="#fase3" class="btn-primary">Lanjut ke Fase 3: Menulis Draft →</a>
+      <a href="#fase1" class="btn-ghost">← Kembali</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- FASE 3: MENULIS DRAFT -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="phase" id="fase3">
+  <div class="phase-inner fade-in">
+    <div class="phase-badge">✍️ Fase 3 · Eksekusi</div>
+    <h2 class="phase-title">Menulis <em>Draft</em> Pertama</h2>
+    <p class="phase-desc">Ini fase yang paling banyak korbannya. 97% penulis tidak menyelesaikan novel pertama mereka. Fase ini berisi semua yang perlu kamu tahu agar masuk ke 3%.</p>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">1</div>
+        <div class="lesson-title">Writer's Block Itu Tidak Nyata — Ini yang Sebenarnya Terjadi</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 6 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Writer's block bukan "kehabisan ide". Ini adalah salah satu dari tiga masalah nyata:</p>
+        <ul>
+          <li><strong>Masalah Plot:</strong> Kamu tidak tahu apa yang harus terjadi selanjutnya → kembali ke outline, atau tulis adegan dari sudut yang berbeda.</li>
+          <li><strong>Masalah Perfeksionisme:</strong> Kamu mengedit sambil menulis → matikan editor dalam dirimu, tulis jelek dulu.</li>
+          <li><strong>Masalah Motivasi:</strong> Kamu bosan dengan ceritamu → mungkin ada sesuatu yang fundamental yang harus diubah, atau kamu butuh istirahat yang nyata (bukan prokrastinasi).</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Mantra Draft Pertama:</strong> "Permisi yang pertama terbit." Kamu tidak bisa mengedit halaman kosong. Draft pertama boleh jelek — itu tugasnya.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">2</div>
+        <div class="lesson-title">Target Harian dan Sistem yang Benar-Benar Bekerja</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 7 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Novel 80.000 kata dengan target 500 kata/hari = 160 hari = sekitar 5 bulan. Dengan 1000 kata/hari, cukup 80 hari.</p>
+        <p><strong>Yang lebih penting dari jumlah target:</strong> konsistensi. 300 kata setiap hari mengalahkan 3000 kata dua kali seminggu — dalam hal volume dan dalam hal menjaga momentum cerita di kepalamu.</p>
+        <ul>
+          <li>Tetapkan waktu spesifik, bukan "kalau sempat"</li>
+          <li>Berhenti di tengah kalimat atau adegan — agar esok hari kamu tahu harus mulai dari mana</li>
+          <li>Jangan baca ulang tulisan kemarin sebelum mulai — langsung lanjut</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Teknik Hemingway:</strong> Berhenti menulis bukan saat kamu kehabisan kata, tapi saat kamu masih tahu apa yang akan terjadi selanjutnya. Ini membuat kamu tidak sabar untuk kembali esok hari.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">3</div>
+        <div class="lesson-title">Membuka Cerita: Hook yang Bikin Pembaca Tidak Bisa Berhenti</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 8 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Kalimat pertama novelmu adalah pekerjaan wawancara. Pembaca memutuskan dalam 30 detik apakah akan lanjut.</p>
+        <p><strong>7 Teknik Hook:</strong></p>
+        <ul>
+          <li><strong>In Medias Res</strong> — Mulai di tengah aksi</li>
+          <li><strong>Pertanyaan yang Menggoda</strong> — Kalimat yang memaksa pembaca bertanya "kenapa?"</li>
+          <li><strong>Kontradiksi</strong> — Dua hal yang tidak seharusnya ada bersama</li>
+          <li><strong>Suara yang Kuat</strong> — Voice narator yang langsung menarik perhatian</li>
+          <li><strong>Atmosfer yang Intens</strong> — Setting yang langsung membangun mood</li>
+          <li><strong>Pernyataan Mengejutkan</strong> — Fakta atau klaim yang mengagetkan</li>
+          <li><strong>Karakter yang Langsung Menarik</strong> — Seseorang yang langsung kita ingin tahu lebih banyak</li>
+        </ul>
+        <div class="example-box">
+          <h6>Contoh Hook yang Bekerja</h6>
+          <p>✅ <span class="ex-good">"Hari ini aku membunuh seseorang untuk kedua kalinya."</span> — Kontradiksi + pertanyaan: bagaimana bisa membunuh untuk kedua kalinya?</p>
+          <p style="margin-top:.5rem">❌ <span class="ex-bad">"Namaku Rina. Aku tinggal di Jakarta. Hidupku biasa saja sampai suatu hari..."</span> — Membosankan. Tidak ada stakes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">4</div>
+        <div class="lesson-title">POV (Point of View): Pilihan yang Menentukan Segalanya</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 8 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>POV adalah kacamata yang dipakai pembaca untuk melihat duniamu. Pilihan salah bisa menghancurkan cerita yang bagus.</p>
+        <ul>
+          <li><strong>First Person (Aku/I):</strong> Paling intim, paling mudah untuk pemula. Kekurangan: terbatas pada apa yang protagonis tahu dan lihat.</li>
+          <li><strong>Third Person Limited (Dia):</strong> Paling fleksibel, paling umum di fiksi modern. Kita di kepala satu karakter, tapi ditulis "dia".</li>
+          <li><strong>Third Person Omniscient:</strong> Narator tahu segalanya. Sulit dilakukan tanpa "head-hopping" yang membingungkan.</li>
+          <li><strong>Second Person (Kamu):</strong> Jarang, biasanya untuk efek artistik atau interaktif.</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Rule of Thumb:</strong> Pilih satu POV dan konsisten di satu adegan. Berpindah kepala karakter di tengah adegan (head-hopping) adalah salah satu kesalahan paling umum yang langsung diketahui editor.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">5</div>
+        <div class="lesson-title">Pacing: Cara Mengatur Ritme Agar Pembaca Tidak Kabur</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 7 menit baca</span>
+          <span class="lesson-level lvl-menengah">Menengah</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Pacing adalah napas novelmu. Terlalu cepat: pembaca pusing. Terlalu lambat: pembaca kabur.</p>
+        <ul>
+          <li><strong>Mempercepat Pacing:</strong> Kalimat pendek. Dialog. Aksi. Kurangi deskripsi. Gunakan white space.</li>
+          <li><strong>Memperlambat Pacing:</strong> Kalimat panjang dan kompleks. Monolog internal. Deskripsi detail. Adegan refleksi.</li>
+          <li><strong>Prinsip Scene-Sequel:</strong> Setiap adegan aksi (scene) harus diikuti adegan refleksi (sequel) di mana karakter memproses apa yang baru terjadi. Tanpa sequel, pembaca kelelahan.</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Cek Pacing:</strong> Baca draft-mu keras-keras. Di mana kamu mulai bosan atau terburu-buru? Itu sinyal pacing bermasalah.
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-nav">
+      <a href="#fase4" class="btn-primary">Lanjut ke Fase 4: Karakter & Dialog →</a>
+      <a href="#fase2" class="btn-ghost">← Kembali</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- FASE 4: KARAKTER & DIALOG -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="phase" id="fase4">
+  <div class="phase-inner fade-in">
+    <div class="phase-badge">🎭 Fase 4 · Jiwa Cerita</div>
+    <h2 class="phase-title">Karakter &amp; <em>Dialog</em></h2>
+    <p class="phase-desc">Pembaca tidak ingat plot. Mereka ingat karakter. Ini bagian di mana novelmu benar-benar jadi hidup.</p>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">1</div>
+        <div class="lesson-title">Membangun Karakter 3 Dimensi: Fisik, Psikologi, Sosiologi</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 9 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Metode Lajos Egri: karakter yang terasa nyata punya tiga lapisan.</p>
+        <ul>
+          <li><strong>Fisik:</strong> Usia, penampilan, kondisi kesehatan, cara bergerak. Bukan sekadar daftar — tapi bagaimana fisiknya mempengaruhi hidupnya.</li>
+          <li><strong>Psikologi:</strong> Ketakutan terdalam, keinginan tersembunyi, trauma masa lalu, cara mereka berbohong pada diri sendiri (misbelief).</li>
+          <li><strong>Sosiologi:</strong> Kelas sosial, pendidikan, pekerjaan, keluarga, budaya. Ini membentuk cara karakter berbicara dan berpikir.</li>
+        </ul>
+        <div class="example-box">
+          <h6>Pertanyaan Kunci untuk Karaktermu</h6>
+          <p>1. Apa yang paling dia takutkan? (bukan monster — tapi ketakutan emosional/psikologis)</p>
+          <p>2. Apa yang dia percaya tentang dirinya yang salah? (misbelief)</p>
+          <p>3. Apa yang dia inginkan vs apa yang sebenarnya dia butuhkan? (want vs need)</p>
+        </div>
+        <div class="tip-box">
+          <strong>💡 Want vs Need:</strong> Protagonis terbaik punya want (tujuan eksternal) yang berbeda dari need (kebutuhan internal). Cerita adalah perjalanan dari want ke realisasi bahwa need-lah yang sebenarnya penting.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">2</div>
+        <div class="lesson-title">Arc Karakter: 4 Tipe dan Kapan Menggunakannya</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 8 menit baca</span>
+          <span class="lesson-level lvl-menengah">Menengah</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <ul>
+          <li><strong>Positive Arc (Change Arc):</strong> Karakter berubah menjadi lebih baik karena melepas misbelief lama. Paling umum, paling memuaskan. Harry Potter, Frodo.</li>
+          <li><strong>Negative Arc (Corruption Arc):</strong> Karakter berubah menjadi lebih buruk karena memilih misbelief. Walter White di Breaking Bad. Powerful tapi butuh penulisan yang presisi.</li>
+          <li><strong>Flat Arc (Steadfast Arc):</strong> Karakter tidak berubah — justru mengubah dunia di sekitarnya. Atticus Finch. Cocok ketika temamu adalah tentang keteguhan prinsip.</li>
+          <li><strong>Corruption Arc Eksternal:</strong> Karakter dipaksa berubah oleh trauma eksternal, bukan pilihan internal. Lebih kompleks, lebih modern.</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Tips:</strong> Tentukan arc sebelum mulai — tapi izinkan karakter mengejutkanmu selama proses menulis. Kalau karaktermu "melawan" arc yang sudah kamu rencanakan, dengarkan mereka. Itu biasanya berarti kamu sudah mengenal karaktermu dengan baik.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">3</div>
+        <div class="lesson-title">Dialog yang Terasa Natural: Aturan dan Cara Melanggarnya</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 8 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Dialog fiksi bukan transkripsi percakapan nyata. Dialog nyata penuh dengan "em", "ah", kalimat tidak selesai, dan sangat membosankan dibaca. Dialog fiksi adalah <em>ilusi</em> percakapan nyata.</p>
+        <ul>
+          <li>Setiap baris dialog harus melakukan minimal satu dari: mengungkap karakter, mendorong plot, membangun konflik, atau mengungkap informasi yang dibutuhkan pembaca.</li>
+          <li>Hindari "As you know, Bob" — karakter menjelaskan hal yang keduanya sudah tahu, hanya untuk memberi info ke pembaca.</li>
+          <li>Gunakan "said" sebagai attribution tag. Cari, berbisik, menyahut, berteriak — boleh dipakai, tapi jarang. "Said" tidak terlihat, yang lain terlihat.</li>
+        </ul>
+        <div class="example-box">
+          <h6>Dialog yang Bekerja vs Tidak</h6>
+          <p>❌ <span class="ex-bad">"Kak, seperti yang kamu tahu, Ayah kita meninggal karena kecelakaan 5 tahun lalu dan meninggalkan hutang besar."</span></p>
+          <p style="margin-top:.5rem">✅ <span class="ex-good">"Lima tahun." Dia menuang kopi. "Kamu masih ingat cara beliau minum kopi?"</span></p>
+        </div>
+        <div class="tip-box">
+          <strong>💡 Teknik Subtext:</strong> Karakter sering tidak mengatakan apa yang mereka maksud. "Tidak apa-apa" bisa berarti banyak hal tergantung konteks. Biarkan pembaca membaca di antara baris.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">4</div>
+        <div class="lesson-title">Show, Don't Tell — dan Kapan Kamu Boleh Melanggarnya</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 7 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Aturan paling terkenal — dan paling sering disalahpahami. "Show, don't tell" bukan berarti tidak boleh ada narasi. Ini berarti: <strong>tunjukkan emosi dan karakter melalui aksi, detail, dan dialog — bukan melalui pernyataan langsung.</strong></p>
+        <div class="example-box">
+          <h6>Tell vs Show</h6>
+          <p>❌ <span class="ex-bad">Tell: "Rina sangat gugup."</span></p>
+          <p style="margin-top:.4rem">✅ <span class="ex-good">Show: "Rina melipatkan tangan di dadanya, membuka, melipatkan lagi. Dia membaca menu tiga kali tanpa benar-benar membacanya."</span></p>
+        </div>
+        <p><strong>Kapan "tell" diizinkan:</strong></p>
+        <ul>
+          <li>Transisi waktu: "Tiga tahun berlalu." (tidak perlu di-show)</li>
+          <li>Informasi minor yang tidak relevan secara emosional</li>
+          <li>Setelah adegan besar yang emosional — sedikit narasi memberi pembaca napas</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Rule of Thumb:</strong> Jika emosi atau karakter penting untuk ceritamu → show. Jika itu hanya logistik atau transisi → tell boleh.
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-nav">
+      <a href="#fase5" class="btn-primary">Lanjut ke Fase 5: Revisi →</a>
+      <a href="#fase3" class="btn-ghost">← Kembali</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- FASE 5: REVISI & EDIT -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="phase" id="fase5">
+  <div class="phase-inner fade-in">
+    <div class="phase-badge">✂️ Fase 5 · Poles</div>
+    <h2 class="phase-title">Revisi &amp; <em>Self-Editing</em></h2>
+    <p class="phase-desc">Draft selesai adalah setengah pekerjaan. Novel lahir di revisi, bukan di draft pertama. Ini fase yang membedakan naskah biasa dari naskah yang diterima penerbit.</p>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">1</div>
+        <div class="lesson-title">Jangan Langsung Edit — Istirahat Dulu (Ini Sains)</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 4 menit baca</span>
+          <span class="lesson-level lvl-pemula">Pemula</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Setelah selesai draft pertama, tunggu minimal <strong>2-4 minggu</strong> sebelum mulai revisi. Ini bukan membuang waktu — ini investasi.</p>
+        <p>Kenapa? Otak kamu masih "menyimpan" apa yang kamu <em>maksudkan</em> untuk ditulis, bukan apa yang <em>sebenarnya</em> tertulis. Jarak waktu membuatmu bisa membaca naskah seperti pembaca, bukan seperti penulisnya.</p>
+        <div class="tip-box">
+          <strong>💡 Selama istirahat:</strong> Baca buku-buku di genre yang sama. Tulismu secara tidak sadar akan menyerap ritme dan craft yang lebih baik untuk sesi revisi.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">2</div>
+        <div class="lesson-title">Urutan Revisi yang Benar: Dari Besar ke Kecil</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 8 menit baca</span>
+          <span class="lesson-level lvl-menengah">Menengah</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Kesalahan fatal: langsung edit typo sebelum struktur ceritamu benar. Kamu akan memoles bagian yang nanti dihapus.</p>
+        <p><strong>Urutan revisi yang benar:</strong></p>
+        <ul>
+          <li><strong>Revisi Struktural (Macro):</strong> Apakah plotnya masuk akal? Apakah arc karakter terpenuhi? Ada adegan yang bisa dihapus tanpa mengurangi cerita?</li>
+          <li><strong>Revisi Adegan (Scene):</strong> Apakah setiap adegan punya tujuan? Ada konflik? Ada perubahan?</li>
+          <li><strong>Revisi Prosa (Line):</strong> Pacing, kalimat, voice, word choice.</li>
+          <li><strong>Copy Edit:</strong> Grammar, tanda baca, konsistensi nama/detail.</li>
+          <li><strong>Proofreading:</strong> Typo, format, spacing terakhir.</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Prinsip:</strong> Jangan proofread sebelum copy edit. Jangan copy edit sebelum line edit. Jangan line edit sebelum structural edit selesai.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">3</div>
+        <div class="lesson-title">Self-Editing Checklist: 20 Poin Sebelum Kirim ke Editor</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 10 menit baca</span>
+          <span class="lesson-level lvl-lanjutan">Lanjutan</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Centang semua poin ini sebelum mengirim naskahmu ke editor atau platform penerbitan:</p>
+        <div class="checklist" id="checklist-edit">
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Halaman pertama sudah punya hook yang kuat</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Setiap bab punya pembuka dan penutup yang memuaskan</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Arc karakter utama terpenuhi di akhir</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Tidak ada adegan yang tidak mendorong plot atau karakter</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>POV konsisten di setiap adegan (tidak head-hopping)</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Dialog terasa natural dan punya subtext</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Tidak ada "as you know, Bob" dalam dialog</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Deskripsi setting diberikan melalui POV karakter, bukan narator netral</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Tidak ada info-dump di bab pertama</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Emosi penting di-show, bukan di-tell</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Pacing bervariasi — ada adegan cepat dan lambat</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Nama karakter konsisten dari awal hingga akhir</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Timeline cerita masuk akal dan konsisten</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Tidak ada kalimat yang dimulai 3x berturut dengan kata yang sama</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Ending memberikan resolusi emosional, bukan hanya plottikal</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Judul cocok dengan tone dan genre</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Sudah dibaca minimal 1 beta reader</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Tidak ada typo di halaman 1-5 (yang paling krusial)</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Format naskah rapi dan konsisten</span></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><span>Kamu sudah membacanya keras-keras minimal sekali</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-nav">
+      <a href="#fase6" class="btn-primary">Lanjut ke Fase 6: Persiapan Terbit →</a>
+      <a href="#fase4" class="btn-ghost">← Kembali</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- FASE 6: PERSIAPAN TERBIT -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="phase" id="fase6">
+  <div class="phase-inner fade-in">
+    <div class="phase-badge">📦 Fase 6 · Siap Terbit</div>
+    <h2 class="phase-title">Persiapan <em>Terbit</em></h2>
+    <p class="phase-desc">Naskahmu sudah bagus. Sekarang kamu perlu menyiapkan semua hal yang dibutuhkan untuk proses penerbitan berjalan mulus.</p>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">1</div>
+        <div class="lesson-title">Sinopsis yang Dijual ke Penerbit (Bukan Sinopsis untuk Pembaca)</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 8 menit baca</span>
+          <span class="lesson-level lvl-lanjutan">Lanjutan</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Sinopsis untuk penerbit berbeda dari blurb di sampul buku. Penerbit butuh tahu <strong>seluruh cerita termasuk ending</strong> — mereka perlu menilai apakah arc ceritamu bekerja.</p>
+        <p><strong>Format Sinopsis Penerbit (1-2 halaman):</strong></p>
+        <ul>
+          <li>Paragraf 1: Kenalkan protagonis, setting, dan masalah utama</li>
+          <li>Paragraf 2-3: Perkembangan plot, konflik yang semakin besar, midpoint</li>
+          <li>Paragraf 4: Klimaks dan resolusi — termasuk ending yang sebenarnya</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Format NovelCraft:</strong> Saat submit ke NovelCraft, sertakan sinopsis singkat (max 500 kata) dan 3 bab pertama sebagai sample. Tim editorial kami akan membaca keduanya.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">2</div>
+        <div class="lesson-title">Format Naskah yang Benar untuk Submission</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 6 menit baca</span>
+          <span class="lesson-level lvl-lanjutan">Lanjutan</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Naskah yang dikirim dengan format berantakan langsung mengirimkan sinyal: "penulis ini tidak profesional." Format standar untuk submission:</p>
+        <ul>
+          <li>Font: Times New Roman atau Garamond, 12pt</li>
+          <li>Spasi: 2.0 (double spacing)</li>
+          <li>Margin: 2.5cm semua sisi</li>
+          <li>Indent paragraf: 1.25cm (bukan spasi ganda antar paragraf)</li>
+          <li>Header: Nama / Judul / Nomor Halaman</li>
+          <li>Format file: .docx (Microsoft Word)</li>
+          <li>Tidak ada center-aligned text di isi naskah</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 NovelCraft Spesifik:</strong> Kami menerima .docx dan .pdf. Jika menggunakan .pdf, pastikan font tertanam (embedded). Ukuran file maksimal 50MB.
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="lesson-header" onclick="toggleLesson(this)">
+        <div class="lesson-num">3</div>
+        <div class="lesson-title">Informasi yang Kamu Butuhkan Saat Submit</div>
+        <div class="lesson-meta">
+          <span class="lesson-time">⏱ 5 menit baca</span>
+          <span class="lesson-level lvl-lanjutan">Lanjutan</span>
+        </div>
+        <span class="lesson-chevron">▼</span>
+      </div>
+      <div class="lesson-body">
+        <p>Siapkan semua ini sebelum membuka form submission agar prosesnya lancar:</p>
+        <ul>
+          <li>Judul novel (boleh sementara)</li>
+          <li>Genre utama dan subgenre (misal: "Romance · Enemies-to-Lovers")</li>
+          <li>Word count (jumlah kata total)</li>
+          <li>Sinopsis 100 kata (untuk form) dan 500 kata (untuk lampiran)</li>
+          <li>Tagline — satu kalimat yang menjual ceritamu</li>
+          <li>Data diri: nama pena (jika ada), nomor KTP, rekening bank, NPWP</li>
+          <li>Preferensi desain cover (opsional)</li>
+          <li>Target pembaca (demografi)</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 KTP & NPWP:</strong> Dibutuhkan untuk perjanjian penulis dan pembayaran royalti. Informasi ini hanya digunakan untuk administrasi dan tidak akan dibagikan.
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-nav">
+      <a href="#submit" class="btn-primary">Lanjut ke Fase 7: Submit & Publish →</a>
+      <a href="#fase5" class="btn-ghost">← Kembali</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- FASE 7: SUBMIT & TIMELINE -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="phase" id="submit">
+  <div class="phase-inner fade-in">
+    <div class="phase-badge">🚀 Fase 7 · Finish Line</div>
+    <h2 class="phase-title">Submit &amp; <em>Publikasi</em></h2>
+    <p class="phase-desc">Ini dia. Setelah semua kerja keras, sekarang waktunya berbagi ceritamu ke dunia. Berikut proses lengkap dan timeline yang bisa kamu pegang.</p>
+
+    <!-- TIMELINE PROSES -->
+    <h3 style="font-family:var(--font-serif);font-size:1.2rem;margin-bottom:1.5rem;font-style:italic;color:var(--white);">⏱ Timeline dari Submit hingga Terbit</h3>
+    <div class="timeline">
+      <div class="tl-item done">
+        <div class="tl-dot">✓</div>
+        <div class="tl-days">Hari 1</div>
+        <div class="tl-title">Submission Diterima</div>
+        <div class="tl-desc">Kamu mengisi form submission online dan mengunggah naskah. Kamu akan menerima email konfirmasi otomatis dalam 5 menit dengan nomor tiket.</div>
+      </div>
+      <div class="tl-item active">
+        <div class="tl-dot">2</div>
+        <div class="tl-days">Hari 1–3</div>
+        <div class="tl-title">Initial Review oleh Tim Editorial</div>
+        <div class="tl-desc">Tim editorial NovelCraft membaca sinopsis dan 3 bab pertama. Kami mengecek: apakah naskah sesuai format, sudah siap terbit secara kualitas, dan cocok dengan katalog kami. Kamu akan dihubungi via email dengan keputusan awal.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">3</div>
+        <div class="tl-days">Hari 3–7</div>
+        <div class="tl-title">Perjanjian Penulis & Onboarding</div>
+        <div class="tl-desc">Jika naskah diterima, kami mengirimkan draft perjanjian penulis digital. Perjanjian mencakup: persentase royalti, hak terbit, durasi kontrak, dan hak penulis. Kamu punya 5 hari untuk membaca dan menandatangani.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">4</div>
+        <div class="tl-days">Hari 7–14</div>
+        <div class="tl-title">Proses Produksi (Desain + Editorial)</div>
+        <div class="tl-desc">Tim kami mengerjakan: desain sampul, layout isi, copy editing final, dan persiapan file digital + cetak. Kamu akan diajak berdiskusi untuk desain cover dan ada satu putaran revisi jika diperlukan.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🎉</div>
+        <div class="tl-days">Hari 14–21</div>
+        <div class="tl-title">Novel Terbit & Distribusi</div>
+        <div class="tl-desc">Novelmu dipublikasikan di platform NovelCraft, tersedia dalam format digital (PDF + ePub) dan tersedia untuk pre-order cetak. Distribusi ke platform e-commerce mitra menyusul dalam 3–5 hari kerja.</div>
+      </div>
+    </div>
+
+    <!-- SUBMIT PANEL -->
+    <div class="submit-panel" id="submit-panel">
+      <h3>Siap Submit <em>Naskahmu?</em></h3>
+      <p>Proses lengkap dari submit hingga novel terbit di platform NovelCraft memakan waktu 14–21 hari kerja. Berikut yang akan terjadi setelah kamu klik tombol di bawah:</p>
+
+      <div class="submit-steps">
+        <div class="ss-item">
+          <div class="ss-num">01</div>
+          <div class="ss-label">Isi form submission online (10 menit)</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-num">02</div>
+          <div class="ss-label">Upload naskah .docx atau .pdf</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-num">03</div>
+          <div class="ss-label">Terima email konfirmasi dalam 5 menit</div>
+        </div>
+        <div class="ss-item">
+          <div class="ss-num">04</div>
+          <div class="ss-label">Tim kami review dalam 1–3 hari kerja</div>
+        </div>
+      </div>
+
+      <div class="publish-timeline">
+        <div class="pt-title">📅 Timeline Ringkas Setelah Submit</div>
+        <div class="pt-row"><span class="pt-icon">📥</span><span class="pt-day">Hari 1</span><span>Submission diterima, email konfirmasi terkirim</span></div>
+        <div class="pt-row"><span class="pt-icon">🔍</span><span class="pt-day">Hari 1–3</span><span>Initial review oleh tim editorial</span></div>
+        <div class="pt-row"><span class="pt-icon">📝</span><span class="pt-day">Hari 3–7</span><span>Perjanjian penulis dikirim & ditandatangani</span></div>
+        <div class="pt-row"><span class="pt-icon">🎨</span><span class="pt-day">Hari 7–14</span><span>Produksi: cover design + layout + copy editing</span></div>
+        <div class="pt-row"><span class="pt-icon">🚀</span><span class="pt-day">Hari 14–21</span><span>Novel TERBIT di platform NovelCraft</span></div>
+        <div class="pt-row"><span class="pt-icon">📦</span><span class="pt-day">Hari 17–26</span><span>Distribusi ke platform mitra (Tokopedia, Shopee, dll)</span></div>
+      </div>
+
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="pelatihan.html" class="btn-primary">Submit Naskahku Sekarang →</a>
+    
+        <a href="#" class="btn-ghost" style="color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.15)">Hubungi Tim Kami</a>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <h3 style="font-family:var(--font-serif);font-size:1.2rem;margin: 2.5rem 0 1rem;font-style:italic;color:var(--white);">Pertanyaan yang Sering Ditanya</h3>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Berapa persen royalti yang saya dapat?</div>
+      <div class="faq-a">NovelCraft memberikan royalti 30–50% dari harga jual bersih, tergantung format (digital atau cetak) dan perjanjian. Detail lengkap ada di perjanjian penulis yang kami kirimkan setelah naskah diterima. Pembayaran royalti dilakukan setiap kuartal (3 bulan sekali) melalui transfer bank.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Apakah naskah saya bisa ditolak? Apa yang terjadi?</div>
+      <div class="faq-a">Ya, kami melakukan seleksi kualitas. Jika naskah ditolak di tahap initial review, kami akan mengirimkan feedback konstruktif tentang apa yang bisa diperbaiki. Kamu boleh submit kembali setelah melakukan revisi — tidak ada batas berapa kali submit. Banyak penulis yang berhasil terbit di submisi ke-2 atau ke-3.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Apakah saya kehilangan hak atas naskah saya?</div>
+      <div class="faq-a">Tidak. Hak cipta tetap sepenuhnya milik kamu sebagai penulis. NovelCraft hanya mendapatkan hak untuk menerbitkan dan mendistribusikan novel tersebut selama durasi kontrak. Setelah kontrak berakhir, kamu bebas menerbitkannya di tempat lain.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Berapa panjang minimal naskah yang diterima?</div>
+      <div class="faq-a">Minimal 40.000 kata untuk novella, dan 60.000 kata untuk novel. Tidak ada batas maksimal, tapi kami biasanya merekomendasikan di bawah 150.000 kata untuk novel debutan karena pertimbangan produksi dan pasar pembaca Indonesia.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Apakah saya bisa pakai nama pena?</div>
+      <div class="faq-a">Tentu saja. Nama pena adalah hal yang sangat umum di industri penerbitan. Kamu perlu menyertakan nama asli dan data KTP untuk keperluan administrasi legal, tapi novel akan diterbitkan dengan nama pena pilihanmu.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Apakah ada biaya untuk submit atau terbit?</div>
+      <div class="faq-a">Tidak ada biaya submission. NovelCraft adalah penerbit tradisional — kamilah yang menanggung biaya produksi (desain, editing, distribusi). Kami menghasilkan uang dari penjualan buku, bukan dari penulis. Jika ada yang meminta biaya dari kamu atas nama NovelCraft, itu bukan kami.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">N<span>ovelCraft</span></div>
+  <p>Platform publikasi &amp; pelatihan novel terpercaya sejak 2013.</p>
+  <p style="margin-top:.5rem">hello@novelcraft.id · +62 812-3456-7890</p>
+  <p style="margin-top:1.5rem; font-size:.78rem; color:var(--white-muted)">© 2025 NovelCraft. Semua hak dilindungi. Dibuat dengan ❤ untuk para penulis Indonesia.</p>
+</footer>
+
+<!-- PROGRESS STICKY -->
+<div class="progress-sticky" id="prog-sticky">
+  <div class="ps-label">Progres Belajarmu</div>
+  <div class="ps-track"><div class="ps-fill" id="ps-fill"></div></div>
+  <div class="ps-text" id="ps-text">Mulai baca untuk mulai!</div>
+</div>
+
+<script>
+/* ============================================
+   NOVELCRAFT — script.js
+   ============================================ */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ---- NAVBAR SCROLL ----
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  }
+
+  // ---- HAMBURGER MENU ----
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.style.display === 'flex';
+      navLinks.style.display = open ? 'none' : 'flex';
+      navLinks.style.flexDirection = open ? '' : 'column';
+      navLinks.style.position = open ? '' : 'absolute';
+      navLinks.style.top = open ? '' : '60px';
+      navLinks.style.left = open ? '' : '0';
+      navLinks.style.right = open ? '' : '0';
+      navLinks.style.background = open ? '' : 'rgba(10,6,8,.97)';
+      navLinks.style.padding = open ? '' : '1rem 4vw 1.5rem';
+      navLinks.style.borderBottom = open ? '' : '1px solid rgba(212,168,71,.15)';
+    });
+  }
+
+  // ---- FORM SUBMIT TOAST ----
+  const showToast = (msg) => {
+    let toast = document.querySelector('.toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'toast';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  };
+
+  const submitForm = document.getElementById('submit-form');
+  if (submitForm) {
+    submitForm.addEventListener('click', (e) => {
+      e.preventDefault();
+      showToast('✦ Pendaftaran berhasil dikirim! Kami akan menghubungi kamu segera.');
+    });
+  }
+
+  // ---- SCROLL REVEAL ----
+  const revealEls = document.querySelectorAll('.card, .lesson, .cl-item, .tl-item, .faq-item');
+  if (revealEls.length > 0 && 'IntersectionObserver' in window) {
+    const revObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          revObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealEls.forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = `opacity .5s ease ${i * 0.05}s, transform .5s ease ${i * 0.05}s`;
+      revObs.observe(el);
+    });
+  }
+
+  // ---- READING PROGRESS BAR ----
+  const bar = document.getElementById('reading-bar');
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop;
+    const total = doc.scrollHeight - doc.clientHeight;
+    const pct = scrolled / total;
+    if (bar) bar.style.transform = `scaleX(${pct})`;
+
+    const fill = document.getElementById('ps-fill');
+    const psText = document.getElementById('ps-text');
+    if (fill) fill.style.width = (pct * 100) + '%';
+    if (psText) {
+      if (pct > 0.05 && pct < 0.99) {
+        psText.textContent = `${Math.round(pct * 100)}% terbaca`;
+      } else if (pct >= 0.99) {
+        psText.textContent = '🎉 Selesai dibaca!';
+      }
+    }
+  });
+
+  // ---- FADE IN ON SCROLL ----
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+});
+
+// ---- TOGGLE LESSON ----
+function toggleLesson(header) {
+  const lesson = header.closest('.lesson');
+  const wasOpen = lesson.classList.contains('open');
+  document.querySelectorAll('.lesson.open').forEach(l => l.classList.remove('open'));
+  if (!wasOpen) lesson.classList.add('open');
+}
+
+// ---- TOGGLE FAQ ----
+function toggleFaq(item) {
+  item.classList.toggle('open');
+}
+
+// ---- TOGGLE CHECKLIST ----
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+  if (item.classList.contains('checked')) {
+    item.querySelector('.cl-box').textContent = '✓';
+  } else {
+    item.querySelector('.cl-box').textContent = '';
+  }
+  const total = document.querySelectorAll('.cl-item').length;
+  const done = document.querySelectorAll('.cl-item.checked').length;
+  const psText = document.getElementById('ps-text');
+  if (done > 0 && psText) {
+    psText.textContent = `${done}/${total} checklist ✓`;
+  }
+}
+</script>
+</body>
+</html>
