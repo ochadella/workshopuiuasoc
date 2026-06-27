@@ -519,7 +519,7 @@
       buyBtn.textContent = inCart ? '✓ Di Keranjang — Lihat Keranjang' : 'Beli Sekarang';
       buyBtn.classList.toggle('added', !!inCart);
       buyBtn.onclick = function() {
-        if (inCart) { window.location.href = '/customer/keranjang.html'; return; }
+        if (inCart) { window.location.href = '../customer/keranjang.html'; return; }
         const c = getCart();
         c.push({
           id:      btn.dataset.id,
