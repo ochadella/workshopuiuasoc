@@ -86,7 +86,12 @@ function initNavbar() {
   const placeholder = document.getElementById('navbar-placeholder');
   if (!placeholder) return;
 
-  fetch('/workshopuiuasoc/components/navbar.html')
+  const navbarPath =
+    window.location.pathname.split('/').length > 2
+      ? '../components/navbar.html'
+      : './components/navbar.html';
+
+  fetch(navbarPath)
     .then(r => r.text())
     .then(html => {
       placeholder.innerHTML = html;
