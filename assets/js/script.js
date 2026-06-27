@@ -6,9 +6,50 @@
 // NAVBAR LOADER
 // ============================================
 
-function initNavbar() {
+/**
+ * Hitung prefix root relatif dari halaman saat ini.
+ *
+ * Contoh struktur repo:
+ *   workshopuiuasoc/
+ *     index.html              → depth 0 → root = './'
+ *     tips/tips.html          → depth 1 → root = '../'
+ *     katalog/katalog.html    → depth 1 → root = '../'
+ *     auth/login.html         → depth 1 → root = '../'
+ *     user/profile-user.html  → depth 1 → root = '../'
+ *
+ * Fungsi ini menghitung berapa kali kita harus naik '../'
+ * dari lokasi file HTML saat ini menuju root project.
+ */
+function getRootPrefix() {
+  // pathname contoh: /workshopuiuasoc/katalog/katalog.html
+  // split('/') → ['', 'workshopuiuasoc', 'katalog', 'katalog.html']
+  const parts = window.location.pathname
+    .split('/')
+    .filter(Boolean); // hapus string kosong
 
-  // scroll effect
+  // Cari index folder root project (folder pertama setelah domain)
+  // GitHub Pages user-site: ochadella.github.io → repo name ada di parts[0]
+  // GitHub Pages project-site: ochadella.github.io/workshopuiuasoc → parts[0] = 'workshopuiuasoc'
+  // Kita perlu tahu seberapa dalam file HTML ini dari root project.
+
+  // parts terakhir adalah filename (index.html, katalog.html, dll)
+  // jadi jumlah folder = parts.length - 1
+  const depth = parts.length - 1;
+
+  // Misal depth = 0 → file ada di root project → './'
+  // Misal depth = 1 → file ada 1 folder dalam → '../'
+  // Misal depth = 2 → file ada 2 folder dalam → '../../'
+  if (depth <= 0) return './';
+  return '../'.repeat(depth);
+}
+
+function initNavbar(root) {
+  // ---- Isi semua href dengan path absolut dari root ----
+  document.querySelectorAll('[data-nav-root]').forEach(el => {
+    el.href = root + el.getAttribute('data-nav-root');
+  });
+
+  // ---- Scroll effect ----
   const navbar = document.getElementById('navbar');
   if (navbar) {
     window.addEventListener('scroll', () => {
@@ -16,25 +57,34 @@ function initNavbar() {
     });
   }
 
-  // hamburger
+  // ---- Hamburger ----
   const hamburger = document.getElementById('hamburger');
   const navLinks  = document.querySelector('.nav-links');
   if (hamburger && navLinks) {
     hamburger.addEventListener('click', () => {
-      const open = navLinks.style.display === 'flex';
-      navLinks.style.display       = open ? 'none'                          : 'flex';
-      navLinks.style.flexDirection = open ? ''                              : 'column';
-      navLinks.style.position      = open ? ''                              : 'absolute';
-      navLinks.style.top           = open ? ''                              : '60px';
-      navLinks.style.left          = open ? ''                              : '0';
-      navLinks.style.right         = open ? ''                              : '0';
-      navLinks.style.background    = open ? ''                              : 'rgba(10,6,8,.97)';
-      navLinks.style.padding       = open ? ''                              : '1rem 4vw 1.5rem';
-      navLinks.style.borderBottom  = open ? ''                              : '1px solid rgba(212,168,71,.15)';
+      const open = hamburger.classList.contains('open');
+      hamburger.classList.toggle('open', !open);
+
+      if (!open) {
+        // Buka menu
+        navLinks.style.display       = 'flex';
+        navLinks.style.flexDirection = 'column';
+        navLinks.style.position      = 'absolute';
+        navLinks.style.top           = '60px';
+        navLinks.style.left          = '0';
+        navLinks.style.right         = '0';
+        navLinks.style.background    = 'rgba(10,6,8,.97)';
+        navLinks.style.padding       = '1rem 4vw 1.5rem';
+        navLinks.style.borderBottom  = '1px solid rgba(212,168,71,.15)';
+        navLinks.style.zIndex        = '999';
+      } else {
+        // Tutup menu
+        navLinks.removeAttribute('style');
+      }
     });
   }
 
-  // login state
+  // ---- Login state ----
   const isLoggedIn   = localStorage.getItem('isLoggedIn') === 'true';
   const userName     = localStorage.getItem('userName') || 'C';
   const guestActions = document.getElementById('guestActions');
@@ -52,7 +102,7 @@ function initNavbar() {
     }
   }
 
-  // profile dropdown
+  // ---- Profile dropdown ----
   if (profileBtn) {
     profileBtn.addEventListener('click', function (e) {
       e.stopPropagation();
@@ -67,35 +117,39 @@ function initNavbar() {
     }
   });
 
-  // logout
+  // ---- Logout ----
   document.getElementById('logoutBtn')?.addEventListener('click', function (e) {
     e.preventDefault();
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userName');
-    window.location.href = '../auth/login.html';
+    window.location.href = root + 'auth/login.html';
   });
 
-  // active link
+  // ---- Active link ----
+  const currentHref = window.location.href;
   document.querySelectorAll('.nav-links a').forEach(link => {
-    if (link.href === window.location.href) link.classList.add('active');
+    if (link.href && link.href === currentHref) {
+      link.classList.add('active');
+    }
   });
 }
 
-// fetch navbar lalu init
+// Fetch navbar lalu init
 (function loadNavbar() {
   const placeholder = document.getElementById('navbar-placeholder');
   if (!placeholder) return;
 
-  const navbarPath =
-    window.location.pathname.split('/').length > 2
-      ? '../components/navbar.html'
-      : './components/navbar.html';
+  const root        = getRootPrefix();
+  const navbarPath  = root + 'components/navbar.html';
 
   fetch(navbarPath)
-    .then(r => r.text())
+    .then(r => {
+      if (!r.ok) throw new Error(`Navbar fetch gagal: ${r.status} ${navbarPath}`);
+      return r.text();
+    })
     .then(html => {
       placeholder.innerHTML = html;
-      initNavbar();
+      initNavbar(root);
     })
     .catch(err => console.warn('Navbar gagal dimuat:', err));
 })();
@@ -189,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('✦ Permintaan revisi terkirim! Tim kami akan merespons dalam 24 jam.');
   });
 
-  // ---- SCROLL REVEAL (halaman lain) ----
+  // ---- SCROLL REVEAL ----
   const revealEls = document.querySelectorAll(
     '.layanan-card, .novel-card, .testi-card, .package-card, ' +
     '.kt-item, .proses-step, .mentor-card, .team-card, ' +
@@ -213,12 +267,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---- READING PROGRESS BAR — panduan ----
+  // ---- READING PROGRESS BAR ----
   const bar = document.getElementById('reading-bar');
   if (bar) {
     window.addEventListener('scroll', () => {
-      const doc     = document.documentElement;
-      const pct     = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+      const doc = document.documentElement;
+      const pct = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
       bar.style.transform = `scaleX(${pct})`;
 
       const fill   = document.getElementById('ps-fill');
@@ -272,4 +326,3 @@ function toggleCheck(item) {
   const psText = document.getElementById('ps-text');
   if (done > 0 && psText) psText.textContent = `${done}/${total} checklist ✓`;
 }
-
