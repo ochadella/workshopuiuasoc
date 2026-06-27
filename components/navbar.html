@@ -1,7 +1,7 @@
 <nav class="navbar" id="navbar">
 
   <div class="nav-brand">
-    <a href="../index.html">
+    <a data-nav-root="index.html" href="#">
       <span class="brand-n">N</span>
       <span class="brand-rest">ovelCraft</span>
     </a>
@@ -9,35 +9,31 @@
   </div>
 
   <ul class="nav-links">
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="../katalog/katalog.html">Katalog</a></li>
-    <li><a href="../tips.html">Tips</a></li>
-    <li><a href="../pelatihan/pelatihan.html">Pelatihan</a></li>
-    <li><a href="../revisi-naskah.html">Revisi</a></li>
-    <li><a href="../submit-naskah.html">Submit</a></li>
-    <li><a href="../berita/arsip-beritaartikel.html">Berita</a></li>
-    <li><a href="../tentang/tentang-kami.html">Tentang</a></li>
+    <li><a data-nav-root="index.html" href="#">Home</a></li>
+    <li><a data-nav-root="katalog/katalog.html" href="#">Katalog</a></li>
+    <li><a data-nav-root="tips.html" href="#">Tips</a></li>
+    <li><a data-nav-root="pelatihan/pelatihan.html" href="#">Pelatihan</a></li>
+    <li><a data-nav-root="revisi-naskah.html" href="#">Revisi</a></li>
+    <li><a data-nav-root="submit-naskah.html" href="#">Submit</a></li>
+    <li><a data-nav-root="berita/arsip-beritaartikel.html" href="#">Berita</a></li>
+    <li><a data-nav-root="tentang/tentang-kami.html" href="#">Tentang</a></li>
   </ul>
 
   <div class="nav-actions">
-
-    <!-- Tampil kalau BELUM login -->
     <div class="guest-actions" id="guestActions">
-      <a href="../auth/login.html" class="btn-login">Login</a>
-      <a href="../auth/register.html" class="btn-nav">Register</a>
+      <a data-nav-root="auth/login.html" href="#" class="btn-login">Login</a>
+      <a data-nav-root="auth/register.html" href="#" class="btn-nav">Register</a>
     </div>
 
-    <!-- Tampil kalau SUDAH login -->
     <div class="profile-menu" id="profileMenu">
       <div class="profile-dropdown" id="profileDropdown">
-        <a href="../user/profile-user.html">Profile</a>
-        <a href="../user/dashboard-user.html">Dashboard</a>
-        <a href="../user/history-transaksi.html">History</a>
-        <a href="../user/keranjang.html">Keranjang</a>
+        <a data-nav-root="user/profile-user.html" href="#">Profile</a>
+        <a data-nav-root="user/dashboard-user.html" href="#">Dashboard</a>
+        <a data-nav-root="user/history-transaksi.html" href="#">History</a>
+        <a data-nav-root="user/keranjang.html" href="#">Keranjang</a>
         <a href="#" id="logoutBtn">Logout</a>
       </div>
     </div>
-
   </div>
 
   <div class="hamburger" id="hamburger">
