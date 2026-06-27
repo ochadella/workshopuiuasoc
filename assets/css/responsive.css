@@ -1,404 +1,385 @@
-/* ============================================
-   NOVELCRAFT — responsive.css
-   CONSISTENT ADMIN ECOSYSTEM
-   TANPA MERUBAH LOGIC
-   ============================================ */
+/* ==========================================
+   LARGE TABLET
+   ========================================== */
+@media screen and (max-width: 1200px){
 
-/* ============================================
-   LARGE DESKTOP
-============================================ */
+    .hero{
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
 
-@media (max-width: 1400px){
+    .hero-desc{
+        max-width: 100%;
+        margin: 0 auto 2rem;
+    }
 
-  .dashboard-stats{
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.4rem;
-  }
+    .hero-cta{
+        justify-content: center;
+    }
 
-  .mentor-admin-grid{
-    grid-template-columns: repeat(2, 1fr);
-  }
+    .hero-visual{
+        order: -1;
+    }
 
-  .dashboard-grid{
-    grid-template-columns: 1fr;
-  }
+    .layanan-grid{
+        grid-template-columns: repeat(2,1fr);
+    }
 
+    .testi-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .footer-top{
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .misi-content{
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .form-wrap{
+        grid-template-columns: 1fr;
+    }
+
+    .mentor-grid{
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .package-grid{
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .program-cards-wrap{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .program-side-cards{
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .program-card.pc-main{
+        width: 100%;
+        max-width: 600px;
+    }
 }
 
-/* ============================================
-   LAPTOP
-============================================ */
-
-@media (max-width: 1200px){
-
-  .admin-sidebar{
-    width: 250px;
-  }
-
-  .admin-main{
-    margin-left: 250px;
-    width: calc(100% - 250px);
-
-    padding: 1.8rem;
-  }
-
-  .topbar-title{
-    font-size: 3.4rem;
-  }
-
-  .topbar-search input{
-    width: 230px;
-  }
-
-  .profile-admin-wrap{
-    grid-template-columns: 1fr;
-  }
-
-}
-
-/* ============================================
+/* ==========================================
    TABLET
-============================================ */
+   ========================================== */
+@media screen and (max-width: 992px){
 
-@media (max-width: 992px){
+    .navbar{
+        padding: 1rem 5vw;
+    }
 
-  .admin-sidebar{
-    position: fixed;
+    .nav-links{
+        gap: 1rem;
+    }
 
-    left: -100%;
+    .events-carousel{
+        flex-direction: column;
+        padding: 2rem 1rem;
+    }
 
-    width: 280px;
+    .event-card.small,
+    .event-card.event-mid{
+        width: 100%;
+        max-width: 500px;
+    }
 
-    transition: .35s ease;
+    .titles-grid{
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
 
-    z-index: 2000;
-  }
+    .title-card{
+        margin: auto;
+    }
 
-  .admin-sidebar.show{
-    left: 0;
-  }
+    .stats-section{
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
 
-  .admin-main{
-    width: 100%;
-    margin-left: 0;
+    .stat-div{
+        display: none;
+    }
 
-    padding: 1.5rem;
-  }
+    .cta-banner{
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem;
+    }
 
-  .sidebar-toggle{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .cta-inner{
+        max-width: 100%;
+    }
 
-  .admin-topbar{
-    flex-direction: column;
-    align-items: flex-start;
+    .hero-stats{
+        width: 100%;
+    }
 
-    gap: 1.4rem;
-  }
+    .hs-item{
+        flex: 1;
+        min-width: 120px;
+    }
 
-  .topbar-right{
-    width: 100%;
+    .package-card.pkg-featured{
+        transform: none;
+    }
 
-    justify-content: space-between;
-
-    flex-wrap: wrap;
-
-    gap: 1rem;
-  }
-
-  .topbar-search{
-    flex: 1;
-  }
-
-  .topbar-search input{
-    width: 100%;
-  }
-
-  .mentor-admin-grid{
-    grid-template-columns: 1fr;
-  }
-
-  .analytics-grid{
-    grid-template-columns: 1fr;
-  }
-
+    .mentor-card.mentor-featured{
+        transform: none;
+    }
 }
 
-/* ============================================
-   MOBILE NAVBAR
-============================================ */
+/* ==========================================
+   MOBILE
+   ========================================== */
+@media screen and (max-width:768px){
 
-@media (max-width: 768px){
+    .navbar{
+        padding: 1rem 5vw;
+    }
 
-  .navbar{
-    padding: 1rem 5vw;
-  }
+    .nav-links{
+        display:none;
+    }
 
-  .nav-links{
-    display: none;
+    .guest-actions{
+        display:none;
+    }
 
-    flex-direction: column;
+    .hamburger{
+        display:flex;
+    }
 
-    position: absolute;
+    .hero{
+        padding:120px 5vw 60px;
+    }
 
-    top: 100%;
-    left: 0;
-    right: 0;
+    .hero-title{
+        font-size:3rem;
+    }
 
-    background:
-      linear-gradient(
-        180deg,
-        rgba(8,4,8,.98),
-        rgba(18,8,20,.98)
-      );
+    .hero-bg-text{
+        display:none;
+    }
 
-    padding: 1.5rem 5vw;
+    .hero-scroll-indicator{
+        display:none;
+    }
 
-    border-bottom:
-      1px solid rgba(212,168,71,.12);
+    .hero-stats{
+        flex-direction:column;
+    }
 
-    z-index: 999;
-  }
+    .hs-item{
+        border-right:none;
+        border-bottom:1px solid rgba(212,168,71,.2);
+    }
 
-  .nav-links.show{
-    display: flex;
-  }
+    .hs-item:last-child{
+        border-bottom:none;
+    }
 
-  .nav-actions{
-    display: none !important;
-  }
+    .layanan-grid,
+    .mentor-grid,
+    .package-grid,
+    .footer-top,
+    .cards-grid,
+    .submit-steps,
+    .checklist{
+        grid-template-columns:1fr;
+    }
 
-  .hamburger{
-    display: flex !important;
-  }
+    .section-title{
+        font-size:2.5rem;
+    }
 
+    .page-title{
+        font-size:3rem;
+    }
+
+    .page-hero{
+        text-align:center;
+    }
+
+    .page-hero-content p{
+        margin:auto;
+    }
+
+    .page-hero-deco{
+        display:none;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+        gap:1rem;
+        text-align:center;
+    }
+
+    .novel-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .timeline{
+        padding-left:1.5rem;
+    }
+
+    .tl-dot{
+        left:-2rem;
+    }
+
+    .lesson-body{
+        padding:1rem;
+    }
+
+    .proses-steps{
+        flex-direction:column;
+    }
+
+    .proses-arrow{
+        transform:rotate(90deg);
+    }
+
+    .publish-timeline{
+        overflow-x:auto;
+    }
+
+    .progress-sticky{
+        display:none;
+    }
 }
 
-/* ============================================
-   MOBILE CONTENT
-============================================ */
-
-@media (max-width: 768px){
-
-  .dashboard-stats{
-    grid-template-columns: 1fr;
-  }
-
-  .stats-card{
-    padding: 1.3rem;
-
-    border-radius: 24px;
-  }
-
-  .stats-icon{
-    width: 64px;
-    height: 64px;
-
-    border-radius: 18px;
-
-    font-size: 1.3rem;
-  }
-
-  .stats-number{
-    font-size: 2.3rem;
-  }
-
-  .stats-label{
-    font-size: .82rem;
-  }
-
-  .dashboard-card{
-    padding: 1.3rem;
-
-    border-radius: 26px;
-  }
-
-  .card-header{
-    flex-direction: column;
-    align-items: flex-start;
-
-    gap: 1rem;
-  }
-
-  .card-title{
-    font-size: 1.4rem;
-  }
-
-  .form-row{
-    grid-template-columns: 1fr;
-  }
-
-  .profile-actions{
-    flex-direction: column;
-  }
-
-  .profile-actions .btn-primary,
-  .profile-actions .btn-ghost{
-    width: 100%;
-  }
-
-  .profile-admin-avatar{
-    width: 100px;
-    height: 100px;
-
-    font-size: 1.6rem;
-  }
-
-  .profile-admin-info h2{
-    font-size: 1.5rem;
-  }
-
-  .mentor-admin-card{
-    padding: 1.3rem;
-  }
-
-  .mentor-meta{
-    flex-direction: column;
-
-    gap: .6rem;
-  }
-
-  .mentor-actions{
-    flex-direction: column;
-  }
-
-  .mentor-actions button{
-    width: 100%;
-  }
-
-  .fake-chart{
-    gap: .6rem;
-  }
-
-  .chart-placeholder{
-    height: 220px;
-  }
-
-}
-
-/* ============================================
-   TABLE RESPONSIVE
-============================================ */
-
-@media (max-width: 700px){
-
-  .table-wrap{
-    overflow-x: auto;
-
-    border-radius: 20px;
-  }
-
-  .admin-table{
-    min-width: 760px;
-  }
-
-  .admin-table th,
-  .admin-table td{
-    padding: 1rem;
-  }
-
-}
-
-/* ============================================
+/* ==========================================
    SMALL MOBILE
-============================================ */
+   ========================================== */
+@media screen and (max-width:576px){
 
-@media (max-width: 500px){
+    .hero-title{
+        font-size:2.3rem;
+    }
 
-  .admin-main{
-    padding: 1rem;
-  }
+    .section-title{
+        font-size:2rem;
+    }
 
-  .topbar-title{
-    font-size: 2.6rem;
+    .page-title{
+        font-size:2.2rem;
+    }
 
-    line-height: .95;
-  }
+    .hero-desc,
+    .hero-sub,
+    .phase-desc{
+        font-size:.9rem;
+    }
 
-  .topbar-subtitle{
-    font-size: .72rem;
-  }
+    .btn-primary,
+    .btn-ghost,
+    .btn-nav{
+        width:100%;
+        text-align:center;
+    }
 
-  .topbar-right{
-    flex-direction: column;
-    align-items: stretch;
-  }
+    .hero-cta{
+        flex-direction:column;
+        width:100%;
+    }
 
-  .topbar-search{
-    width: 100%;
-  }
+    .book-stack{
+        transform:scale(.8);
+    }
 
-  .topbar-search input{
-    width: 100%;
-  }
+    .novel-grid{
+        grid-template-columns:1fr;
+    }
 
-  .live-clock{
-    width: 100%;
+    .filter-bar{
+        justify-content:center;
+    }
 
-    justify-content: center;
-  }
+    .footer-brand .brand-n{
+        font-size:2rem;
+    }
 
-  .admin-profile-mini{
-    width: 100%;
-  }
+    .footer-brand-simple{
+        font-size:2rem;
+    }
 
-  .stats-card{
-    flex-direction: row;
-    align-items: center;
-  }
+    .event-arrow{
+        display:none;
+    }
 
-  .activity-item{
-    align-items: flex-start;
-  }
+    .events-carousel{
+        padding:1rem 0;
+    }
 
-  .profile-stats{
-    flex-direction: column;
+    .form-card{
+        padding:1.5rem;
+    }
 
-    gap: 1rem;
-  }
+    .submit-panel{
+        padding:1.5rem;
+    }
 
-  .sidebar-logout{
-    justify-content: center;
-  }
+    .phase{
+        padding:4rem 5vw;
+    }
 
-  .btn-primary{
-    width: 100%;
+    .journey-overview{
+        padding:4rem 5vw;
+    }
 
-    justify-content: center;
-  }
-
-  .admin-toast{
-    left: 1rem;
-    right: 1rem;
-
-    top: 1rem;
-  }
-
+    .pelatihan-programs,
+    .mentor-section,
+    .revisi-packages,
+    .form-section,
+    .misi-section{
+        padding:4rem 5vw;
+    }
 }
 
-/* ============================================
-   VERY SMALL DEVICE
-============================================ */
+/* ==========================================
+   EXTRA SMALL DEVICE
+   ========================================== */
+@media screen and (max-width:400px){
 
-@media (max-width: 380px){
+    .hero-title{
+        font-size:1.8rem;
+    }
 
-  .topbar-title{
-    font-size: 2.2rem;
-  }
+    .section-title{
+        font-size:1.6rem;
+    }
 
-  .stats-number{
-    font-size: 2rem;
-  }
+    .brand-n{
+        font-size:1.5rem;
+    }
 
-  .stats-icon{
-    width: 56px;
-    height: 56px;
-  }
+    .brand-rest{
+        font-size:.9rem;
+    }
 
-  .dashboard-card{
-    padding: 1.1rem;
-  }
+    .hero h1{
+        font-size:2rem;
+    }
 
+    .stat-num{
+        font-size:3rem;
+    }
+
+    .pc-frame-box h2,
+    .ec-frame h2{
+        font-size:1.5rem;
+    }
+
+    .package-card,
+    .mentor-card,
+    .layanan-card{
+        padding:1.5rem;
+    }
 }
