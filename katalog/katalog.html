@@ -264,7 +264,7 @@
   <div id="footer-container"></div>
 
   <!-- Cart FAB -->
-  <a href="/auth/register.html" class="cart-fab" id="cartFab">
+  <a href="../auth/register.html" class="cart-fab" id="cartFab"></a>
     <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
     <span class="cart-fab-count hidden" id="cartCount">0</span>
   </a>
@@ -351,7 +351,7 @@
 
         if (existing) {
           // sudah ada → langsung ke keranjang
-          window.location.href = 'keranjang.html';
+          window.location.href = '../customer/keranjang.html';
           return;
         }
 
@@ -400,7 +400,7 @@
       buyBtn.textContent = inCart ? '✓ Di Keranjang — Lihat Keranjang' : 'Beli Sekarang';
       buyBtn.classList.toggle('added', !!inCart);
       buyBtn.onclick = function() {
-        if (inCart) { window.location.href = 'keranjang.html'; return; }
+        if (inCart) { window.location.href = '../customer/keranjang.html'; return; }
         const c = getCart();
         c.push({ id: btn.dataset.id, title: btn.dataset.title, author: btn.dataset.author, price: parseInt(btn.dataset.price), cover: btn.dataset.cover, initial: btn.dataset.initial, qty: 1 });
         saveCart(c);
