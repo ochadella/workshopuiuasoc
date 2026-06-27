@@ -6,45 +6,30 @@
 // NAVBAR LOADER
 // ============================================
 
-/**
- * Hitung prefix root relatif dari halaman saat ini.
- *
- * Contoh struktur repo:
- *   workshopuiuasoc/
- *     index.html              → depth 0 → root = './'
- *     tips/tips.html          → depth 1 → root = '../'
- *     katalog/katalog.html    → depth 1 → root = '../'
- *     auth/login.html         → depth 1 → root = '../'
- *     user/profile-user.html  → depth 1 → root = '../'
- *
- * Fungsi ini menghitung berapa kali kita harus naik '../'
- * dari lokasi file HTML saat ini menuju root project.
- */
 function getRootPrefix() {
   // pathname contoh: /workshopuiuasoc/katalog/katalog.html
-  // split('/') → ['', 'workshopuiuasoc', 'katalog', 'katalog.html']
-  const parts = window.location.pathname
-    .split('/')
-    .filter(Boolean); // hapus string kosong
+  // → parts: ['workshopuiuasoc', 'katalog', 'katalog.html']
+  const parts    = window.location.pathname.split('/').filter(Boolean);
+  const repoName = 'workshopuiuasoc'; // ← nama repo GitHub Pages kamu
+  const repoIdx  = parts.indexOf(repoName);
 
-  // Cari index folder root project (folder pertama setelah domain)
-  // GitHub Pages user-site: ochadella.github.io → repo name ada di parts[0]
-  // GitHub Pages project-site: ochadella.github.io/workshopuiuasoc → parts[0] = 'workshopuiuasoc'
-  // Kita perlu tahu seberapa dalam file HTML ini dari root project.
+  if (repoIdx === -1) {
+    // Fallback: hitung dari semua parts (user-site tanpa subfolder repo)
+    const depth = parts.length - 1;
+    return depth <= 0 ? './' : '../'.repeat(depth);
+  }
 
-  // parts terakhir adalah filename (index.html, katalog.html, dll)
-  // jadi jumlah folder = parts.length - 1
-  const depth = parts.length - 1;
-
-  // Misal depth = 0 → file ada di root project → './'
-  // Misal depth = 1 → file ada 1 folder dalam → '../'
-  // Misal depth = 2 → file ada 2 folder dalam → '../../'
-  if (depth <= 0) return './';
-  return '../'.repeat(depth);
+  // Hitung folder setelah repo hingga sebelum filename
+  // contoh: ['workshopuiuasoc', 'katalog', 'katalog.html']
+  //          repoIdx=0, parts.length=3 → depth = 3 - 0 - 2 = 1 → '../'
+  // contoh: ['workshopuiuasoc', 'index.html']
+  //          repoIdx=0, parts.length=2 → depth = 2 - 0 - 2 = 0 → './'
+  const depth = parts.length - repoIdx - 2;
+  return depth <= 0 ? './' : '../'.repeat(depth);
 }
 
 function initNavbar(root) {
-  // ---- Isi semua href dengan path absolut dari root ----
+  // ---- Isi semua href dari data-nav-root ----
   document.querySelectorAll('[data-nav-root]').forEach(el => {
     el.href = root + el.getAttribute('data-nav-root');
   });
@@ -66,7 +51,6 @@ function initNavbar(root) {
       hamburger.classList.toggle('open', !open);
 
       if (!open) {
-        // Buka menu
         navLinks.style.display       = 'flex';
         navLinks.style.flexDirection = 'column';
         navLinks.style.position      = 'absolute';
@@ -78,7 +62,6 @@ function initNavbar(root) {
         navLinks.style.borderBottom  = '1px solid rgba(212,168,71,.15)';
         navLinks.style.zIndex        = '999';
       } else {
-        // Tutup menu
         navLinks.removeAttribute('style');
       }
     });
@@ -128,9 +111,7 @@ function initNavbar(root) {
   // ---- Active link ----
   const currentHref = window.location.href;
   document.querySelectorAll('.nav-links a').forEach(link => {
-    if (link.href && link.href === currentHref) {
-      link.classList.add('active');
-    }
+    if (link.href && link.href === currentHref) link.classList.add('active');
   });
 }
 
@@ -139,12 +120,12 @@ function initNavbar(root) {
   const placeholder = document.getElementById('navbar-placeholder');
   if (!placeholder) return;
 
-  const root        = getRootPrefix();
-  const navbarPath  = root + 'components/navbar.html';
+  const root       = getRootPrefix();
+  const navbarPath = root + 'components/navbar.html';
 
   fetch(navbarPath)
     .then(r => {
-      if (!r.ok) throw new Error(`Navbar fetch gagal: ${r.status} ${navbarPath}`);
+      if (!r.ok) throw new Error(`Navbar fetch gagal: ${r.status} — ${navbarPath}`);
       return r.text();
     })
     .then(html => {
