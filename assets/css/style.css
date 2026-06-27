@@ -1655,3 +1655,112 @@ ul { list-style: none; }
   .proses-arrow { transform: rotate(90deg); }
   .cta-banner { flex-direction: column; gap: 2rem; }
 }
+
+/* ============================================
+   MOBILE NAV DROPDOWN — PATCH
+   Tambahkan blok ini ke style.css (di akhir file,
+   atau di dalam @media (max-width: 768px) yang sudah ada)
+   ============================================ */
+
+@media (max-width: 768px) {
+
+  /* Saat menu mobile dibuka */
+  .nav-links.show {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 100px 8vw 2rem;
+    background: rgba(10,6,8,.98);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    gap: 0;
+    overflow-y: auto;
+    animation: navSlideDown .3s ease;
+  }
+
+  @keyframes navSlideDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .nav-links.show li {
+    width: 100%;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+
+  .nav-links.show a {
+    display: block;
+    padding: 1.1rem 0;
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .nav-links.show a::after { display: none; }
+
+  /* nav-actions (login/register/profile) juga muncul di bawah menu saat mobile nav terbuka */
+  .nav-actions.show {
+    display: flex !important;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1.2rem 8vw 2rem;
+    background: rgba(10,6,8,.98);
+    z-index: 999;
+    gap: .75rem;
+  }
+
+  .nav-actions.show .guest-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: .75rem;
+  }
+
+  .nav-actions.show .btn-login,
+  .nav-actions.show .btn-nav {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-actions.show .btn-nav {
+    height: 44px;
+  }
+
+  .nav-actions.show .profile-menu {
+    width: 100%;
+  }
+
+  .nav-actions.show .profile-dropdown {
+    position: static;
+    width: 100%;
+    display: flex;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+  }
+
+  /* Hamburger jadi ikon "X" saat menu terbuka */
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Kunci scroll body saat menu mobile terbuka */
+  body.nav-open {
+    overflow: hidden;
+  }
+}
