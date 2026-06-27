@@ -7,23 +7,15 @@
 // ============================================
 
 function getRootPrefix() {
-  // pathname contoh: /workshopuiuasoc/katalog/katalog.html
-  // → parts: ['workshopuiuasoc', 'katalog', 'katalog.html']
   const parts    = window.location.pathname.split('/').filter(Boolean);
-  const repoName = 'workshopuiuasoc'; // ← nama repo GitHub Pages kamu
+  const repoName = 'workshopuiuasoc';
   const repoIdx  = parts.indexOf(repoName);
 
   if (repoIdx === -1) {
-    // Fallback: hitung dari semua parts (user-site tanpa subfolder repo)
     const depth = parts.length - 1;
     return depth <= 0 ? './' : '../'.repeat(depth);
   }
 
-  // Hitung folder setelah repo hingga sebelum filename
-  // contoh: ['workshopuiuasoc', 'katalog', 'katalog.html']
-  //          repoIdx=0, parts.length=3 → depth = 3 - 0 - 2 = 1 → '../'
-  // contoh: ['workshopuiuasoc', 'index.html']
-  //          repoIdx=0, parts.length=2 → depth = 2 - 0 - 2 = 0 → './'
   const depth = parts.length - repoIdx - 2;
   return depth <= 0 ? './' : '../'.repeat(depth);
 }
@@ -116,8 +108,10 @@ function initNavbar(root) {
 }
 
 // Fetch navbar lalu init
+// Support dua jenis placeholder: 'navbar-placeholder' (index) dan 'navbar-container' (subpage)
 (function loadNavbar() {
-  const placeholder = document.getElementById('navbar-placeholder');
+  const placeholder = document.getElementById('navbar-placeholder')
+                   || document.getElementById('navbar-container');
   if (!placeholder) return;
 
   const root       = getRootPrefix();

@@ -12,18 +12,12 @@
     Revisi Naskah – NovelCraft
   </title>
 
-  <!-- =========================================
-       GLOBAL CSS
-  ========================================== -->
   <link rel="stylesheet"
-        href="../assets/css/style.css" />
+        href="assets/css/style.css" />
 
   <link rel="stylesheet"
-        href="../assets/css/responsive.css" />
+        href="assets/css/responsive.css" />
 
-  <!-- =========================================
-       GOOGLE FONTS
-  ========================================== -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap"
         rel="stylesheet" />
 
@@ -42,14 +36,8 @@
 
 <body>
 
-  <!-- =========================================
-       NAVBAR COMPONENT
-  ========================================== -->
   <div id="navbar-container"></div>
 
-  <!-- =========================================
-       PAGE HERO
-  ========================================== -->
   <section class="page-hero page-hero-revisi">
 
     <div class="page-hero-content">
@@ -75,9 +63,6 @@
 
   </section>
 
-  <!-- =========================================
-       REVISI PAKET
-  ========================================== -->
   <section class="revisi-packages">
 
     <div class="section-header">
@@ -132,9 +117,7 @@
 
         <span class="btn-ghost btn-disabled"
               aria-disabled="true">
-
           Coming Soon
-
         </span>
 
       </div>
@@ -183,9 +166,7 @@
 
         <span class="btn-primary btn-disabled"
               aria-disabled="true">
-
           Coming Soon
-
         </span>
 
       </div>
@@ -231,9 +212,7 @@
 
         <span class="btn-ghost btn-disabled"
               aria-disabled="true">
-
           Coming Soon
-
         </span>
 
       </div>
@@ -242,9 +221,6 @@
 
   </section>
 
-  <!-- =========================================
-       PROSES REVISI
-  ========================================== -->
   <section class="proses-section">
 
     <div class="section-header">
@@ -262,137 +238,60 @@
     <div class="proses-steps">
 
       <div class="proses-step">
-
-        <div class="ps-icon">
-          📤
-        </div>
-
-        <div class="ps-num">
-          01
-        </div>
-
-        <h3>
-          Submit Naskah
-        </h3>
-
-        <p>
-          Kirim naskahmu melalui form
-          di bawah beserta brief singkat.
-        </p>
-
+        <div class="ps-icon">📤</div>
+        <div class="ps-num">01</div>
+        <h3>Submit Naskah</h3>
+        <p>Kirim naskahmu melalui form di bawah beserta brief singkat.</p>
       </div>
 
-      <div class="proses-arrow">
-        →
-      </div>
+      <div class="proses-arrow">→</div>
 
       <div class="proses-step">
-
-        <div class="ps-icon">
-          🤝
-        </div>
-
-        <div class="ps-num">
-          02
-        </div>
-
-        <h3>
-          Konsultasi Awal
-        </h3>
-
-        <p>
-          Tim kami akan menghubungimu
-          untuk diskusi paket yang sesuai.
-        </p>
-
+        <div class="ps-icon">🤝</div>
+        <div class="ps-num">02</div>
+        <h3>Konsultasi Awal</h3>
+        <p>Tim kami akan menghubungimu untuk diskusi paket yang sesuai.</p>
       </div>
 
-      <div class="proses-arrow">
-        →
-      </div>
+      <div class="proses-arrow">→</div>
 
       <div class="proses-step">
-
-        <div class="ps-icon">
-          ✍️
-        </div>
-
-        <div class="ps-num">
-          03
-        </div>
-
-        <h3>
-          Proses Editing
-        </h3>
-
-        <p>
-          Editor profesional kami
-          mulai mengerjakan naskahmu.
-        </p>
-
+        <div class="ps-icon">✍️</div>
+        <div class="ps-num">03</div>
+        <h3>Proses Editing</h3>
+        <p>Editor profesional kami mulai mengerjakan naskahmu.</p>
       </div>
 
-      <div class="proses-arrow">
-        →
-      </div>
+      <div class="proses-arrow">→</div>
 
       <div class="proses-step">
-
-        <div class="ps-icon">
-          📦
-        </div>
-
-        <div class="ps-num">
-          04
-        </div>
-
-        <h3>
-          Terima Hasil
-        </h3>
-
-        <p>
-          Naskah final + laporan editorial
-          dikirimkan ke emailmu.
-        </p>
-
+        <div class="ps-icon">📦</div>
+        <div class="ps-num">04</div>
+        <h3>Terima Hasil</h3>
+        <p>Naskah final + laporan editorial dikirimkan ke emailmu.</p>
       </div>
 
     </div>
 
   </section>
 
-  <!-- =========================================
-       FOOTER COMPONENT
-  ========================================== -->
   <div id="footer-container"></div>
 
-  <!-- =========================================
-       COMPONENT CALL
-  ========================================== -->
   <script>
-
-    fetch('../components/navbar.html')
+    fetch('components/navbar.html')
       .then(res => res.text())
       .then(data => {
-
         document.getElementById('navbar-container').innerHTML = data;
-
       });
 
-    fetch('../components/footer.html')
+    fetch('components/footer.html')
       .then(res => res.text())
       .then(data => {
-
         document.getElementById('footer-container').innerHTML = data;
-
       });
-
   </script>
 
-  <!-- =========================================
-       GLOBAL JS
-  ========================================== -->
-  <script src="../assets/js/script.js"></script>
+  <script src="assets/js/script.js"></script>
 
 </body>
 
