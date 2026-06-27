@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="../assets/css/responsive.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    /* Cart badge on navbar */
     .cart-fab {
       position: fixed;
       bottom: 2rem; right: 2rem;
@@ -34,14 +33,12 @@
     }
     .cart-fab-count.hidden { display: none; }
 
-    /* Add to cart button state */
     .btn-novel.added {
       background: rgba(43,191,168,.15);
       border-color: rgba(43,191,168,.4);
       color: #2bbfa8;
     }
 
-    /* Toast */
     .nc-toast {
       position: fixed; bottom: 5.5rem; right: 2rem;
       background: #1a1018; border: 1px solid rgba(212,168,71,.25);
@@ -54,32 +51,21 @@
     }
     .nc-toast.show { opacity: 1; transform: translateY(0); }
 
-    /* Cards harus terlihat clickable */
     .novel-card { cursor: pointer; }
 
-    /* ── COVER IMAGE ── */
-    .novel-cover {
-      position: relative;
-      overflow: hidden;
-    }
+    .novel-cover { position: relative; overflow: hidden; }
     .novel-cover img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      width: 100%; height: 100%; object-fit: cover; display: block;
       transition: transform .4s ease;
     }
-    .novel-card:hover .novel-cover img {
-      transform: scale(1.06);
-    }
+    .novel-card:hover .novel-cover img { transform: scale(1.06); }
     .cover-overlay {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(to bottom, transparent 40%, rgba(10,6,8,.6) 100%);
       pointer-events: none;
     }
 
-    /* ── SINOPSIS MODAL ── */
+    /* SINOPSIS MODAL */
     .sinopsis-overlay {
       display: none; position: fixed; inset: 0; background: rgba(0,0,0,.72);
       z-index: 1000; align-items: center; justify-content: center; padding: 1rem;
@@ -96,12 +82,9 @@
       height: 150px; position: relative; overflow: hidden;
       border-radius: 22px 22px 0 0;
     }
-    .sinopsis-cover-banner img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-    }
+    .sinopsis-cover-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .sinopsis-cover-banner::after {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 100%);
     }
     .sinopsis-close {
@@ -141,7 +124,8 @@
 </head>
 <body>
 
-  <div id="navbar-container"></div>
+  <!-- NAVBAR -->
+  <div id="navbar-placeholder"></div>
 
   <section class="page-hero">
     <div class="page-hero-content">
@@ -261,23 +245,18 @@
     </div>
   </section>
 
-  <div id="footer-container"></div>
+  <!-- FOOTER -->
+  <div id="footer-placeholder"></div>
 
   <!-- Cart FAB -->
-<a href="../auth/register.html" class="cart-fab" id="cartFab">
-  <svg viewBox="0 0 24 24">
-    <circle cx="9" cy="21" r="1"/>
-    <circle cx="20" cy="21" r="1"/>
-    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-  </svg>
-
-  <span class="cart-fab-count hidden" id="cartCount">0</span>
-</a>
-
-  <span class="cart-fab-count hidden" id="cartCount">
-    0
-  </span>
-</a>
+  <a href="../customer/keranjang.html" class="cart-fab" id="cartFab">
+    <svg viewBox="0 0 24 24">
+      <circle cx="9" cy="21" r="1"/>
+      <circle cx="20" cy="21" r="1"/>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+    </svg>
+    <span class="cart-fab-count hidden" id="cartCount">0</span>
+  </a>
 
   <div class="nc-toast" id="ncToast"></div>
 
@@ -307,20 +286,21 @@
     </div>
   </div>
 
-  <script>
-    fetch('../components/navbar.html').then(r=>r.text()).then(d=>{document.getElementById('navbar-container').innerHTML=d;});
-    fetch('../components/footer.html').then(r=>r.text()).then(d=>{document.getElementById('footer-container').innerHTML=d;});
-  </script>
+  <!-- SCRIPT -->
   <script src="../assets/js/script.js"></script>
+
+  <!-- Footer loader -->
   <script>
-    // ============================================
-    // CART LOGIC
-    // ============================================
+    fetch('../components/footer.html').then(r=>r.text()).then(d=>{document.getElementById('footer-placeholder').innerHTML=d;});
+  </script>
+
+  <!-- Cart & Modal Logic -->
+  <script>
     function getCart() { return JSON.parse(localStorage.getItem('novelCart') || '[]'); }
     function saveCart(cart) { localStorage.setItem('novelCart', JSON.stringify(cart)); }
 
     function updateFab() {
-      const cart = getCart();
+      const cart  = getCart();
       const count = cart.reduce((s, i) => s + i.qty, 0);
       const badge = document.getElementById('cartCount');
       if (count > 0) {
@@ -339,8 +319,7 @@
     }
 
     function markAddedButtons() {
-      const cart = getCart();
-      const ids = cart.map(i => i.id);
+      const ids = getCart().map(i => i.id);
       document.querySelectorAll('.btn-novel[data-id]').forEach(btn => {
         if (ids.includes(btn.dataset.id)) {
           btn.textContent = '✓ Di Keranjang';
@@ -355,12 +334,11 @@
     document.querySelectorAll('.btn-novel[data-id]').forEach(btn => {
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
-        const cart = getCart();
-        const id   = this.dataset.id;
+        const cart     = getCart();
+        const id       = this.dataset.id;
         const existing = cart.find(i => i.id === id);
 
         if (existing) {
-          // sudah ada → langsung ke keranjang
           window.location.href = '../customer/keranjang.html';
           return;
         }
@@ -378,38 +356,33 @@
         updateFab();
         markAddedButtons();
         showToast(`"${this.dataset.title}" ditambahkan ke keranjang ✦`);
-
         this.textContent = '✓ Di Keranjang';
         this.classList.add('added');
       });
     });
 
-    // ============================================
-    // SINOPSIS MODAL
-    // ============================================
     function fmtRupiah(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
 
     function openSinopsis(card) {
-      const btn = card.querySelector('.btn-novel');
-      const coverClass = btn.dataset.cover;
-      const banner = document.getElementById('sinopsisCoverBanner');
-      banner.className = 'sinopsis-cover-banner ' + coverClass;
-      document.getElementById('sinopsisImg').src = btn.dataset.img || '';
-      document.getElementById('sinopsisImg').alt = btn.dataset.title;
-      document.getElementById('sinopsisGenre').textContent = card.querySelector('.novel-genre').textContent;
-      document.getElementById('sinopsisTitle').textContent = btn.dataset.title;
+      const btn        = card.querySelector('.btn-novel');
+      const banner     = document.getElementById('sinopsisCoverBanner');
+      banner.className = 'sinopsis-cover-banner ' + btn.dataset.cover;
+
+      document.getElementById('sinopsisImg').src        = btn.dataset.img || '';
+      document.getElementById('sinopsisImg').alt        = btn.dataset.title;
+      document.getElementById('sinopsisGenre').textContent  = card.querySelector('.novel-genre').textContent;
+      document.getElementById('sinopsisTitle').textContent  = btn.dataset.title;
       document.getElementById('sinopsisAuthor').textContent = btn.dataset.author;
       document.getElementById('sinopsisRating').textContent = card.querySelector('.novel-rating').textContent.replace('★','').trim();
-      document.getElementById('sinopsisPages').textContent = card.querySelector('.novel-pages').textContent;
-      document.getElementById('sinopsisText').textContent = card.dataset.sinopsis || 'Sinopsis belum tersedia untuk novel ini.';
-      document.getElementById('sinopsisPrice').textContent = fmtRupiah(parseInt(btn.dataset.price));
+      document.getElementById('sinopsisPages').textContent  = card.querySelector('.novel-pages').textContent;
+      document.getElementById('sinopsisText').textContent   = card.dataset.sinopsis || 'Sinopsis belum tersedia.';
+      document.getElementById('sinopsisPrice').textContent  = fmtRupiah(parseInt(btn.dataset.price));
 
       const buyBtn = document.getElementById('sinopsisBuyBtn');
-      const cart = getCart();
-      const inCart = cart.find(i => i.id === btn.dataset.id);
+      const inCart = getCart().find(i => i.id === btn.dataset.id);
       buyBtn.textContent = inCart ? '✓ Di Keranjang — Lihat Keranjang' : 'Beli Sekarang';
       buyBtn.classList.toggle('added', !!inCart);
-      buyBtn.onclick = function() {
+      buyBtn.onclick = function () {
         if (inCart) { window.location.href = '../customer/keranjang.html'; return; }
         const c = getCart();
         c.push({ id: btn.dataset.id, title: btn.dataset.title, author: btn.dataset.author, price: parseInt(btn.dataset.price), cover: btn.dataset.cover, initial: btn.dataset.initial, qty: 1 });
@@ -428,14 +401,12 @@
     }
 
     document.querySelectorAll('.novel-card').forEach(card => {
-      card.addEventListener('click', function() {
-        openSinopsis(this);
-      });
+      card.addEventListener('click', function () { openSinopsis(this); });
     });
 
-    // init
     updateFab();
     markAddedButtons();
   </script>
+
 </body>
 </html>
