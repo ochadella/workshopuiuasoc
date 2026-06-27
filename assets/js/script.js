@@ -86,7 +86,7 @@ function initNavbar() {
   const placeholder = document.getElementById('navbar-placeholder');
   if (!placeholder) return;
 
-  fetch('./components/navbar.html')
+  fetch('../components/navbar.html')
     .then(r => r.text())
     .then(html => {
       placeholder.innerHTML = html;
