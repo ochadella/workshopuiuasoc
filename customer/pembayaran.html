@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pembayaran – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link rel="stylesheet" href="../assets/css/customer.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    .payment-layout {
+      display:grid;grid-template-columns:1fr 340px;gap:1.5rem;align-items:start;
+    }
+    @media(max-width:900px){ .payment-layout{ grid-template-columns:1fr; } }
+
+    .pay-steps { display:flex;align-items:center;gap:0;margin-bottom:1.5rem; }
+    .pay-step { display:flex;align-items:center;gap:.5rem;font-family:'DM Sans',sans-serif;font-size:.82rem;color:#555; }
+    .pay-step.active { color:#c084fc; }
+    .pay-step.done   { color:#7ecb5f; }
+    .step-dot {
+      width:26px;height:26px;border-radius:50%;border:2px solid currentColor;
+      display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0;
+    }
+    .step-line { flex:1;height:1px;background:rgba(255,255,255,.08);margin:0 .4rem; }
+
+    .method-group { margin-bottom:1.25rem; }
+    .method-group-title {
+      font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;color:#888;
+      text-transform:uppercase;letter-spacing:.08em;margin-bottom:.6rem;
+    }
+    .method-options { display:flex;flex-direction:column;gap:.5rem; }
+    .method-opt {
+      display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;
+      border-radius:12px;border:1.5px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.02);cursor:pointer;transition:all .18s;
+    }
+    .method-opt:hover { border-color:rgba(192,132,252,.25); }
+    .method-opt.selected { border-color:#c084fc;background:rgba(192,132,252,.08); }
+    .method-icon { font-size:1.4rem;flex-shrink:0; }
+    .method-name { font-size:.9rem;font-weight:600;color:#e2d9f3;margin:0 0 .1rem;font-family:'DM Sans',sans-serif; }
+    .method-desc { font-size:.75rem;color:#888;margin:0;font-family:'DM Sans',sans-serif; }
+    .method-radio {
+      margin-left:auto;width:16px;height:16px;border-radius:50%;
+      border:2px solid rgba(255,255,255,.2);flex-shrink:0;transition:all .15s;
+    }
+    .method-opt.selected .method-radio {
+      border-color:#c084fc;background:#c084fc;box-shadow:0 0 0 3px rgba(192,132,252,.2);
+    }
+
+    .payment-detail-area { margin-top:1rem; }
+    .bank-info {
+      border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+      padding:1rem;display:flex;flex-direction:column;gap:.6rem;
+    }
+    .bank-row { display:flex;justify-content:space-between;align-items:center; }
+    .bank-label { font-family:'DM Sans',sans-serif;font-size:.8rem;color:#888; }
+    .bank-value { font-family:'DM Sans',sans-serif;font-size:.88rem;color:#e2d9f3;font-weight:600; }
+    .bank-copy {
+      padding:.25rem .6rem;border-radius:6px;background:rgba(192,132,252,.1);
+      border:1px solid rgba(192,132,252,.2);color:#c084fc;font-size:.72rem;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;
+    }
+    .bank-copy:hover { background:rgba(192,132,252,.2); }
+    .qris-box {
+      display:flex;flex-direction:column;align-items:center;gap:.75rem;padding:1.25rem;
+      border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);
+    }
+    .qris-placeholder {
+      width:140px;height:140px;border-radius:12px;background:#fff;
+      display:flex;align-items:center;justify-content:center;font-size:2.5rem;
+    }
+    .qris-note { font-family:'DM Sans',sans-serif;font-size:.8rem;color:#888;text-align:center; }
+    .ewallet-options { display:flex;gap:.6rem;flex-wrap:wrap; }
+    .ewallet-btn {
+      flex:1;min-width:80px;padding:.65rem .5rem;border-radius:10px;
+      border:1.5px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);
+      font-family:'DM Sans',sans-serif;font-size:.82rem;color:#aaa;
+      cursor:pointer;transition:all .18s;text-align:center;
+    }
+    .ewallet-btn:hover,.ewallet-btn.active { border-color:rgba(192,132,252,.35);color:#c084fc;background:rgba(192,132,252,.08); }
+    .ewallet-phone { margin-top:.75rem;display:flex;gap:.5rem; }
+    .phone-prefix {
+      padding:.6rem .85rem;border-radius:10px;border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);color:#888;font-family:'DM Sans',sans-serif;font-size:.85rem;
+    }
+    .phone-input {
+      flex:1;padding:.6rem .85rem;border-radius:10px;
+      border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+      color:#e2d9f3;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;
+    }
+    .phone-input:focus { border-color:rgba(192,132,252,.4); }
+    .cc-form { display:flex;flex-direction:column;gap:.75rem; }
+    .cc-input {
+      width:100%;padding:.65rem .9rem;border-radius:10px;
+      border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+      color:#e2d9f3;font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;box-sizing:border-box;
+    }
+    .cc-input:focus { border-color:rgba(192,132,252,.4); }
+    .cc-row { display:grid;grid-template-columns:1fr 1fr;gap:.6rem; }
+
+    /* Shipping strip */
+    .shipping-strip {
+      display:flex;align-items:center;gap:.75rem;padding:.8rem 1rem;
+      border-radius:10px;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.15);
+      margin-bottom:.85rem;
+    }
+    .shipping-strip-icon { font-size:1.2rem; }
+    .shipping-strip-info { flex:1; }
+    .shipping-strip-name { font-family:'DM Sans',sans-serif;font-size:.82rem;color:#38bdf8;font-weight:600;margin:0 0 .1rem; }
+    .shipping-strip-addr { font-family:'DM Sans',sans-serif;font-size:.73rem;color:#666;margin:0; }
+
+    /* Order items */
+    .order-item {
+      display:flex;gap:.75rem;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.05);align-items:center;
+    }
+    .order-item:last-child { border:none; }
+
+    /* Cover — foto atau gradien */
+    .order-item-cover {
+      width:36px;height:44px;border-radius:6px;flex-shrink:0;
+      overflow:hidden;position:relative;
+    }
+    .order-item-cover img {
+      width:100%;height:100%;object-fit:cover;display:block;
+    }
+    .order-item-cover .cover-initial {
+      width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+      font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#fff;
+    }
+
+    .order-item-name { font-family:'DM Sans',sans-serif;font-size:.85rem;color:#e2d9f3;margin:0 0 .15rem; }
+    .order-item-sub  { font-family:'DM Sans',sans-serif;font-size:.75rem;color:#888;margin:0; }
+    .order-item-price{ font-family:'Playfair Display',serif;font-size:.9rem;color:#f5c518;margin-left:auto;white-space:nowrap; }
+
+    .summary-row {
+      display:flex;justify-content:space-between;align-items:center;
+      font-family:'DM Sans',sans-serif;font-size:.9rem;color:#aaa;padding:.45rem 0;
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+    .summary-row:last-child { border:none; }
+    .summary-row.total { font-weight:700;font-size:1.05rem;color:#f5c518;margin-top:.25rem; }
+    .summary-row span:last-child { font-family:'Playfair Display',serif; }
+    .checkout-note { font-family:'DM Sans',sans-serif;font-size:.75rem;color:#666;text-align:center;margin-top:.75rem;line-height:1.5; }
+
+    /* Success modal */
+    .success-overlay {
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;
+      align-items:center;justify-content:center;
+    }
+    .success-overlay.show { display:flex; }
+    .success-modal {
+      background:#1a1a2e;border:1.5px solid rgba(192,132,252,.3);border-radius:20px;
+      padding:2.5rem 2rem;max-width:380px;width:90%;text-align:center;
+      display:flex;flex-direction:column;align-items:center;gap:1rem;
+    }
+    .success-icon { font-size:3rem; }
+    .success-title { font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.06em;color:#e2d9f3;margin:0; }
+    .success-desc  { font-family:'DM Sans',sans-serif;font-size:.88rem;color:#888;line-height:1.6;margin:0; }
+    .success-trx   { font-family:'DM Sans',sans-serif;font-size:.78rem;color:#c084fc;background:rgba(192,132,252,.1);padding:.4rem .9rem;border-radius:999px; }
+    .success-shipping {
+      font-family:'DM Sans',sans-serif;font-size:.78rem;color:#38bdf8;
+      background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);
+      padding:.5rem .9rem;border-radius:10px;line-height:1.5;text-align:center;
+    }
+
+    /* Gradient cover colors */
+    .nc-1{background:linear-gradient(135deg,#3b0764,#a855d4);}
+    .nc-2{background:linear-gradient(135deg,#4c0519,#f08080);}
+    .nc-3{background:linear-gradient(135deg,#022c22,#20b2aa);}
+    .nc-4{background:linear-gradient(135deg,#1e1b4b,#818cf8);}
+    .nc-5{background:linear-gradient(135deg,#431407,#f5c518);}
+    .nc-6{background:linear-gradient(135deg,#2e1065,#c084fc);}
+    .nc-7{background:linear-gradient(135deg,#0f172a,#38bdf8);}
+    .nc-8{background:linear-gradient(135deg,#14532d,#4ade80);}
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Customer Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-customer.html" class="sidebar-link" data-page="dashboard-customer.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor</a>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Pengajuan</a>
+      <div class="sidebar-divider"></div>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring</a>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Submit Naskah</a>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah</a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang</a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi</a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-customer.html" class="sidebar-link" data-page="profile-customer.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout" data-logout><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Checkout ✦</p>
+        <h1 class="topbar-title">Pembayaran</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="admin-profile">
+          <div class="admin-avatar" id="topbarAvatar" style="background:linear-gradient(135deg,#f5c518,#e07b39);">C</div>
+          <div><strong id="topbarName">Customer</strong><p>Customer</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <!-- Steps -->
+      <div class="pay-steps">
+        <div class="pay-step done"><div class="step-dot">✓</div>Keranjang</div>
+        <div class="step-line"></div>
+        <div class="pay-step done"><div class="step-dot">✓</div>Alamat</div>
+        <div class="step-line"></div>
+        <div class="pay-step active"><div class="step-dot">3</div>Pembayaran</div>
+        <div class="step-line"></div>
+        <div class="pay-step"><div class="step-dot">4</div>Konfirmasi</div>
+      </div>
+
+      <div class="payment-layout">
+
+        <!-- LEFT: payment method -->
+        <div>
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Pilih Cara Bayar</p><h3 class="card-title">Metode Pembayaran</h3></div>
+            </div>
+
+            <!-- Transfer Bank -->
+            <div class="method-group">
+              <div class="method-group-title">Transfer Bank</div>
+              <div class="method-options">
+                <div class="method-opt selected" onclick="selectMethod('bca',this)">
+                  <span class="method-icon">🏦</span>
+                  <div><p class="method-name">BCA Virtual Account</p><p class="method-desc">Bayar via ATM, m-Banking, atau i-Banking BCA</p></div>
+                  <div class="method-radio"></div>
+                </div>
+                <div class="method-opt" onclick="selectMethod('mandiri',this)">
+                  <span class="method-icon">🏛</span>
+                  <div><p class="method-name">Mandiri Virtual Account</p><p class="method-desc">Bayar via ATM, Livin', atau i-Banking Mandiri</p></div>
+                  <div class="method-radio"></div>
+                </div>
+                <div class="method-opt" onclick="selectMethod('bni',this)">
+                  <span class="method-icon">🏢</span>
+                  <div><p class="method-name">BNI Virtual Account</p><p class="method-desc">Bayar via ATM atau BNI Mobile Banking</p></div>
+                  <div class="method-radio"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- QRIS -->
+            <div class="method-group">
+              <div class="method-group-title">QRIS</div>
+              <div class="method-options">
+                <div class="method-opt" onclick="selectMethod('qris',this)">
+                  <span class="method-icon">📷</span>
+                  <div><p class="method-name">QRIS</p><p class="method-desc">Scan QR dari aplikasi e-wallet atau m-banking manapun</p></div>
+                  <div class="method-radio"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- E-Wallet -->
+            <div class="method-group">
+              <div class="method-group-title">E-Wallet</div>
+              <div class="method-options">
+                <div class="method-opt" onclick="selectMethod('ewallet',this)">
+                  <span class="method-icon">📱</span>
+                  <div><p class="method-name">E-Wallet</p><p class="method-desc">GoPay, OVO, Dana, ShopeePay</p></div>
+                  <div class="method-radio"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Kartu -->
+            <div class="method-group">
+              <div class="method-group-title">Kartu</div>
+              <div class="method-options">
+                <div class="method-opt" onclick="selectMethod('cc',this)">
+                  <span class="method-icon">💳</span>
+                  <div><p class="method-name">Kartu Kredit / Debit</p><p class="method-desc">Visa, Mastercard, JCB</p></div>
+                  <div class="method-radio"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic detail -->
+            <div class="payment-detail-area" id="paymentDetail"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: order summary -->
+        <div>
+          <div class="dashboard-card" style="position:sticky;top:1.5rem;">
+            <div class="card-header">
+              <div><p class="card-subtitle">Pesananmu</p><h3 class="card-title">Ringkasan Order</h3></div>
+            </div>
+
+            <!-- Shipping info strip -->
+            <div class="shipping-strip" id="shippingStrip" style="display:none;">
+              <span class="shipping-strip-icon">🚚</span>
+              <div class="shipping-strip-info">
+                <p class="shipping-strip-name" id="stripMethod">Reguler</p>
+                <p class="shipping-strip-addr" id="stripAddr">—</p>
+              </div>
+            </div>
+
+            <div id="orderItems"></div>
+
+            <div style="margin-top:.5rem;">
+              <div class="summary-row"><span>Subtotal</span><span id="paySubtotal">Rp 0</span></div>
+              <div class="summary-row" id="payDiscRow" style="display:none;color:#7ecb5f;">
+                <span>Diskon</span><span id="payDisc">- Rp 0</span>
+              </div>
+              <div class="summary-row" id="payShipRow"><span>Ongkos Kirim</span><span id="payShip">—</span></div>
+              <div class="summary-row"><span>Biaya Admin</span><span>Rp 5.000</span></div>
+              <div class="summary-row total"><span>Total Bayar</span><span id="payTotal">Rp 0</span></div>
+            </div>
+
+            <button class="locked-upgrade-btn" style="width:100%;justify-content:center;margin-top:1rem;border:none;" onclick="confirmPayment()">
+              Konfirmasi Bayar ✦
+            </button>
+            <a href="alamat-pengiriman.html" style="display:block;text-align:center;margin-top:.6rem;font-family:'DM Sans',sans-serif;font-size:.83rem;color:#666;text-decoration:none;">← Ubah Alamat</a>
+            <p class="checkout-note">🔒 Transaksi aman & terenkripsi. Setelah konfirmasi, novelmu langsung diproses untuk pengiriman.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- SUCCESS MODAL -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-modal">
+      <div class="success-icon">📦</div>
+      <h2 class="success-title">PESANAN MASUK!</h2>
+      <p class="success-desc">Pembayaran berhasil dikonfirmasi. Novelmu sedang diproses dan akan segera dikirim!</p>
+      <span class="success-trx" id="successTrxId">TRX-XXXXXXXX</span>
+      <div class="success-shipping" id="successShipping"></div>
+      <div style="display:flex;flex-direction:column;gap:.6rem;width:100%;margin-top:.5rem;">
+        <a href="history-transaksi.html" class="locked-upgrade-btn" style="justify-content:center;text-decoration:none;" onclick="clearCart()">Lacak Pesanan →</a>
+        <a href="dashboard-customer.html" style="text-align:center;font-family:'DM Sans',sans-serif;font-size:.83rem;color:#888;text-decoration:none;" onclick="clearCart()">Ke Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar"><span></span><span></span><span></span></button>
+
+  <script>
+    let activeMethod = 'bca';
+
+    const METHOD_DETAILS = {
+      bca:     { va:'8277 0012 3456 7890', bank:'BCA' },
+      mandiri: { va:'8920 0098 7654 3210', bank:'Mandiri' },
+      bni:     { va:'9888 0055 1122 3344', bank:'BNI' },
+    };
+
+    const METHOD_KEY = {
+      bca:'BCA', mandiri:'MANDIRI', bni:'BNI', qris:'QRIS', ewallet:'EWALLET', cc:'CC'
+    };
+
+    function fmt(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+
+    function selectMethod(method, el) {
+      activeMethod = method;
+      document.querySelectorAll('.method-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      renderDetail();
+    }
+
+    function copyVA() {
+      const va = document.getElementById('vaNumber');
+      if (va) navigator.clipboard.writeText(va.textContent.replace(/\s/g,'')).then(() => showToast('Nomor VA disalin!','success'));
+    }
+
+    function renderDetail() {
+      const area = document.getElementById('paymentDetail');
+      const now  = new Date(); now.setHours(now.getHours() + 24);
+      const exp  = now.toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'}) + ', ' +
+                   now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}) + ' WIB';
+
+      if (['bca','mandiri','bni'].includes(activeMethod)) {
+        const d = METHOD_DETAILS[activeMethod];
+        area.innerHTML = `
+          <div class="bank-info">
+            <div class="bank-row"><span class="bank-label">Bank</span><span class="bank-value">${d.bank}</span></div>
+            <div class="bank-row">
+              <span class="bank-label">No. Virtual Account</span>
+              <div style="display:flex;align-items:center;gap:.5rem;">
+                <span class="bank-value" id="vaNumber">${d.va}</span>
+                <button class="bank-copy" onclick="copyVA()">Salin</button>
+              </div>
+            </div>
+            <div class="bank-row"><span class="bank-label">Nama</span><span class="bank-value">NOVELCRAFT STUDIO</span></div>
+            <div class="bank-row"><span class="bank-label">Berlaku hingga</span><span class="bank-value">${exp}</span></div>
+          </div>
+          <p style="font-family:'DM Sans',sans-serif;font-size:.78rem;color:#666;margin-top:.65rem;line-height:1.5;">
+            ⚠️ Pastikan nominal yang ditransfer tepat sampai ke angka terakhir. Dikonfirmasi otomatis 1–5 menit.
+          </p>`;
+
+      } else if (activeMethod === 'qris') {
+        area.innerHTML = `
+          <div class="qris-box">
+            <div class="qris-placeholder">📷</div>
+            <p class="qris-note">Scan QR code ini menggunakan aplikasi e-wallet atau m-banking manapun yang mendukung QRIS.</p>
+            <span style="font-family:'DM Sans',sans-serif;font-size:.75rem;color:#c084fc;">QR berlaku 15 menit</span>
+          </div>`;
+
+      } else if (activeMethod === 'ewallet') {
+        area.innerHTML = `
+          <div>
+            <div class="ewallet-options">
+              <button class="ewallet-btn active" onclick="setWallet(this)">GoPay</button>
+              <button class="ewallet-btn" onclick="setWallet(this)">OVO</button>
+              <button class="ewallet-btn" onclick="setWallet(this)">Dana</button>
+              <button class="ewallet-btn" onclick="setWallet(this)">ShopeePay</button>
+            </div>
+            <div class="ewallet-phone">
+              <span class="phone-prefix">+62</span>
+              <input type="tel" class="phone-input" placeholder="Nomor HP terdaftar..." id="phoneInput" />
+            </div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:.75rem;color:#666;margin-top:.5rem;">Kamu akan menerima notifikasi pembayaran di aplikasi e-wallet kamu.</p>
+          </div>`;
+
+      } else if (activeMethod === 'cc') {
+        area.innerHTML = `
+          <div class="cc-form">
+            <input type="text" class="cc-input" placeholder="Nomor Kartu" maxlength="19" oninput="formatCC(this)" />
+            <input type="text" class="cc-input" placeholder="Nama di Kartu" />
+            <div class="cc-row">
+              <input type="text" class="cc-input" placeholder="MM/YY" maxlength="5" oninput="formatExp(this)" />
+              <input type="password" class="cc-input" placeholder="CVV" maxlength="3" />
+            </div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:.75rem;color:#666;">🔒 Data kartu dienkripsi dengan standar PCI-DSS.</p>
+          </div>`;
+      }
+    }
+
+    function setWallet(btn) {
+      document.querySelectorAll('.ewallet-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    function formatCC(el) {
+      let v = el.value.replace(/\D/g,'').substring(0,16);
+      el.value = v.replace(/(.{4})/g,'$1 ').trim();
+    }
+    function formatExp(el) {
+      let v = el.value.replace(/\D/g,'');
+      if (v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2,4);
+      el.value = v;
+    }
+
+    function itemLabel(i) { return i.title || i.name || 'Item'; }
+    function itemSub(i) {
+      if (i.author) return i.author;
+      if (i.sessions) return `${i.sessions} Sesi${i.genre ? ' · ' + i.genre : ''}`;
+      return '';
+    }
+
+    // Helper: render cover — foto jika ada field `img`, fallback gradien+initial
+    function orderCoverHTML(item) {
+      const coverClass = item.cover || '';
+      const fallbackBg = coverClass ? '' : 'background:linear-gradient(135deg,#c084fc,#5b21b6);';
+      if (item.img) {
+        return `<div class="order-item-cover ${coverClass}" style="${fallbackBg}">
+          <img src="${item.img}" alt="${itemLabel(item)}" loading="lazy" />
+        </div>`;
+      }
+      return `<div class="order-item-cover ${coverClass}" style="${fallbackBg}">
+        <div class="cover-initial">${item.initial || itemLabel(item).charAt(0)}</div>
+      </div>`;
+    }
+
+    function loadOrderSummary() {
+      try {
+        const data = JSON.parse(localStorage.getItem('checkoutData') || 'null');
+        if (!data) return;
+        const { cart, subtotal, discount, total, shippingMethod, shippingCost, address } = data;
+
+        document.getElementById('paySubtotal').textContent = fmt(subtotal);
+        document.getElementById('payTotal').textContent    = fmt(total);
+
+        if (discount > 0) {
+          document.getElementById('payDiscRow').style.display = 'flex';
+          document.getElementById('payDisc').textContent = '- ' + fmt(discount);
+        }
+
+        if (shippingCost !== undefined) {
+          document.getElementById('payShip').textContent = fmt(shippingCost);
+        }
+
+        if (shippingMethod && address) {
+          document.getElementById('stripMethod').textContent = shippingMethod;
+          document.getElementById('stripAddr').textContent   = `${address.nama} · ${address.kota}, ${address.provinsi}`;
+          document.getElementById('shippingStrip').style.display = 'flex';
+        }
+
+        document.getElementById('orderItems').innerHTML = cart.map(i => `
+          <div class="order-item">
+            ${orderCoverHTML(i)}
+            <div>
+              <p class="order-item-name">${itemLabel(i)}${(i.qty||1) > 1 ? ' ×' + i.qty : ''}</p>
+              <p class="order-item-sub">${itemSub(i)}</p>
+            </div>
+            <span class="order-item-price">${fmt(i.price * (i.qty||1))}</span>
+          </div>
+        `).join('');
+      } catch(e) {}
+    }
+
+    /* ── CONFIRM PAYMENT → status: 'dikirim' ── */
+    function confirmPayment() {
+      try {
+        const data = JSON.parse(localStorage.getItem('checkoutData') || 'null');
+        if (!data || !data.cart || data.cart.length === 0) {
+          showToast('Keranjang kosong!', 'warning'); return;
+        }
+
+        const trxId   = 'TRX-' + Date.now().toString(36).toUpperCase();
+        const history = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+
+        history.unshift({
+          id:             trxId,
+          date:           new Date().toISOString(),
+          items:          data.cart,
+          subtotal:       data.subtotal,
+          discount:       data.discount || 0,
+          shippingMethod: data.shippingMethod || 'Reguler',
+          shippingCost:   data.shippingCost   || 15000,
+          total:          data.total,
+          method:         METHOD_KEY[activeMethod] || activeMethod.toUpperCase(),
+          address:        data.address || null,
+          status:         'dikirim',
+        });
+
+        localStorage.setItem('trxHistory', JSON.stringify(history));
+
+        document.getElementById('successTrxId').textContent = trxId;
+        const kurir = data.shippingMethod || 'Reguler';
+        const ETA   = { 'Same Day':'hari ini', Express:'1–2 hari kerja', Reguler:'3–5 hari kerja' };
+        document.getElementById('successShipping').innerHTML =
+          `🚚 ${kurir} · Estimasi tiba ${ETA[kurir] || 'beberapa hari'}<br/>
+           📍 ${data.address ? data.address.kota + ', ' + data.address.provinsi : 'Alamat tersimpan'}`;
+
+        document.getElementById('successOverlay').classList.add('show');
+      } catch(e) {
+        showToast('Terjadi kesalahan, coba lagi.', 'warning');
+      }
+    }
+
+    function clearCart() {
+      localStorage.removeItem('novelCart');
+      localStorage.removeItem('checkoutData');
+    }
+
+    function showToast(msg, type) {
+      const el = document.createElement('div');
+      el.textContent = msg;
+      const colors = {
+        success:['#1a3a2a','#7ecb5f','rgba(126,203,95,.3)'],
+        warning:['#3a2a1a','#f5c518','rgba(245,197,24,.3)'],
+      };
+      const [bg,color,border] = colors[type] || colors.warning;
+      Object.assign(el.style,{
+        position:'fixed',bottom:'1.5rem',right:'1.5rem',padding:'.75rem 1.25rem',
+        borderRadius:'10px',fontFamily:'DM Sans,sans-serif',fontSize:'.88rem',
+        background:bg,color,border:`1px solid ${border}`,zIndex:'9999',transition:'opacity .3s'
+      });
+      document.body.appendChild(el);
+      setTimeout(() => { el.style.opacity='0'; setTimeout(() => el.remove(), 300); }, 2500);
+    }
+
+    (function(){
+      const currentPage = window.location.pathname.split('/').pop();
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(l => {
+        l.classList.toggle('active', l.dataset.page === currentPage);
+      });
+      const userName = localStorage.getItem('userName') || 'Customer';
+      const av = document.getElementById('topbarAvatar');
+      if (av) av.textContent = userName.charAt(0).toUpperCase();
+      const tn = document.getElementById('topbarName');
+      if (tn) tn.textContent = userName;
+
+      renderDetail();
+      loadOrderSummary();
+    })();
+  </script>
+  <script src="../assets/js/user.js"></script>
+</body>
+</html>

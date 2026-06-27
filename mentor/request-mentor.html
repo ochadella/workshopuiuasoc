@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Permintaan Mentoring – NovelCraft Mentor</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+  <link rel="stylesheet" href="../assets/css/mentor.css" />
+  <link rel="stylesheet" href="../assets/css/mentor-shared.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar mentor-sidebar" id="mentorSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Mentor Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="jadwal-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Jadwal Sesi</a>
+      <div class="sidebar-divider"></div>
+      <a href="mentee-list.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg></span>Daftar Mentee<span class="sl-badge" id="menteeBadge">8</span></a>
+      <a href="request-mentor.html" class="sidebar-link active"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Permintaan<span class="sl-badge badge-purple" id="reqBadge">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <header class="admin-topbar">
+      <div><p class="topbar-subtitle">Masuk ✦</p><h1 class="topbar-title">Permintaan Mentoring</h1></div>
+      <div class="topbar-right">
+        <div class="live-clock"><div class="live-clock-dot"></div><span id="liveClock">00:00</span></div>
+        <div class="admin-profile">
+          <div class="admin-avatar" style="background:linear-gradient(135deg,#f5c518,#c084fc);">R</div>
+          <div><strong>Ratna Wulandari</strong><p>Senior Mentor</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div><p class="card-subtitle" id="pendingCount">3 Menunggu</p><h3 class="card-title">Permintaan Baru</h3></div>
+      </div>
+
+      <div class="request-list" id="requestList">
+
+        <div class="request-card" data-name="Fajar Nugroho" data-genre="Fiksi Fantasi" data-level="Pemula" data-avatar="F" data-avatar-style="">
+          <div class="request-card-avatar">F</div>
+          <div class="request-card-body">
+            <strong>Fajar Nugroho</strong>
+            <p>Ingin bimbingan menulis novel fiksi fantasi high-fantasy dengan world-building kompleks.</p>
+            <div class="request-meta">
+              <span>Fiksi Fantasi</span>
+              <span>Pemula</span>
+              <span>2 jam lalu</span>
+            </div>
+          </div>
+          <div class="request-card-actions">
+            <button class="btn-accept">Terima</button>
+            <button class="btn-decline">Tolak</button>
+          </div>
+        </div>
+
+        <div class="request-card" data-name="Sari Kusuma" data-genre="Novel Romansa" data-level="Menengah" data-avatar="S" data-avatar-style="background:linear-gradient(135deg,var(--purple-light),#5b21b6);">
+          <div class="request-card-avatar" style="background:linear-gradient(135deg,var(--purple-light),#5b21b6);">S</div>
+          <div class="request-card-body">
+            <strong>Sari Kusuma</strong>
+            <p>Membutuhkan mentor untuk mengembangkan novel romansa dengan plot twist yang kuat.</p>
+            <div class="request-meta">
+              <span>Novel Romansa</span>
+              <span>Menengah</span>
+              <span>5 jam lalu</span>
+            </div>
+          </div>
+          <div class="request-card-actions">
+            <button class="btn-accept">Terima</button>
+            <button class="btn-decline">Tolak</button>
+          </div>
+        </div>
+
+        <div class="request-card" data-name="Hendra Wijaya" data-genre="Thriller" data-level="Lanjutan" data-avatar="H" data-avatar-style="background:linear-gradient(135deg,var(--teal),#0d6e69);">
+          <div class="request-card-avatar" style="background:linear-gradient(135deg,var(--teal),#0d6e69);">H</div>
+          <div class="request-card-body">
+            <strong>Hendra Wijaya</strong>
+            <p>Sudah punya draft 80 halaman thriller, butuh review mendalam dan arahan revisi struktur.</p>
+            <div class="request-meta">
+              <span>Thriller</span>
+              <span>Lanjutan</span>
+              <span>Kemarin</span>
+            </div>
+          </div>
+          <div class="request-card-actions">
+            <button class="btn-accept">Terima</button>
+            <button class="btn-decline">Tolak</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyReq" style="display:none;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <h3>Tidak ada permintaan baru</h3>
+        <p>Semua permintaan sudah ditangani.</p>
+      </div>
+    </div>
+
+    <!-- Riwayat -->
+    <div class="dashboard-card" style="margin-top:1.5rem;">
+      <div class="card-header">
+        <div><p class="card-subtitle">Riwayat</p><h3 class="card-title">Permintaan Sebelumnya</h3></div>
+      </div>
+      <div class="request-list" id="riwayatList">
+        <div class="request-card" style="opacity:.55;">
+          <div class="request-card-avatar" style="background:linear-gradient(135deg,#f08080,#b03050);">N</div>
+          <div class="request-card-body">
+            <strong>Nadya Permata</strong>
+            <p>Novel fiksi fantasi — diterima, mentoring selesai.</p>
+            <div class="request-meta"><span>Fiksi Fantasi</span><span class="status success">Diterima</span><span>2 minggu lalu</span></div>
+          </div>
+        </div>
+        <div class="request-card" style="opacity:.55;">
+          <div class="request-card-avatar">M</div>
+          <div class="request-card-body">
+            <strong>Mutiara Sari</strong>
+            <p>Ditolak karena kapasitas penuh.</p>
+            <div class="request-meta"><span>Horor</span><span class="status failed">Ditolak</span><span>3 minggu lalu</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar"><span></span><span></span><span></span></button>
+
+  <!-- CRUD Modal (tolak confirm) -->
+  <div class="admin-modal-overlay" id="crudModal">
+    <div class="admin-modal">
+      <div class="modal-header">
+        <div><p class="modal-subtitle" id="crudSubtitle"></p><h3 class="modal-title" id="crudTitle"></h3></div>
+        <button class="modal-close" id="crudClose">✕</button>
+      </div>
+      <div class="modal-body" id="crudContent"></div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="crudCancel">Batal</button>
+        <button class="btn-primary" id="crudSave">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/mentor.js"></script>
+
+  <script>
+    // ============================================
+    // TERIMA / TOLAK — dengan localStorage bridge
+    // ============================================
+    (function () {
+
+      const reqList   = document.getElementById('requestList');
+      const riwayat   = document.getElementById('riwayatList');
+      const emptyReq  = document.getElementById('emptyReq');
+      const pendingEl = document.getElementById('pendingCount');
+      const reqBadge  = document.getElementById('reqBadge');
+
+      function updatePendingCount() {
+        const remaining = reqList.querySelectorAll('.request-card').length;
+        pendingEl.textContent = remaining + ' Menunggu';
+        if (reqBadge) reqBadge.textContent = remaining;
+        if (remaining === 0) emptyReq.style.display = '';
+      }
+
+      function removeCard(card, onDone) {
+        card.style.transition = '.35s ease';
+        card.style.opacity    = '0';
+        card.style.transform  = 'translateX(30px)';
+        setTimeout(() => {
+          card.remove();
+          updatePendingCount();
+          if (onDone) onDone();
+          // munculkan nama baru dari pool supaya list ga kosong
+          setTimeout(() => {
+            const next = getNextFromPool();
+            if (next) addPoolCard(next);
+          }, 500);
+        }, 350);
+      }
+
+      function addToRiwayat(card, status) {
+        const name   = card.dataset.name;
+        const genre  = card.dataset.genre;
+        const avLetter = card.dataset.avatar;
+        const avStyle  = card.dataset.avatarStyle;
+        const statusClass = status === 'accepted' ? 'success' : 'failed';
+        const statusLabel = status === 'accepted' ? 'Diterima' : 'Ditolak';
+
+        const rCard = document.createElement('div');
+        rCard.className = 'request-card';
+        rCard.style.opacity = '0';
+        rCard.innerHTML = `
+          <div class="request-card-avatar" style="${avStyle}">${avLetter}</div>
+          <div class="request-card-body">
+            <strong>${name}</strong>
+            <p>${genre} — ${statusLabel.toLowerCase()}.</p>
+            <div class="request-meta">
+              <span>${genre}</span>
+              <span class="status ${statusClass}">${statusLabel}</span>
+              <span>Baru saja</span>
+            </div>
+          </div>
+        `;
+        riwayat.prepend(rCard);
+        requestAnimationFrame(() => {
+          rCard.style.transition = '.35s ease';
+          rCard.style.opacity = '.55';
+        });
+      }
+
+      function saveMenteeToStorage(card) {
+        const name   = card.dataset.name;
+        const genre  = card.dataset.genre;
+        const level  = card.dataset.level;
+        const avatar = card.dataset.avatar;
+        const avatarStyle = card.dataset.avatarStyle;
+        const id     = name.toLowerCase().replace(/\s+/g, '-');
+
+        const existing = JSON.parse(localStorage.getItem('newMentees') || '[]');
+        // hindari duplikat
+        if (!existing.find(m => m.id === id)) {
+          existing.push({ id, name, genre, level, avatar, avatarStyle, progress: 0, status: 'pending', joinedLabel: 'Baru bergabung' });
+          localStorage.setItem('newMentees', JSON.stringify(existing));
+        }
+      }
+
+      reqList.addEventListener('click', (e) => {
+        const btnAccept  = e.target.closest('.btn-accept');
+        const btnDecline = e.target.closest('.btn-decline');
+        const card = e.target.closest('.request-card');
+        if (!card) return;
+
+        if (btnAccept) {
+          const name = card.dataset.name;
+          saveMenteeToStorage(card);
+          addToRiwayat(card, 'accepted');
+          removeCard(card, () => {
+            showToast(`${name} diterima dan ditambahkan ke Daftar Mentee ✦`, 'success');
+          });
+        }
+
+        if (btnDecline) {
+          const name = card.dataset.name;
+          // pakai modal konfirmasi dari mentor.js (crudModal)
+          const crudModal    = document.getElementById('crudModal');
+          const crudTitle    = document.getElementById('crudTitle');
+          const crudSubtitle = document.getElementById('crudSubtitle');
+          const crudContent  = document.getElementById('crudContent');
+          const crudSave     = document.getElementById('crudSave');
+          const crudCancel   = document.getElementById('crudCancel');
+
+          crudTitle.textContent    = 'Tolak Permintaan';
+          crudSubtitle.textContent = 'Tindakan ini tidak bisa dibatalkan.';
+          crudContent.innerHTML    = `<p style="color:rgba(255,255,255,.65);line-height:1.7;">Yakin ingin menolak permintaan dari <strong style="color:#fff;">${name}</strong>?</p>`;
+          crudSave.style.display   = 'inline-flex';
+          crudSave.textContent     = 'Ya, Tolak';
+          crudSave.style.background = 'rgba(192,41,58,.8)';
+          crudCancel.textContent   = 'Batal';
+          crudModal.classList.add('show');
+          document.body.style.overflow = 'hidden';
+
+          crudSave.onclick = () => {
+            crudSave.style.background = '';
+            crudModal.classList.remove('show');
+            document.body.style.overflow = '';
+            // simpan ke localStorage supaya ga muncul lagi waktu refresh
+            const dec = JSON.parse(localStorage.getItem('declinedMentees') || '[]');
+            if (!dec.includes(name)) { dec.push(name); localStorage.setItem('declinedMentees', JSON.stringify(dec)); }
+            addToRiwayat(card, 'declined');
+            removeCard(card, () => {
+              showToast(`Permintaan dari ${name} ditolak`, 'error');
+            });
+          };
+
+          const closeModal = () => {
+            crudSave.style.background = '';
+            crudModal.classList.remove('show');
+            document.body.style.overflow = '';
+          };
+          crudCancel.onclick = closeModal;
+          document.getElementById('crudClose').onclick = closeModal;
+        }
+      });
+
+      // ============================================
+      // POOL NAMA CADANGAN — selalu ada isi baru
+      // ============================================
+      const POOL = [
+        { name: 'Laila Azzahra',   genre: 'Roman Sejarah',      level: 'Pemula',   avatar: 'L', avatarStyle: 'background:linear-gradient(135deg,#f5c518,#b8860b);',              desc: 'Ingin menulis roman berlatar kerajaan Majapahit dengan riset sejarah mendalam.' },
+        { name: 'Galih Pratama',   genre: 'Science Fiction',    level: 'Menengah', avatar: 'G', avatarStyle: 'background:linear-gradient(135deg,#20b2aa,#0d6e69);',              desc: 'Sedang mengerjakan novel sci-fi distopia, butuh bantuan world-building teknologi.' },
+        { name: 'Nisa Rahayu',     genre: 'Slice of Life',      level: 'Pemula',   avatar: 'N', avatarStyle: 'background:linear-gradient(135deg,#c084fc,#5b21b6);',              desc: 'Ingin menulis cerita kehidupan sehari-hari yang menyentuh dan relate bagi pembaca.' },
+        { name: 'Bima Sakti',      genre: 'Horror Psikologis',  level: 'Lanjutan', avatar: 'B', avatarStyle: 'background:linear-gradient(135deg,#f08080,#b03050);',              desc: 'Draft 60 halaman horror psikologis, perlu masukan untuk membangun atmosfer ketegangan.' },
+        { name: 'Tiara Kusumawati',genre: 'Young Adult',        level: 'Menengah', avatar: 'T', avatarStyle: 'background:linear-gradient(135deg,#f5c518,#c084fc);',              desc: 'Menulis novel YA tentang persahabatan dan identitas diri, butuh arahan struktur plot.' },
+        { name: 'Daffa Ardiansyah',genre: 'Thriller Politik',   level: 'Lanjutan', avatar: 'D', avatarStyle: 'background:linear-gradient(135deg,#20b2aa,#c084fc);',              desc: 'Naskah thriller politik 100 halaman, perlu review konsistensi dan pacing cerita.' },
+        { name: 'Rania Putri',     genre: 'Chicklit',           level: 'Pemula',   avatar: 'R', avatarStyle: 'background:linear-gradient(135deg,#f08080,#f5c518);',              desc: 'Ingin menulis chicklit urban yang fresh dan relatable untuk pembaca muda Indonesia.' },
+        { name: 'Yoga Santoso',    genre: 'Petualangan',        level: 'Menengah', avatar: 'Y', avatarStyle: 'background:linear-gradient(135deg,#20b2aa,#f5c518);',              desc: 'Novel petualangan dengan setting hutan tropis Indonesia, perlu bantuan pacing aksi.' },
+      ];
+
+      function getUsedNames() {
+        const acc = JSON.parse(localStorage.getItem('newMentees') || '[]').map(m => m.name);
+        const dec = JSON.parse(localStorage.getItem('declinedMentees') || '[]');
+        // nama asli di HTML
+        const orig = ['Fajar Nugroho', 'Sari Kusuma', 'Hendra Wijaya'];
+        return [...acc, ...dec, ...orig];
+      }
+
+      function getNextFromPool() {
+        const used = getUsedNames();
+        const poolUsed = JSON.parse(localStorage.getItem('poolUsed') || '[]');
+        return POOL.find(p => !used.includes(p.name) && !poolUsed.includes(p.name)) || null;
+      }
+
+      function addPoolCard(mentee) {
+        const card = document.createElement('div');
+        card.className = 'request-card';
+        card.dataset.name        = mentee.name;
+        card.dataset.genre       = mentee.genre;
+        card.dataset.level       = mentee.level;
+        card.dataset.avatar      = mentee.avatar;
+        card.dataset.avatarStyle = mentee.avatarStyle;
+        card.style.opacity = '0';
+        card.innerHTML = `
+          <div class="request-card-avatar" style="${mentee.avatarStyle}">${mentee.avatar}</div>
+          <div class="request-card-body">
+            <strong>${mentee.name}</strong>
+            <p>${mentee.desc}</p>
+            <div class="request-meta">
+              <span>${mentee.genre}</span>
+              <span>${mentee.level}</span>
+              <span>Baru saja</span>
+            </div>
+          </div>
+          <div class="request-card-actions">
+            <button class="btn-accept">Terima</button>
+            <button class="btn-decline">Tolak</button>
+          </div>`;
+        reqList.appendChild(card);
+        requestAnimationFrame(() => {
+          card.style.transition = '.4s ease';
+          card.style.opacity = '1';
+        });
+        // tandai sudah dipakai
+        const poolUsed = JSON.parse(localStorage.getItem('poolUsed') || '[]');
+        if (!poolUsed.includes(mentee.name)) {
+          poolUsed.push(mentee.name);
+          localStorage.setItem('poolUsed', JSON.stringify(poolUsed));
+        }
+      }
+
+      // Reset pool jika semua nama sudah dipakai (biar demo bisa diulang)
+      const poolUsed = JSON.parse(localStorage.getItem('poolUsed') || '[]');
+      if (poolUsed.length >= POOL.length) {
+        localStorage.removeItem('poolUsed');
+        localStorage.removeItem('newMentees');
+        localStorage.removeItem('declinedMentees');
+      }
+
+      // Inject pool cards yg sudah pernah dimunculkan tapi belum dihandle
+      const usedNames = getUsedNames();
+      const freshPoolUsed = JSON.parse(localStorage.getItem('poolUsed') || '[]');
+      freshPoolUsed.forEach(name => {
+        if (usedNames.includes(name)) return;
+        const m = POOL.find(p => p.name === name);
+        if (m) addPoolCard(m);
+      });
+
+      // Kalau list masih kosong setelah inject, munculkan dari pool
+      function refillIfEmpty() {
+        const remaining = reqList.querySelectorAll('.request-card').length;
+        if (remaining < 1) {
+          const next = getNextFromPool();
+          if (next) addPoolCard(next);
+          // munculkan 2 lagi biar ga sepi
+          setTimeout(() => { const n2 = getNextFromPool(); if (n2) addPoolCard(n2); }, 300);
+          setTimeout(() => { const n3 = getNextFromPool(); if (n3) addPoolCard(n3); }, 600);
+        }
+      }
+      refillIfEmpty();
+
+      // Render riwayat dari localStorage
+      const allAccepted = JSON.parse(localStorage.getItem('newMentees') || '[]');
+      const allDeclined = JSON.parse(localStorage.getItem('declinedMentees') || '[]');
+
+      allAccepted.forEach(m => {
+        const rCard = document.createElement('div');
+        rCard.className = 'request-card';
+        rCard.style.opacity = '.55';
+        rCard.innerHTML = `
+          <div class="request-card-avatar" style="${m.avatarStyle}">${m.avatar}</div>
+          <div class="request-card-body">
+            <strong>${m.name}</strong>
+            <p>${m.genre} — diterima.</p>
+            <div class="request-meta">
+              <span>${m.genre}</span>
+              <span class="status success">Diterima</span>
+              <span>Sebelumnya</span>
+            </div>
+          </div>`;
+        riwayat.prepend(rCard);
+      });
+
+      allDeclined.forEach(name => {
+        const rCard = document.createElement('div');
+        rCard.className = 'request-card';
+        rCard.style.opacity = '.55';
+        rCard.innerHTML = `
+          <div class="request-card-avatar">${name.charAt(0).toUpperCase()}</div>
+          <div class="request-card-body">
+            <strong>${name}</strong>
+            <p>Permintaan ditolak.</p>
+            <div class="request-meta">
+              <span class="status failed">Ditolak</span>
+              <span>Sebelumnya</span>
+            </div>
+          </div>`;
+        riwayat.prepend(rCard);
+      });
+
+      // Sembunyikan card yang sudah diterima/ditolak dari localStorage
+      const accepted = JSON.parse(localStorage.getItem('newMentees') || '[]').map(m => m.name);
+      const declined = JSON.parse(localStorage.getItem('declinedMentees') || '[]');
+      const handled  = [...accepted, ...declined];
+
+      reqList.querySelectorAll('.request-card').forEach(card => {
+        if (handled.includes(card.dataset.name)) {
+          card.remove();
+        }
+      });
+
+      updatePendingCount();
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!-- ============================================
+     SIDEBAR USER COMPONENT — NovelCraft Member Panel
+     Dipanggil via fetch() di setiap halaman /user/*.html
+     Class "active" di-set otomatis oleh script di bawah,
+     berdasarkan nama file halaman yang sedang dibuka.
+============================================ -->
+<aside class="admin-sidebar" id="userSidebar">
+  <div class="sidebar-top">
+    <a href="../index.html" class="sidebar-logo">
+      <span class="brand-n">N</span><span class="brand-rest">ovelCraft</span>
+    </a>
+    <p class="sidebar-role">Member Panel</p>
+  </div>
+
+  <nav class="sidebar-menu">
+    <a href="dashboard-user.html" class="sidebar-link" data-page="dashboard-user.html">
+      <span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+      Dashboard
+    </a>
+    <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html">
+      <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+      Pilih Mentor
+    </a>
+    <a href="pengajuan-mentor.html" class="sidebar-link" data-page="pengajuan-mentor.html">
+      <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+      Pengajuan
+      <span class="sl-badge" id="sidebarPengajuanCount">1</span>
+    </a>
+    <div class="sidebar-divider"></div>
+    <a href="status-mentoring.html" class="sidebar-link" data-page="status-mentoring.html">
+      <span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+      Status Mentoring
+    </a>
+    <a href="submit-naskah.html" class="sidebar-link" data-page="submit-naskah.html">
+      <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+      Submit Naskah
+    </a>
+    <a href="revisi-naskah.html" class="sidebar-link" data-page="revisi-naskah.html">
+      <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+      Revisi Naskah
+      <span class="sl-badge badge-gold" id="sidebarRevisiCount">2</span>
+    </a>
+    <div class="sidebar-divider"></div>
+    <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html">
+      <span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
+      Keranjang
+      <span class="sl-badge badge-gold" id="sidebarCartCount"></span>
+    </a>
+    <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html">
+      <span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
+      Riwayat Transaksi
+    </a>
+    <div class="sidebar-divider"></div>
+    <a href="profile-user.html" class="sidebar-link" data-page="profile-user.html">
+      <span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
+      Profil Saya
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a href="../auth/logout.html" class="sidebar-logout" data-logout>
+      <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+      Logout
+    </a>
+  </div>
+</aside>
+
+<script>
+  // ============================================
+  // AUTO ACTIVE STATE — set class "active" sesuai
+  // halaman yang sedang dibuka, dan sync badge keranjang
+  // dengan localStorage agar selalu konsisten.
+  // ============================================
+  (function () {
+    const currentPage = location.pathname.split('/').pop() || 'dashboard-user.html';
+    document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(link => {
+      if (link.dataset.page === currentPage) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    // Sinkronkan badge jumlah item keranjang
+    try {
+      const cart = JSON.parse(localStorage.getItem('novelCart') || '[]');
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      const badge = document.getElementById('sidebarCartCount');
+      if (badge) badge.textContent = count > 0 ? count : '';
+    } catch (e) {}
+
+    // Sinkronkan badge jumlah revisi yang perlu aksi ("needrev")
+    try {
+      const revisi = JSON.parse(localStorage.getItem('revisiNaskah') || 'null');
+      if (revisi) {
+        const needAction = revisi.filter(r => r.status === 'needrev').length;
+        const badge = document.getElementById('sidebarRevisiCount');
+        if (badge) badge.textContent = needAction;
+      }
+    } catch (e) {}
+  })();
+</script>

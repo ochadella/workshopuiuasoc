@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riwayat Transaksi – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link rel="stylesheet" href="../assets/css/customer.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RIWAYAT TRANSAKSI ── */
+    .trx-filters {
+      display:flex;gap:.55rem;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center;
+    }
+    .trx-filter-btn {
+      padding:.38rem .9rem;border-radius:999px;font-family:'DM Sans',sans-serif;font-size:.8rem;
+      border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#888;
+      cursor:pointer;transition:all .18s;
+    }
+    .trx-filter-btn:hover,.trx-filter-btn.active {
+      background:rgba(192,132,252,.12);border-color:rgba(192,132,252,.35);color:#c084fc;
+    }
+    .trx-search {
+      flex:1;min-width:180px;max-width:280px;
+      padding:.4rem .9rem;border-radius:999px;
+      border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+      color:#e2d9f3;font-family:'DM Sans',sans-serif;font-size:.83rem;outline:none;
+    }
+    .trx-search:focus { border-color:rgba(192,132,252,.4); }
+
+    .trx-stats {
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.85rem;margin-bottom:1.5rem;
+    }
+    .trx-stat {
+      border-radius:14px;border:1px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.02);padding:1rem;
+    }
+    .trx-stat-num { font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#fff;margin:0 0 .2rem; }
+    .trx-stat-label { font-family:'DM Sans',sans-serif;font-size:.75rem;color:#888;margin:0; }
+
+    .trx-card {
+      border-radius:14px;border:1px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.02);padding:1.1rem;
+      transition:border-color .18s;margin-bottom:.75rem;
+    }
+    .trx-card:hover { border-color:rgba(192,132,252,.2); }
+    .trx-card.status-dikirim { border-color:rgba(56,189,248,.15); }
+
+    .trx-header {
+      display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;margin-bottom:.75rem;
+    }
+    .trx-id {
+      font-family:'DM Sans',sans-serif;font-size:.78rem;color:#c084fc;font-weight:600;
+      background:rgba(192,132,252,.1);padding:.2rem .65rem;border-radius:999px;
+    }
+    .trx-date { font-family:'DM Sans',sans-serif;font-size:.76rem;color:#666;margin-top:.2rem; }
+
+    .trx-status-badge {
+      padding:.25rem .75rem;border-radius:999px;font-family:'DM Sans',sans-serif;
+      font-size:.74rem;font-weight:700;white-space:nowrap;
+    }
+    .trx-status-badge.success { background:rgba(126,203,95,.12);border:1px solid rgba(126,203,95,.25);color:#7ecb5f; }
+    .trx-status-badge.pending { background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.25);color:#f5c518; }
+    .trx-status-badge.failed  { background:rgba(240,128,128,.1);border:1px solid rgba(240,128,128,.25);color:#f08080; }
+    .trx-status-badge.dikirim { background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.25);color:#38bdf8; }
+
+    .trx-items-list { display:flex;flex-direction:column;gap:.45rem;margin-bottom:.85rem; }
+    .trx-item-row {
+      display:flex;align-items:center;gap:.7rem;
+      padding:.5rem .75rem;border-radius:8px;background:rgba(255,255,255,.02);
+    }
+    .trx-item-dot { width:8px;height:8px;border-radius:50%;background:#c084fc;flex-shrink:0; }
+    .trx-item-name { font-family:'DM Sans',sans-serif;font-size:.83rem;color:#d0c4f0;flex:1; }
+    .trx-item-price{ font-family:'DM Sans',sans-serif;font-size:.8rem;color:#f5c518;white-space:nowrap; }
+
+    .trx-eta-bar {
+      margin-bottom:.85rem;padding:.75rem 1rem;border-radius:10px;
+      background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.18);
+    }
+    .trx-eta-top { display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem; }
+    .trx-eta-label { font-family:'DM Sans',sans-serif;font-size:.78rem;color:#38bdf8; }
+    .trx-eta-countdown { font-family:'DM Sans',sans-serif;font-size:.76rem;color:#888; }
+    .trx-eta-track { height:5px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden; }
+    .trx-eta-fill {
+      height:100%;border-radius:999px;
+      background:linear-gradient(90deg,#38bdf8,#818cf8);
+      transition:width .5s ease;
+    }
+
+    .trx-footer {
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
+      padding-top:.75rem;border-top:1px solid rgba(255,255,255,.05);
+    }
+    .trx-method { font-family:'DM Sans',sans-serif;font-size:.78rem;color:#666; }
+    .trx-total  { font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:#f5c518; }
+    .trx-action-btns { display:flex;gap:.45rem;flex-wrap:wrap; }
+    .trx-btn {
+      padding:.32rem .8rem;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:.76rem;
+      cursor:pointer;transition:all .15s;border:1px solid;
+    }
+    .trx-btn.primary { background:rgba(192,132,252,.12);border-color:rgba(192,132,252,.3);color:#c084fc; }
+    .trx-btn.primary:hover { background:rgba(192,132,252,.22); }
+    .trx-btn.ghost   { background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:#888; }
+    .trx-btn.ghost:hover { background:rgba(255,255,255,.08); }
+    .trx-btn.confirm { background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.3);color:#38bdf8;font-weight:600; }
+    .trx-btn.confirm:hover { background:rgba(56,189,248,.22); }
+    .trx-btn.success-btn { background:rgba(126,203,95,.12);border-color:rgba(126,203,95,.25);color:#7ecb5f;font-weight:600; }
+
+    .trx-empty {
+      text-align:center;padding:3.5rem 1.5rem;display:flex;flex-direction:column;align-items:center;gap:1rem;
+    }
+    .trx-empty-icon { font-size:2.8rem; }
+    .trx-empty h3 { font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:#e2d9f3;margin:0; }
+    .trx-empty p  { font-family:'DM Sans',sans-serif;font-size:.88rem;color:#777;max-width:280px;margin:0;line-height:1.5; }
+
+    /* ── DETAIL MODAL ── */
+    #detailModal {
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
+      z-index:99998;align-items:center;justify-content:center;padding:1rem;
+    }
+    #detailModal.show { display:flex; }
+    #detailModal .modal-box {
+      background:#16162a !important;border:1.5px solid rgba(192,132,252,.25) !important;
+      border-radius:18px !important;max-width:460px;width:100%;
+      padding:1.75rem !important;max-height:90vh;overflow-y:auto;
+      position:relative;
+    }
+    #detailModal .modal-header {
+      display:flex !important;justify-content:space-between !important;
+      align-items:center !important;margin-bottom:1.25rem !important;
+      gap:1rem;border:none !important;padding:0 !important;
+    }
+    #detailModal .modal-title {
+      font-family:'Bebas Neue',sans-serif !important;font-size:1.5rem !important;
+      letter-spacing:.06em;color:#e2d9f3 !important;margin:0 !important;
+    }
+    #detailModal .modal-close-btn {
+      display:flex;align-items:center;justify-content:center;
+      width:36px;height:36px;min-width:36px;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.2);
+      border-radius:8px;color:#ccc;
+      font-size:1.1rem;cursor:pointer;
+      flex-shrink:0;
+      z-index:99999;position:relative;
+      transition:background .15s;
+      outline:none;
+    }
+    #detailModal .modal-close-btn:hover { background:rgba(240,128,128,.25);color:#f08080; }
+
+    /* ── TRACKING MODAL ── */
+    #trackModal {
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);
+      z-index:99999;align-items:center;justify-content:center;padding:1rem;
+    }
+    #trackModal.show { display:flex; }
+    #trackModal .track-box {
+      background:#16162a;border:1.5px solid rgba(56,189,248,.25);border-radius:18px;
+      max-width:440px;width:100%;padding:1.75rem;max-height:90vh;overflow-y:auto;
+      position:relative;
+    }
+    #trackModal .track-header {
+      display:flex !important;justify-content:space-between !important;
+      align-items:center !important;margin-bottom:1.5rem;gap:1rem;
+    }
+    #trackModal .track-title {
+      font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;color:#e2d9f3;margin:0;
+    }
+    #trackModal .track-close-btn {
+      display:flex;align-items:center;justify-content:center;
+      width:36px;height:36px;min-width:36px;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.2);
+      border-radius:8px;color:#ccc;
+      font-size:1.1rem;cursor:pointer;
+      flex-shrink:0;
+      z-index:99999;position:relative;
+      transition:background .15s;
+      outline:none;
+    }
+    #trackModal .track-close-btn:hover { background:rgba(240,128,128,.25);color:#f08080; }
+
+    .track-courier {
+      display:flex;align-items:center;gap:.85rem;padding:.9rem 1.1rem;
+      border-radius:12px;background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.18);
+      margin-bottom:1.4rem;
+    }
+    .track-courier-icon { font-size:1.6rem; }
+    .track-courier-name { font-family:'DM Sans',sans-serif;font-weight:700;font-size:.9rem;color:#e2d9f3;margin:0 0 .1rem; }
+    .track-courier-sub  { font-family:'DM Sans',sans-serif;font-size:.76rem;color:#888;margin:0; }
+    .track-resi {
+      margin-left:auto;font-family:'DM Sans',monospace,sans-serif;font-size:.72rem;
+      color:#38bdf8;background:rgba(56,189,248,.1);padding:.3rem .7rem;border-radius:7px;
+      letter-spacing:.05em;white-space:nowrap;
+    }
+
+    .track-timeline { display:flex;flex-direction:column;gap:0; }
+    .track-step { display:flex;gap:.9rem;position:relative; }
+    .track-step:not(:last-child)::before {
+      content:'';position:absolute;left:12px;top:28px;
+      width:2px;height:calc(100% + 2px);background:rgba(255,255,255,.06);z-index:0;
+    }
+    .track-step.done::before   { background:rgba(56,189,248,.3); }
+    .track-step.active::before { background:rgba(56,189,248,.1); }
+    .track-dot-wrap { display:flex;flex-direction:column;align-items:center;flex-shrink:0;position:relative;z-index:1; }
+    .track-dot {
+      width:26px;height:26px;border-radius:50%;flex-shrink:0;
+      border:2px solid rgba(255,255,255,.08);background:#0d0d1a;
+      display:flex;align-items:center;justify-content:center;font-size:.78rem;
+    }
+    .track-step.done   .track-dot { border-color:#38bdf8;background:rgba(56,189,248,.15);color:#38bdf8; }
+    .track-step.active .track-dot { border-color:#f5c518;background:rgba(245,197,24,.12);color:#f5c518;animation:pulse-dot 1.5s ease infinite; }
+    .track-step.upcoming .track-dot { border-color:rgba(255,255,255,.07);color:#333; }
+    @keyframes pulse-dot {
+      0%,100% { box-shadow:0 0 0 0 rgba(245,197,24,.4); }
+      50%      { box-shadow:0 0 0 6px rgba(245,197,24,.0); }
+    }
+    .track-step-body { padding:.05rem 0 1.35rem; }
+    .track-step-title { font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;margin:0 0 .18rem; }
+    .track-step.done     .track-step-title { color:#e2d9f3; }
+    .track-step.active   .track-step-title { color:#f5c518; }
+    .track-step.upcoming .track-step-title { color:#444; }
+    .track-step-loc  { font-family:'DM Sans',sans-serif;font-size:.77rem;color:#777;margin:0 0 .1rem; }
+    .track-step-time { font-family:'DM Sans',sans-serif;font-size:.72rem;color:#555;margin:0; }
+
+    .track-confirm-wrap {
+      margin-top:1.4rem;padding:1rem 1.1rem;border-radius:12px;
+      background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.18);
+    }
+    .track-confirm-wrap p { font-family:'DM Sans',sans-serif;font-size:.82rem;color:#7eb8f5;margin:0 0 .75rem;line-height:1.5; }
+    .track-confirm-btn {
+      width:100%;padding:.7rem;border-radius:10px;border:none;cursor:pointer;font-weight:700;
+      font-family:'DM Sans',sans-serif;font-size:.88rem;
+      background:linear-gradient(135deg,#38bdf8,#818cf8);color:#fff;transition:opacity .15s;
+    }
+    .track-confirm-btn:hover { opacity:.88; }
+
+    /* ── STRUK / INVOICE MODAL ── */
+    #strukOverlay {
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100000;
+      align-items:flex-start;justify-content:center;padding:2.5rem 1rem;overflow-y:auto;
+    }
+    #strukOverlay.show { display:flex; }
+    .struk-stage { display:flex;flex-direction:column;align-items:center;margin-top:1.5rem; }
+    .struk-printer {
+      width:230px;height:34px;
+      background:linear-gradient(180deg,#3a3a48,#23232e);
+      border-radius:10px 10px 4px 4px;
+      box-shadow:0 6px 18px rgba(0,0,0,.5),inset 0 -3px 6px rgba(0,0,0,.4);
+      position:relative;z-index:3;
+    }
+    .struk-printer::before {
+      content:'';position:absolute;left:50%;top:8px;transform:translateX(-50%);
+      width:170px;height:7px;border-radius:4px;background:#0a0a10;
+      box-shadow:inset 0 2px 4px rgba(0,0,0,.6);
+    }
+    .struk-close {
+      position:absolute;top:-.6rem;right:-.6rem;width:30px;height:30px;border-radius:50%;
+      background:#1a1a2e;border:1px solid rgba(192,132,252,.3);color:#e2d9f3;
+      font-size:.95rem;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;
+    }
+    .struk-close:hover { background:#241f3d; }
+    .struk-wrap {
+      position:relative;margin-top:-3px;width:212px;overflow:hidden;max-height:0;
+      transition:max-height .85s cubic-bezier(.2,.8,.2,1);
+    }
+    #strukOverlay.show .struk-wrap { max-height:1000px; }
+    .struk-paper {
+      background:#f7f4ec;width:212px;padding:1.4rem 1.3rem 1.6rem;
+      box-shadow:0 14px 30px rgba(0,0,0,.45);font-family:'DM Sans',monospace,sans-serif;color:#1a1a1a;
+      transform:translateY(-100%);transition:transform .85s cubic-bezier(.2,.8,.2,1);
+      clip-path:polygon(0% 0%,100% 0%,100% 97%,95% 100%,90% 97%,85% 100%,80% 97%,75% 100%,70% 97%,65% 100%,60% 97%,55% 100%,50% 97%,45% 100%,40% 97%,35% 100%,30% 97%,25% 100%,20% 97%,15% 100%,10% 97%,5% 100%,0% 97%);
+    }
+    #strukOverlay.show .struk-paper { transform:translateY(0); }
+    .struk-title { font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;text-align:center;margin:0 0 .15rem; }
+    .struk-sub { text-align:center;font-size:.68rem;color:#666;margin:0 0 .9rem;letter-spacing:.04em; }
+    .struk-divider { border:none;border-top:1.5px dashed #999;margin:.7rem 0; }
+    .struk-row { display:flex;justify-content:space-between;font-size:.74rem;padding:.18rem 0;gap:.5rem; }
+    .struk-row span:first-child { flex:1; }
+    .struk-row.label-only span:last-child { color:#444; }
+    .struk-row.bold { font-weight:700;font-size:.82rem; }
+    .struk-itemname { display:block;font-size:.74rem; }
+    .struk-itemsub  { display:block;font-size:.65rem;color:#777; }
+    .struk-barcode {
+      margin:1rem auto .35rem;height:38px;width:90%;
+      background:repeating-linear-gradient(90deg,#1a1a1a 0 2px,transparent 2px 4px,#1a1a1a 4px 5px,transparent 5px 8px);
+    }
+    .struk-barcode-num { text-align:center;font-size:.65rem;letter-spacing:.08em;color:#555;margin:0; }
+    .struk-thanks { text-align:center;font-size:.7rem;color:#555;margin-top:.7rem;font-style:italic; }
+
+    /* modal-section styles */
+    #detailModal .modal-section { margin-bottom:1rem; }
+    #detailModal .modal-section-title { font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.08em;margin:0 0 .5rem; }
+    #detailModal .modal-row { display:flex;justify-content:space-between;padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-family:'DM Sans',sans-serif;font-size:.85rem; }
+    #detailModal .modal-row:last-child { border:none; }
+    #detailModal .modal-row span:first-child { color:#888; }
+    #detailModal .modal-row span:last-child  { color:#e2d9f3;font-weight:500; }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Customer Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-customer.html" class="sidebar-link" data-page="dashboard-customer.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor</a>
+      <a href="upgrade-member.html" class="sidebar-link" data-page="upgrade-member.html">
+  <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Pengajuan
+</a>
+      <div class="sidebar-divider"></div>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring</a>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Submit Naskah</a>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah</a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang <span class="sl-badge badge-gold" id="sidebarCartCount"></span></a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi</a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-customer.html" class="sidebar-link" data-page="profile-customer.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout" data-logout><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Histori ✦</p>
+        <h1 class="topbar-title">Riwayat Transaksi</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="admin-profile">
+          <div class="admin-avatar" id="topbarAvatar" style="background:linear-gradient(135deg,#f5c518,#e07b39);">C</div>
+          <div><strong id="topbarName">Customer</strong><p>Customer</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="trx-stats">
+        <div class="trx-stat"><p class="trx-stat-num" id="statTotal">0</p><p class="trx-stat-label">Total Transaksi</p></div>
+        <div class="trx-stat"><p class="trx-stat-num" id="statDikirim">0</p><p class="trx-stat-label">Sedang Dikirim</p></div>
+        <div class="trx-stat"><p class="trx-stat-num" id="statSuccess">0</p><p class="trx-stat-label">Berhasil Diterima</p></div>
+        <div class="trx-stat"><p class="trx-stat-num" id="statSpend">Rp 0</p><p class="trx-stat-label">Total Pengeluaran</p></div>
+      </div>
+
+      <div class="dashboard-card">
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem;">
+          <input type="text" class="trx-search" placeholder="🔍  Cari ID transaksi..." id="trxSearch" oninput="renderTrx()" />
+          <div class="trx-filters">
+            <button class="trx-filter-btn active" onclick="setTrxFilter('semua',this)">Semua</button>
+            <button class="trx-filter-btn" onclick="setTrxFilter('pending',this)">Pending</button>
+            <button class="trx-filter-btn" onclick="setTrxFilter('dikirim',this)">Dikirim</button>
+            <button class="trx-filter-btn" onclick="setTrxFilter('success',this)">Berhasil</button>
+            <button class="trx-filter-btn" onclick="setTrxFilter('failed',this)">Gagal</button>
+          </div>
+        </div>
+        <div id="trxContainer"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- DETAIL MODAL -->
+  <!-- Gunakan class modal-close-btn (bukan modal-close) agar tidak ditangkap user.js -->
+  <div id="detailModal">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title">DETAIL TRANSAKSI</h3>
+        <button class="modal-close-btn" id="detailCloseBtn" type="button">✕</button>
+      </div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- TRACKING MODAL -->
+  <div id="trackModal">
+    <div class="track-box" onclick="event.stopPropagation()">
+      <div class="track-header">
+        <h3 class="track-title">LACAK PESANAN</h3>
+        <button class="track-close-btn" id="trackCloseBtn" type="button">✕</button>
+      </div>
+      <div id="trackContent"></div>
+    </div>
+  </div>
+
+  <!-- STRUK / INVOICE MODAL -->
+  <div id="strukOverlay">
+    <div class="struk-stage" onclick="event.stopPropagation()">
+      <div class="struk-printer">
+        <button class="struk-close" id="strukCloseBtn" type="button">✕</button>
+      </div>
+      <div class="struk-wrap">
+        <div class="struk-paper" id="strukPaper"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar"><span></span><span></span><span></span></button>
+
+  <script>
+    let activeFilter = 'semua';
+
+    function fmt(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+    function fmtDate(iso) {
+      return new Date(iso).toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    }
+    function itemLabel(i) { return i.title || i.name || 'Item'; }
+    function itemSub(i) {
+      if (i.author) return i.author;
+      if (i.sessions) return `${i.sessions} Sesi`;
+      return '';
+    }
+
+    const KURIR_HOURS = { 'Same Day': 12, 'Express': 36, 'Reguler': 96 };
+
+    // ── MODAL OPEN/CLOSE (nama berbeda dari user.js agar tidak konflik) ──
+    function openDetailModal()  { document.getElementById('detailModal').classList.add('show'); }
+    function closeDetailModal() { document.getElementById('detailModal').classList.remove('show'); }
+    function openTrackModal()   { document.getElementById('trackModal').classList.add('show'); }
+    function closeTrackModal()  { document.getElementById('trackModal').classList.remove('show'); }
+    function openStruk()        { document.getElementById('strukOverlay').classList.add('show'); }
+    function closeStruk()       { document.getElementById('strukOverlay').classList.remove('show'); }
+
+    // Backdrop click untuk tutup modal
+    document.getElementById('detailModal').addEventListener('click', function(e) {
+      if (e.target === this) closeDetailModal();
+    });
+    document.getElementById('trackModal').addEventListener('click', function(e) {
+      if (e.target === this) closeTrackModal();
+    });
+    document.getElementById('strukOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeStruk();
+    });
+
+    // Tombol X — pakai addEventListener bukan onclick agar tidak bisa di-override
+    document.getElementById('detailCloseBtn').addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeDetailModal();
+    });
+    document.getElementById('trackCloseBtn').addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeTrackModal();
+    });
+    document.getElementById('strukCloseBtn').addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeStruk();
+    });
+
+    function checkAutoComplete() {
+      const all = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+      let changed = false;
+      const now = Date.now();
+      all.forEach(t => {
+        if (t.status !== 'dikirim') return;
+        const hrs = KURIR_HOURS[t.shippingMethod] || 96;
+        const eta = new Date(t.date).getTime() + hrs * 3600000;
+        if (now >= eta) { t.status = 'success'; t.receivedAt = new Date(eta).toISOString(); changed = true; }
+      });
+      if (changed) localStorage.setItem('trxHistory', JSON.stringify(all));
+    }
+
+    function remainingLabel(t) {
+      const hrs = KURIR_HOURS[t.shippingMethod] || 96;
+      const eta = new Date(t.date).getTime() + hrs * 3600000;
+      const ms  = eta - Date.now();
+      if (ms <= 0) return 'Selesai otomatis';
+      const h = Math.floor(ms / 3600000);
+      const d = Math.floor(h / 24);
+      const rh = h % 24;
+      if (d > 0) return `${d} hari ${rh} jam lagi`;
+      return `${h} jam lagi`;
+    }
+
+    function etaProgress(t) {
+      const hrs   = KURIR_HOURS[t.shippingMethod] || 96;
+      const start = new Date(t.date).getTime();
+      const end   = start + hrs * 3600000;
+      const now   = Date.now();
+      return Math.min(100, Math.max(0, Math.round((now - start) / (end - start) * 100)));
+    }
+
+    function setTrxFilter(f, btn) {
+      activeFilter = f;
+      document.querySelectorAll('.trx-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTrx();
+    }
+
+    function renderTrx() {
+      checkAutoComplete();
+      const all = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+      const q   = document.getElementById('trxSearch').value.toLowerCase();
+
+      const data = all.filter(t => {
+        const matchFilter = activeFilter === 'semua' || t.status === activeFilter;
+        const matchQ      = !q || t.id.toLowerCase().includes(q);
+        return matchFilter && matchQ;
+      });
+
+      const dikirimTrx = all.filter(t => t.status === 'dikirim');
+      const successTrx = all.filter(t => t.status === 'success');
+      document.getElementById('statTotal').textContent   = all.length;
+      document.getElementById('statDikirim').textContent = dikirimTrx.length;
+      document.getElementById('statSuccess').textContent = successTrx.length;
+      document.getElementById('statSpend').textContent   = fmt(successTrx.reduce((s,t) => s + t.total, 0));
+
+      const container = document.getElementById('trxContainer');
+
+      if (data.length === 0) {
+        const isEmptyOverall = all.length === 0;
+        container.innerHTML = `
+          <div class="trx-empty">
+            <div class="trx-empty-icon">🧾</div>
+            <h3>${isEmptyOverall ? 'Belum Ada Transaksi' : 'Tidak Ditemukan'}</h3>
+            <p>${isEmptyOverall
+              ? 'Kamu belum melakukan transaksi apapun. Jelajahi katalog dan temukan novel favoritmu!'
+              : 'Tidak ada transaksi yang cocok dengan pencarian atau filter ini.'}</p>
+            ${isEmptyOverall ? '<a href="/katalog/katalog-customer.html" class="locked-upgrade-btn" style="margin-top:.5rem;">Jelajahi Katalog ✦</a>' : ''}
+          </div>`;
+        return;
+      }
+
+      const statusLabel = { success:'Berhasil', pending:'Menunggu', failed:'Gagal', dikirim:'Dikirim' };
+      const statusCls   = { success:'success', pending:'pending', failed:'failed', dikirim:'dikirim' };
+      const methodLabel = {
+        BCA:'Transfer BCA', MANDIRI:'Transfer Mandiri', BNI:'Transfer BNI',
+        QRIS:'QRIS', GOPAY:'GoPay', OVO:'OVO', DANA:'Dana', EWALLET:'E-Wallet', CC:'Kartu Kredit'
+      };
+
+      container.innerHTML = data.map(t => {
+        const isDikirim = t.status === 'dikirim';
+        const isSuccess = t.status === 'success';
+        const prog      = isDikirim ? etaProgress(t) : 0;
+        const remain    = isDikirim ? remainingLabel(t) : '';
+        const etaHrs    = KURIR_HOURS[t.shippingMethod] || 96;
+        const etaLabel  = etaHrs <= 12 ? 'Hari ini' : etaHrs <= 36 ? '1–2 hari kerja' : '3–5 hari kerja';
+
+        return `
+        <div class="trx-card ${isDikirim ? 'status-dikirim' : ''}">
+          <div class="trx-header">
+            <div>
+              <span class="trx-id">${t.id}</span>
+              <p class="trx-date">${fmtDate(t.date)}</p>
+            </div>
+            <span class="trx-status-badge ${statusCls[t.status]||t.status}">${statusLabel[t.status]||t.status}</span>
+          </div>
+          <div class="trx-items-list">
+            ${t.items.map(i => `
+              <div class="trx-item-row">
+                <div class="trx-item-dot"></div>
+                <span class="trx-item-name">${itemLabel(i)}${itemSub(i) ? ' · ' + itemSub(i) : ''}</span>
+                <span class="trx-item-price">${fmt(i.price)}</span>
+              </div>
+            `).join('')}
+          </div>
+          ${isDikirim ? `
+          <div class="trx-eta-bar">
+            <div class="trx-eta-top">
+              <span class="trx-eta-label">📦 ${t.shippingMethod || 'Reguler'} · Est. ${etaLabel}</span>
+              <span class="trx-eta-countdown">${remain}</span>
+            </div>
+            <div class="trx-eta-track"><div class="trx-eta-fill" style="width:${prog}%"></div></div>
+          </div>` : ''}
+          <div class="trx-footer">
+            <span class="trx-method">💳 ${methodLabel[t.method]||t.method}</span>
+            <span class="trx-total">${fmt(t.total)}</span>
+            <div class="trx-action-btns">
+              <button class="trx-btn primary" onclick="showDetail('${t.id}')">Detail</button>
+              ${isDikirim ? `
+                <button class="trx-btn ghost" onclick="showTracking('${t.id}')">🚚 Lacak</button>
+                <button class="trx-btn confirm" onclick="confirmReceived('${t.id}')">✓ Sudah Diterima</button>
+              ` : ''}
+              ${isSuccess ? `<button class="trx-btn ghost" onclick="downloadInvoice('${t.id}')">Invoice</button>` : ''}
+              ${t.status === 'pending' ? `<button class="trx-btn ghost" onclick="cancelTrx('${t.id}')">Batalkan</button>` : ''}
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function confirmReceived(id) {
+      if (!confirm('Konfirmasi pesanan sudah kamu terima?\nSetelah ini status akan berubah jadi Berhasil.')) return;
+      const all = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+      const idx = all.findIndex(t => t.id === id);
+      if (idx > -1) {
+        all[idx].status     = 'success';
+        all[idx].receivedAt = new Date().toISOString();
+        localStorage.setItem('trxHistory', JSON.stringify(all));
+      }
+      closeTrackModal();
+      renderTrx();
+      showToast('Pesanan dikonfirmasi diterima ✦', 'success');
+    }
+
+    function offsetDate(base, hrs) {
+      const d = new Date(base.getTime() + hrs * 3600000);
+      return d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+    }
+
+    function buildTimeline(t) {
+      const totalHrs   = KURIR_HOURS[t.shippingMethod] || 96;
+      const orderDate  = new Date(t.date);
+      const hrsElapsed = (Date.now() - orderDate.getTime()) / 3600000;
+      const pct = [0, 0.08, 0.25, 0.45, 0.65, 0.85, 1];
+      const steps = [
+        { icon:'✓',  title:'Pesanan Dikonfirmasi',  loc:'NovelCraft Warehouse, Surabaya' },
+        { icon:'📦', title:'Sedang Dikemas',         loc:'NovelCraft Warehouse, Surabaya' },
+        { icon:'🚚', title:'Diserahkan ke Kurir',    loc:`Droppoint ${t.shippingMethod||'Reguler'} Surabaya` },
+        { icon:'🏭', title:'Di Sortir Hub',          loc:`Hub ${t.shippingMethod||'Reguler'} Regional` },
+        { icon:'✈️', title:'Dalam Perjalanan',       loc:'Transit Antar Kota' },
+        { icon:'🏙️', title:'Tiba di Kota Tujuan',   loc: t.address ? `${t.shippingMethod||''} ${t.address.kota}` : 'Kota Tujuan' },
+        { icon:'🎉', title:'Terkirim ke Penerima',   loc: t.address ? t.address.alamat.substring(0,40)+'...' : 'Alamat Penerima' },
+      ];
+      return steps.map((s, i) => {
+        const thresholdHrs = pct[i] * totalHrs;
+        const done   = hrsElapsed >= thresholdHrs;
+        const nextPct = pct[i + 1] ?? 1;
+        const active = done && hrsElapsed < nextPct * totalHrs;
+        const cls    = active ? 'active' : done ? 'done' : 'upcoming';
+        return { ...s, done, active, cls, time: offsetDate(orderDate, thresholdHrs) };
+      });
+    }
+
+    function showTracking(id) {
+      const all = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+      const t   = all.find(x => x.id === id);
+      if (!t) return;
+      const kurir  = t.shippingMethod || 'Reguler';
+      const resi   = 'NC' + t.id.replace(/\D/g,'').slice(-10).padStart(10,'0');
+      const steps  = buildTimeline(t);
+      const active = steps.find(s => s.active) || steps.filter(s => s.done).pop() || steps[0];
+      const icons  = { 'Same Day':'⚡', Express:'🚚', Reguler:'📦' };
+
+      document.getElementById('trackContent').innerHTML = `
+        <div class="track-courier">
+          <span class="track-courier-icon">${icons[kurir]||'📦'}</span>
+          <div>
+            <p class="track-courier-name">${kurir}</p>
+            <p class="track-courier-sub">Status: ${active.title}</p>
+          </div>
+          <span class="track-resi">${resi}</span>
+        </div>
+        <div class="track-timeline">
+          ${steps.map(s => `
+            <div class="track-step ${s.cls}">
+              <div class="track-dot-wrap"><div class="track-dot">${s.done || s.active ? s.icon : '○'}</div></div>
+              <div class="track-step-body">
+                <p class="track-step-title">${s.title}</p>
+                <p class="track-step-loc">📍 ${s.loc}</p>
+                ${s.done || s.active
+                  ? `<p class="track-step-time">🕐 ${s.time}</p>`
+                  : `<p class="track-step-time" style="color:#2a2a3a;">Estimasi menyusul</p>`}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="track-confirm-wrap">
+          <p>📬 Sudah menerima paketnya? Tekan tombol di bawah agar status otomatis berubah jadi <strong>Berhasil</strong>.</p>
+          <button class="track-confirm-btn" onclick="confirmReceived('${t.id}')">✓ Pesanan Sudah Diterima</button>
+        </div>
+      `;
+      openTrackModal();
+    }
+
+    function showDetail(id) {
+      const all = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+      const t   = all.find(x => x.id === id);
+      if (!t) return;
+
+      const statusLabel = { success:'✅ Berhasil Diterima', pending:'⏳ Menunggu Konfirmasi', failed:'❌ Gagal', dikirim:'🚚 Sedang Dikirim' };
+      const methodLabel = { BCA:'Transfer BCA', MANDIRI:'Transfer Mandiri', BNI:'Transfer BNI', QRIS:'QRIS', GOPAY:'GoPay', OVO:'OVO', DANA:'Dana', EWALLET:'E-Wallet', CC:'Kartu Kredit' };
+
+      document.getElementById('modalContent').innerHTML = `
+        <div class="modal-section">
+          <p class="modal-section-title">Info Transaksi</p>
+          <div class="modal-row"><span>ID</span><span>${t.id}</span></div>
+          <div class="modal-row"><span>Tanggal</span><span>${fmtDate(t.date)}</span></div>
+          <div class="modal-row"><span>Status</span><span>${statusLabel[t.status]||t.status}</span></div>
+          <div class="modal-row"><span>Metode</span><span>${methodLabel[t.method]||t.method}</span></div>
+          ${t.shippingMethod ? `<div class="modal-row"><span>Kurir</span><span>${t.shippingMethod}</span></div>` : ''}
+          ${t.receivedAt ? `<div class="modal-row"><span>Diterima</span><span>${fmtDate(t.receivedAt)}</span></div>` : ''}
+        </div>
+        ${t.address ? `
+        <div class="modal-section">
+          <p class="modal-section-title">Alamat Pengiriman</p>
+          <p style="font-family:'DM Sans',sans-serif;font-size:.85rem;color:#e2d9f3;line-height:1.6;margin:0;">
+            ${t.address.nama} · ${t.address.hp}<br/>
+            ${t.address.alamat}, ${t.address.kota}, ${t.address.provinsi} ${t.address.kodepos}
+          </p>
+        </div>` : ''}
+        <div class="modal-section">
+          <p class="modal-section-title">Item Dibeli</p>
+          ${t.items.map(i => `
+            <div class="modal-row"><span>${itemLabel(i)}${(i.qty||1)>1?' ×'+i.qty:''}</span><span>${fmt(i.price*(i.qty||1))}</span></div>
+          `).join('')}
+        </div>
+        <div class="modal-section">
+          <p class="modal-section-title">Pembayaran</p>
+          <div class="modal-row"><span>Subtotal</span><span>${fmt(t.items.reduce((s,i)=>s+i.price*(i.qty||1),0))}</span></div>
+          ${t.shippingCost ? `<div class="modal-row"><span>Ongkos Kirim</span><span>${fmt(t.shippingCost)}</span></div>` : ''}
+          <div class="modal-row"><span>Biaya Admin</span><span>Rp 5.000</span></div>
+          <div class="modal-row" style="font-weight:700;color:#f5c518;"><span>Total</span><span>${fmt(t.total)}</span></div>
+        </div>
+        ${t.status === 'dikirim' ? `
+        <div class="modal-section" style="background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.18);border-radius:10px;padding:.85rem;display:flex;flex-direction:column;gap:.6rem;">
+          <p style="font-family:'DM Sans',sans-serif;font-size:.82rem;color:#38bdf8;margin:0;">🚚 Pesananmu sedang dalam perjalanan!</p>
+          <div style="display:flex;gap:.5rem;">
+            <button class="trx-btn confirm" style="flex:1;" onclick="closeDetailModal();showTracking('${t.id}')">🚚 Lacak Pesanan</button>
+            <button class="trx-btn success-btn" style="flex:1;" onclick="closeDetailModal();confirmReceived('${t.id}')">✓ Sudah Diterima</button>
+          </div>
+        </div>` : ''}
+        ${t.status === 'success' ? `
+        <div class="modal-section" style="background:rgba(126,203,95,.06);border:1px solid rgba(126,203,95,.15);border-radius:10px;padding:.85rem;">
+          <p style="font-family:'DM Sans',sans-serif;font-size:.82rem;color:#7ecb5f;margin:0 0 .6rem;">✦ Terima kasih sudah berbelanja di NovelCraft!</p>
+          <button class="trx-btn ghost" style="width:100%;" onclick="closeDetailModal();downloadInvoice('${t.id}')">📄 Lihat Invoice</button>
+        </div>` : ''}
+      `;
+      openDetailModal();
+    }
+
+    function downloadInvoice(id) {
+      const all = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+      const t   = all.find(x => x.id === id);
+      if (!t) return;
+      const methodLabel = { BCA:'Transfer BCA', MANDIRI:'Transfer Mandiri', BNI:'Transfer BNI', QRIS:'QRIS', GOPAY:'GoPay', OVO:'OVO', DANA:'Dana', EWALLET:'E-Wallet', CC:'Kartu Kredit' };
+      const subtotal = t.items.reduce((s,i) => s + i.price*(i.qty||1), 0);
+      const ongkir   = t.shippingCost || 0;
+      const admin    = (t.total - subtotal - ongkir) > 0 ? (t.total - subtotal - ongkir) : 5000;
+
+      document.getElementById('strukPaper').innerHTML = `
+        <p class="struk-title">NOVELCRAFT</p>
+        <p class="struk-sub">Jl. Literasi No. 7, Surabaya</p>
+        <hr class="struk-divider" />
+        <div class="struk-row label-only"><span>No. Transaksi</span><span>${t.id}</span></div>
+        <div class="struk-row label-only"><span>Tanggal</span><span>${fmtDate(t.date)}</span></div>
+        ${t.receivedAt ? `<div class="struk-row label-only"><span>Diterima</span><span>${fmtDate(t.receivedAt)}</span></div>` : ''}
+        <div class="struk-row label-only"><span>Metode</span><span>${methodLabel[t.method]||t.method}</span></div>
+        ${t.address ? `
+        <hr class="struk-divider" />
+        <div class="struk-row label-only"><span>Kirim ke</span><span></span></div>
+        <div class="struk-row"><span style="font-size:.72rem;line-height:1.5;">${t.address.nama} · ${t.address.hp}<br/>${t.address.alamat}, ${t.address.kota}, ${t.address.provinsi} ${t.address.kodepos}</span><span></span></div>
+        ${t.shippingMethod ? `<div class="struk-row label-only"><span>Kurir</span><span>${t.shippingMethod}</span></div>` : ''}
+        ` : ''}
+        <hr class="struk-divider" />
+        ${t.items.map(i => `
+          <div class="struk-row">
+            <span>
+              <span class="struk-itemname">${itemLabel(i)}${(i.qty||1)>1?' ×'+i.qty:''}</span>
+              ${itemSub(i) ? `<span class="struk-itemsub">${itemSub(i)}</span>` : ''}
+            </span>
+            <span>${fmt(i.price*(i.qty||1))}</span>
+          </div>
+        `).join('')}
+        <hr class="struk-divider" />
+        <div class="struk-row"><span>Subtotal</span><span>${fmt(subtotal)}</span></div>
+        ${ongkir > 0 ? `<div class="struk-row"><span>Ongkos Kirim</span><span>${fmt(ongkir)}</span></div>` : ''}
+        <div class="struk-row"><span>Biaya Admin</span><span>${fmt(admin)}</span></div>
+        <div class="struk-row bold"><span>TOTAL</span><span>${fmt(t.total)}</span></div>
+        <div class="struk-barcode"></div>
+        <p class="struk-barcode-num">#${t.id.replace(/[^0-9A-Z]/g,'')}</p>
+        <p class="struk-thanks">Terima kasih telah berbelanja di NovelCraft ✦</p>
+      `;
+      openStruk();
+    }
+
+    function cancelTrx(id) {
+      if (!confirm('Batalkan transaksi ini?')) return;
+      const all = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+      const idx = all.findIndex(t => t.id === id);
+      if (idx > -1) { all[idx].status = 'failed'; localStorage.setItem('trxHistory', JSON.stringify(all)); }
+      renderTrx();
+      showToast('Transaksi dibatalkan', 'info');
+    }
+
+    function showToast(msg, type) {
+      const el = document.createElement('div');
+      el.textContent = msg;
+      const colors = {
+        success: ['#1a3a2a','#7ecb5f','rgba(126,203,95,.3)'],
+        info:    ['#1a2a3a','#7eb8f5','rgba(126,184,245,.3)'],
+        warning: ['#3a2a1a','#f5c518','rgba(245,197,24,.3)'],
+      };
+      const [bg,color,border] = colors[type]||colors.info;
+      Object.assign(el.style,{
+        position:'fixed',bottom:'1.5rem',right:'1.5rem',padding:'.75rem 1.25rem',
+        borderRadius:'10px',fontFamily:'DM Sans,sans-serif',fontSize:'.88rem',
+        background:bg,color,border:`1px solid ${border}`,zIndex:'99999',transition:'opacity .3s'
+      });
+      document.body.appendChild(el);
+      setTimeout(()=>{ el.style.opacity='0'; setTimeout(()=>el.remove(),300); }, 2500);
+    }
+
+    (function(){
+      const currentPage = window.location.pathname.split('/').pop();
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(l => {
+        l.classList.toggle('active', l.dataset.page === currentPage);
+      });
+      try {
+        const cart  = JSON.parse(localStorage.getItem('novelCart') || '[]');
+        const count = cart.reduce((s,i) => s+(i.qty||1), 0);
+        const badge = document.getElementById('sidebarCartCount');
+        if (badge) badge.textContent = count > 0 ? count : '';
+      } catch(e){}
+      const userName = localStorage.getItem('userName') || 'Customer';
+      const av = document.getElementById('topbarAvatar');
+      if (av) av.textContent = userName.charAt(0).toUpperCase();
+      const tn = document.getElementById('topbarName');
+      if (tn) tn.textContent = userName;
+      renderTrx();
+      setInterval(renderTrx, 60000);
+    })();
+  </script>
+  <script src="../assets/js/user.js"></script>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil Saya – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link rel="stylesheet" href="../assets/css/customer.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── PROFILE HERO (gaya kartu mentor) ── */
+    .profile-hero-card {
+      background: linear-gradient(145deg, rgba(24,14,20,.96), rgba(10,6,10,.98));
+      border: 1px solid rgba(168,85,212,.15); border-radius: 18px;
+      padding: 1.6rem; margin-bottom: 1.25rem;
+      display: flex; flex-direction: column; gap: 1.25rem;
+    }
+    .profile-hero-top { display: flex; gap: 1.1rem; align-items: center; flex-wrap: wrap; }
+    .mentor-avatar-lg {
+      width: 80px; height: 80px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 2.1rem; color: #0a0608;
+    }
+    .mav-gold { background: linear-gradient(135deg,#d4a847,#f5c518); }
+    .profile-hero-info { display:flex; flex-direction:column; gap:.3rem; }
+    .profile-hero-info h2 { font-family:'Playfair Display',serif; font-size:1.5rem; color:#fff; margin:0; }
+    .profile-hero-info .ph-email { font-size:.83rem; color:rgba(255,255,255,.45); font-family:'DM Sans',sans-serif; }
+    .profile-hero-badges { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.2rem; }
+    .mentor-level { font-size:.72rem; font-weight:600; padding:.22rem .65rem; border-radius:20px; display:inline-block; font-family:'DM Sans',sans-serif; }
+    .level-senior { background: rgba(245,197,24,.12); color: #f5c518; border: 1px solid rgba(245,197,24,.25); }
+    .level-pro    { background: rgba(32,178,170,.12); color: #20b2aa; border: 1px solid rgba(32,178,170,.25); }
+
+    .mentor-stats { display:flex; gap:1.6rem; flex-wrap:wrap; padding-top:1rem; border-top:1px solid rgba(255,255,255,.06); }
+    .mstat { text-align:center; }
+    .mstat-num { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; color:#fff; line-height:1; }
+    .mstat-label { font-size:.7rem; color:rgba(255,255,255,.4); margin-top:.15rem; font-family:'DM Sans',sans-serif; }
+
+    /* ── FORM ── */
+    .prof-form { display:flex; flex-direction:column; gap:1rem; }
+    .prof-row { display:grid; grid-template-columns:1fr 1fr; gap:.85rem; }
+    @media(max-width:560px){ .prof-row{ grid-template-columns:1fr; } }
+    .prof-field { display:flex; flex-direction:column; gap:.4rem; }
+    .prof-label { font-family:'DM Sans',sans-serif; font-size:.78rem; font-weight:600; color:#aaa; }
+    .prof-input, .prof-textarea {
+      width:100%; padding:.7rem .9rem; border-radius:10px;
+      border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.04);
+      color:#e2d9f3; font-family:'DM Sans',sans-serif; font-size:.88rem; outline:none;
+      box-sizing:border-box; transition:border-color .18s;
+    }
+    .prof-input:focus, .prof-textarea:focus { border-color:rgba(192,132,252,.45); }
+    .prof-textarea { resize:vertical; min-height:80px; font-family:'DM Sans',sans-serif; }
+    .prof-hint { font-family:'DM Sans',sans-serif; font-size:.74rem; color:#666; margin-top:-.15rem; }
+
+    /* Genre chips */
+    .genre-tag-group { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .genre-tag {
+      font-size:.78rem; padding:.4rem .85rem; border-radius:20px;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.55); font-family:'DM Sans',sans-serif;
+      cursor:pointer; transition: all .18s; user-select:none;
+    }
+    .genre-tag:hover { border-color: rgba(245,197,24,.3); }
+    .genre-tag.selected {
+      background: rgba(245,197,24,.14); border-color: rgba(245,197,24,.4); color:#f5c518; font-weight:600;
+    }
+
+    /* Password strength (mini versi dari halaman register) */
+    .pw-wrap { position:relative; }
+    .pw-toggle-btn {
+      position:absolute; right:.7rem; top:50%; transform:translateY(-50%);
+      background:none; border:none; cursor:pointer; font-size:.95rem; color:#888;
+    }
+    .pw-strength { margin-top:.4rem; display:none; }
+    .pw-strength.show { display:block; }
+    .pw-strength-bar { height:5px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden; }
+    .pw-strength-fill { height:100%; width:0%; border-radius:999px; transition:width .25s,background .25s; }
+    .pw-strength-text { font-family:'DM Sans',sans-serif; font-size:.72rem; margin-top:.3rem; display:inline-block; }
+
+    .prof-save-btn {
+      align-self:flex-start; padding:.7rem 1.6rem; border-radius:10px; border:none; cursor:pointer;
+      font-family:'DM Sans',sans-serif; font-size:.88rem; font-weight:700; color:#0a0608;
+      background:linear-gradient(135deg,#f5c518,#e07b39); transition:opacity .15s;
+    }
+    .prof-save-btn:hover { opacity:.88; }
+    .prof-save-btn.ghost-save {
+      color:#e2d9f3; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
+    }
+    .prof-save-btn.ghost-save:hover { background:rgba(255,255,255,.09); }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Customer Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-customer.html" class="sidebar-link" data-page="dashboard-customer.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor</a>
+      <a href="upgrade-member.html" class="sidebar-link" data-page="upgrade-member.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Pengajuan
+        </a>
+      <div class="sidebar-divider"></div>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring</a>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Submit Naskah</a>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah</a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang <span class="sl-badge badge-gold" id="sidebarCartCount"></span></a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi</a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-customer.html" class="sidebar-link" data-page="profile-customer.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout" data-logout><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Akun Saya ✦</p>
+        <h1 class="topbar-title">Profil Saya</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="admin-profile">
+          <div class="admin-avatar" id="topbarAvatar" style="background:linear-gradient(135deg,#f5c518,#e07b39);">C</div>
+          <div><strong id="topbarName">Customer</strong><p>Customer</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <!-- HERO -->
+      <div class="profile-hero-card">
+        <div class="profile-hero-top">
+          <div class="mentor-avatar-lg mav-gold" id="profAvatarBig">C</div>
+          <div class="profile-hero-info">
+            <h2 id="profName">Customer</h2>
+            <span class="ph-email" id="profEmail">email@kamu.com</span>
+            <div class="profile-hero-badges">
+              <span class="mentor-level level-senior">✦ Customer</span>
+              <span class="mentor-level level-pro" id="profJoinedBadge">Member baru</span>
+            </div>
+          </div>
+        </div>
+        <div class="mentor-stats">
+          <div class="mstat"><div class="mstat-num" id="statTrx">0</div><div class="mstat-label">Transaksi</div></div>
+          <div class="mstat"><div class="mstat-num" id="statCart">0</div><div class="mstat-label">Di Keranjang</div></div>
+          <div class="mstat"><div class="mstat-num" id="statGenre">0</div><div class="mstat-label">Genre Favorit</div></div>
+        </div>
+      </div>
+
+      <!-- UPGRADE BANNER -->
+      <div class="upgrade-banner">
+        <div class="upgrade-banner-icon">🚀</div>
+        <div class="upgrade-banner-text">
+          <h4>UPGRADE KE MEMBER</h4>
+          <p>Lengkapi profilmu lalu pilih mentor untuk membuka akses Submit Naskah, Mentoring, dan fitur eksklusif lainnya.</p>
+        </div>
+        <a href="pilih-mentor.html" class="upgrade-banner-btn">Lihat Paket ✦</a>
+      </div>
+
+      <section class="dashboard-grid">
+
+        <!-- LEFT: edit profil -->
+        <div class="dashboard-left">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <p class="card-subtitle">Kelola Identitas</p>
+                <h3 class="card-title">Edit Profil</h3>
+              </div>
+            </div>
+
+            <form class="prof-form" id="profileForm" onsubmit="return false;">
+              <div class="prof-row">
+                <div class="prof-field">
+                  <label class="prof-label">Nama Lengkap</label>
+                  <input type="text" class="prof-input" id="fName" placeholder="Nama lengkap kamu" />
+                </div>
+                <div class="prof-field">
+                  <label class="prof-label">Email</label>
+                  <input type="email" class="prof-input" id="fEmail" placeholder="email@kamu.com" />
+                </div>
+              </div>
+
+              <div class="prof-field">
+                <label class="prof-label">No. HP</label>
+                <input type="tel" class="prof-input" id="fPhone" placeholder="08xxxxxxxxxx" />
+              </div>
+
+              <div class="prof-field">
+                <label class="prof-label">Bio Singkat</label>
+                <textarea class="prof-textarea" id="fBio" placeholder="Ceritakan sedikit tentang dirimu sebagai penulis..."></textarea>
+              </div>
+
+              <div class="prof-field">
+                <label class="prof-label">Genre Favorit</label>
+                <div class="genre-tag-group" id="genreGroup">
+                  <span class="genre-tag" data-genre="Fiksi Fantasi">Fiksi Fantasi</span>
+                  <span class="genre-tag" data-genre="Romance">Romance</span>
+                  <span class="genre-tag" data-genre="Thriller">Thriller</span>
+                  <span class="genre-tag" data-genre="Sastra">Sastra</span>
+                  <span class="genre-tag" data-genre="Horror">Horror</span>
+                  <span class="genre-tag" data-genre="Komedi">Komedi</span>
+                  <span class="genre-tag" data-genre="Misteri">Misteri</span>
+                  <span class="genre-tag" data-genre="Young Adult">Young Adult</span>
+                  <span class="genre-tag" data-genre="Sci-Fi">Sci-Fi</span>
+                </div>
+                <p class="prof-hint">Pilih satu atau lebih, nanti dipakai buat rekomendasi mentor.</p>
+              </div>
+
+              <button class="prof-save-btn" onclick="saveProfile()">Simpan Perubahan ✦</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- RIGHT: password & info -->
+        <div class="dashboard-right">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <p class="card-subtitle">Keamanan</p>
+                <h3 class="card-title">Ganti Password</h3>
+              </div>
+            </div>
+            <form class="prof-form" id="pwForm" onsubmit="return false;">
+              <div class="prof-field">
+                <label class="prof-label">Password Saat Ini</label>
+                <div class="pw-wrap">
+                  <input type="password" class="prof-input" id="fCurrentPw" placeholder="Masukkan password saat ini" />
+                  <button type="button" class="pw-toggle-btn" onclick="togglePw('fCurrentPw',this)">👁</button>
+                </div>
+              </div>
+              <div class="prof-field">
+                <label class="prof-label">Password Baru</label>
+                <div class="pw-wrap">
+                  <input type="password" class="prof-input" id="fNewPw" placeholder="Minimal 8 karakter" oninput="updatePwStrength()" />
+                  <button type="button" class="pw-toggle-btn" onclick="togglePw('fNewPw',this)">👁</button>
+                </div>
+                <div class="pw-strength" id="pwStrengthBox">
+                  <div class="pw-strength-bar"><div class="pw-strength-fill" id="pwFill"></div></div>
+                  <span class="pw-strength-text" id="pwText">Lemah</span>
+                </div>
+              </div>
+              <div class="prof-field">
+                <label class="prof-label">Konfirmasi Password Baru</label>
+                <div class="pw-wrap">
+                  <input type="password" class="prof-input" id="fConfirmPw" placeholder="Ulangi password baru" />
+                  <button type="button" class="pw-toggle-btn" onclick="togglePw('fConfirmPw',this)">👁</button>
+                </div>
+              </div>
+              <button class="prof-save-btn ghost-save" onclick="changePassword()">Update Password</button>
+            </form>
+          </div>
+
+          <div class="deco-quote">
+            "Profil yang lengkap bikin mentor lebih kenal gaya nulismu — langkah kecil sebelum naskah pertamamu terbit."
+            <cite>— NovelCraft Studio</cite>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar"><span></span><span></span><span></span></button>
+
+  <script>
+    /* ─── toast (konsisten dgn halaman lain) ─── */
+    function showToast(msg, type) {
+      const el = document.createElement('div');
+      el.textContent = msg;
+      const colors = {
+        success: ['#1a3a2a','#7ecb5f','rgba(126,203,95,.3)'],
+        info:    ['#1a2a3a','#7eb8f5','rgba(126,184,245,.3)'],
+        warning: ['#3a2a1a','#f5c518','rgba(245,197,24,.3)'],
+      };
+      const [bg,color,border] = colors[type]||colors.info;
+      Object.assign(el.style,{
+        position:'fixed',bottom:'1.5rem',right:'1.5rem',padding:'.75rem 1.25rem',
+        borderRadius:'10px',fontFamily:'DM Sans,sans-serif',fontSize:'.88rem',
+        background:bg,color,border:`1px solid ${border}`,zIndex:'99999',transition:'opacity .3s'
+      });
+      document.body.appendChild(el);
+      setTimeout(()=>{ el.style.opacity='0'; setTimeout(()=>el.remove(),300); }, 2500);
+    }
+
+    /* ─── password toggle & strength ─── */
+    function togglePw(id, btn) {
+      const input = document.getElementById(id);
+      const isText = input.type === 'text';
+      input.type = isText ? 'password' : 'text';
+      btn.textContent = isText ? '👁' : '🙈';
+    }
+
+    function getPwScore(pw) {
+      let score = 0;
+      if (pw.length >= 8) score++;
+      if (pw.length >= 12) score++;
+      if (/[A-Z]/.test(pw)) score++;
+      if (/[0-9]/.test(pw)) score++;
+      if (/[^A-Za-z0-9]/.test(pw)) score++;
+      return score;
+    }
+
+    function updatePwStrength() {
+      const val = document.getElementById('fNewPw').value;
+      const box = document.getElementById('pwStrengthBox');
+      if (!val) { box.classList.remove('show'); return; }
+      box.classList.add('show');
+      const levels = [
+        { w:'20%',  bg:'#c0293a', label:'Sangat Lemah' },
+        { w:'40%',  bg:'#e05030', label:'Lemah' },
+        { w:'60%',  bg:'#d4a847', label:'Cukup' },
+        { w:'80%',  bg:'#60b060', label:'Kuat' },
+        { w:'100%', bg:'#2bbfa8', label:'Sangat Kuat' },
+      ];
+      const lvl = levels[Math.min(getPwScore(val), 4)];
+      const fill = document.getElementById('pwFill');
+      const text = document.getElementById('pwText');
+      fill.style.width = lvl.w;
+      fill.style.background = lvl.bg;
+      text.textContent = lvl.label;
+      text.style.color = lvl.bg;
+    }
+
+    function changePassword() {
+      const cur = document.getElementById('fCurrentPw').value;
+      const next = document.getElementById('fNewPw').value;
+      const conf = document.getElementById('fConfirmPw').value;
+
+      if (!cur) { showToast('Masukkan password saat ini.', 'warning'); return; }
+      if (!next || next.length < 8) { showToast('Password baru minimal 8 karakter.', 'warning'); return; }
+      if (next !== conf) { showToast('Konfirmasi password tidak cocok.', 'warning'); return; }
+
+      // Demo: belum ada backend asli, jadi cuma disimulasikan berhasil.
+      document.getElementById('pwForm').reset();
+      document.getElementById('pwStrengthBox').classList.remove('show');
+      showToast('Password berhasil diperbarui ✦', 'success');
+    }
+
+    /* ─── genre chip toggle ─── */
+    function updateGenreStat() {
+      const count = document.querySelectorAll('#genreGroup .genre-tag.selected').length;
+      document.getElementById('statGenre').textContent = count;
+    }
+
+    document.querySelectorAll('#genreGroup .genre-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        tag.classList.toggle('selected');
+        updateGenreStat();
+      });
+    });
+
+    /* ─── load & save profil ke localStorage ─── */
+    function loadProfile() {
+      const name  = localStorage.getItem('userName')  || 'Customer';
+      const email = localStorage.getItem('userEmail') || '';
+      const phone = localStorage.getItem('userPhone') || '';
+      const bio   = localStorage.getItem('userBio')   || '';
+      let genres  = [];
+      try { genres = JSON.parse(localStorage.getItem('userGenres') || '[]'); } catch(e) {}
+
+      document.getElementById('fName').value  = name;
+      document.getElementById('fEmail').value = email;
+      document.getElementById('fPhone').value = phone;
+      document.getElementById('fBio').value   = bio;
+
+      document.getElementById('profName').textContent  = name;
+      document.getElementById('profEmail').textContent = email || 'Belum ada email';
+      document.getElementById('profAvatarBig').textContent = name.charAt(0).toUpperCase();
+
+      genres.forEach(g => {
+        const tag = document.querySelector(`#genreGroup .genre-tag[data-genre="${g}"]`);
+        if (tag) tag.classList.add('selected');
+      });
+      updateGenreStat();
+
+      const joinedAt = localStorage.getItem('userJoinedAt');
+      const joinedBadge = document.getElementById('profJoinedBadge');
+      if (joinedAt) {
+        joinedBadge.textContent = 'Bergabung ' + new Date(joinedAt).toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
+      }
+    }
+
+    function saveProfile() {
+      const name  = document.getElementById('fName').value.trim();
+      const email = document.getElementById('fEmail').value.trim();
+      const phone = document.getElementById('fPhone').value.trim();
+      const bio   = document.getElementById('fBio').value.trim();
+
+      if (!name) { showToast('Nama tidak boleh kosong.', 'warning'); return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Format email tidak valid.', 'warning'); return; }
+
+      const genres = [...document.querySelectorAll('#genreGroup .genre-tag.selected')].map(t => t.dataset.genre);
+
+      localStorage.setItem('userName', name);
+      localStorage.setItem('userEmail', email);
+      localStorage.setItem('userPhone', phone);
+      localStorage.setItem('userBio', bio);
+      localStorage.setItem('userGenres', JSON.stringify(genres));
+
+      document.getElementById('profName').textContent  = name;
+      document.getElementById('profEmail').textContent = email;
+      document.getElementById('profAvatarBig').textContent = name.charAt(0).toUpperCase();
+      document.getElementById('topbarName').textContent = name;
+      document.getElementById('topbarAvatar').textContent = name.charAt(0).toUpperCase();
+
+      showToast('Profil berhasil diperbarui ✦', 'success');
+    }
+
+    /* ─── stats dari data lain ─── */
+    function loadStats() {
+      try {
+        const trx = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+        document.getElementById('statTrx').textContent = trx.length;
+      } catch(e) {}
+      try {
+        const cart = JSON.parse(localStorage.getItem('novelCart') || '[]');
+        const count = cart.reduce((s,i) => s + (i.qty||1), 0);
+        document.getElementById('statCart').textContent = count;
+      } catch(e) {}
+    }
+
+    /* ─── init ─── */
+    (function(){
+      const currentPage = window.location.pathname.split('/').pop();
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(l=>{
+        l.classList.toggle('active', l.dataset.page === currentPage);
+      });
+      try {
+        const cart = JSON.parse(localStorage.getItem('novelCart') || '[]');
+        const count = cart.reduce((s,i) => s+(i.qty||1), 0);
+        const badge = document.getElementById('sidebarCartCount');
+        if (badge) badge.textContent = count > 0 ? count : '';
+      } catch(e) {}
+
+      loadProfile();
+      loadStats();
+    })();
+  </script>
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/user.js"></script>
+</body>
+</html>

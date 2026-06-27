@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alamat Pengiriman – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link rel="stylesheet" href="../assets/css/customer.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    .addr-layout {
+      display:grid;grid-template-columns:1fr 340px;gap:1.5rem;align-items:start;
+    }
+    @media(max-width:900px){ .addr-layout{ grid-template-columns:1fr; } }
+
+    /* Steps */
+    .pay-steps { display:flex;align-items:center;gap:0;margin-bottom:1.5rem; }
+    .pay-step { display:flex;align-items:center;gap:.5rem;font-family:'DM Sans',sans-serif;font-size:.82rem;color:#555; }
+    .pay-step.active { color:#c084fc; }
+    .pay-step.done   { color:#7ecb5f; }
+    .step-dot {
+      width:26px;height:26px;border-radius:50%;border:2px solid currentColor;
+      display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;
+      flex-shrink:0;
+    }
+    .step-line { flex:1;height:1px;background:rgba(255,255,255,.08);margin:0 .4rem; }
+
+    /* Form */
+    .addr-form { display:flex;flex-direction:column;gap:1rem; }
+    .addr-row { display:grid;grid-template-columns:1fr 1fr;gap:.85rem; }
+    @media(max-width:560px){ .addr-row{ grid-template-columns:1fr; } }
+    .addr-field { display:flex;flex-direction:column;gap:.4rem; }
+    .addr-label {
+      font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;color:#aaa;
+    }
+    .addr-label .req { color:#f08080; }
+    .addr-input, .addr-textarea, .addr-select {
+      width:100%;padding:.7rem .9rem;border-radius:10px;
+      border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+      color:#e2d9f3;font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;
+      box-sizing:border-box;transition:border-color .18s;
+    }
+    .addr-input:focus, .addr-textarea:focus, .addr-select:focus { border-color:rgba(192,132,252,.45); }
+    .addr-textarea { resize:vertical;min-height:80px;font-family:'DM Sans',sans-serif; }
+    .addr-select { appearance:none;cursor:pointer; }
+    .addr-error {
+      font-family:'DM Sans',sans-serif;font-size:.74rem;color:#f08080;min-height:1rem;margin-top:-.15rem;
+    }
+    .addr-input.invalid, .addr-textarea.invalid, .addr-select.invalid { border-color:rgba(240,128,128,.5); }
+
+    /* Saved address chip */
+    .saved-addr-banner {
+      display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;
+      padding:.9rem 1.1rem;border-radius:12px;
+      background:rgba(192,132,252,.07);border:1px solid rgba(192,132,252,.2);
+      margin-bottom:1.1rem;
+    }
+    .saved-addr-text { font-family:'DM Sans',sans-serif;font-size:.82rem;color:#d0c4f0;line-height:1.5; }
+    .saved-addr-text strong { color:#e2d9f3;display:block;margin-bottom:.15rem; }
+    .saved-addr-edit {
+      flex-shrink:0;padding:.32rem .8rem;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:.76rem;
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:#aaa;cursor:pointer;
+      transition:background .15s;white-space:nowrap;
+    }
+    .saved-addr-edit:hover { background:rgba(255,255,255,.1); }
+
+    /* Kurir */
+    .kurir-group { margin-top:1.4rem; }
+    .kurir-group-title {
+      font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;color:#888;
+      text-transform:uppercase;letter-spacing:.08em;margin-bottom:.7rem;
+    }
+    .kurir-options { display:flex;flex-direction:column;gap:.5rem; }
+    .kurir-opt {
+      display:flex;align-items:center;gap:.85rem;padding:.85rem 1rem;
+      border-radius:12px;border:1.5px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.02);cursor:pointer;transition:all .18s;
+      font-family:'DM Sans',sans-serif;
+    }
+    .kurir-opt:hover { border-color:rgba(192,132,252,.25); }
+    .kurir-opt.selected { border-color:#c084fc;background:rgba(192,132,252,.08); }
+    .kurir-icon { font-size:1.4rem;flex-shrink:0; }
+    .kurir-name { font-size:.9rem;font-weight:600;color:#e2d9f3;margin:0 0 .1rem; }
+    .kurir-desc { font-size:.75rem;color:#888;margin:0; }
+    .kurir-price { font-family:'Playfair Display',serif;font-weight:700;font-size:.92rem;color:#f5c518;white-space:nowrap; }
+    .kurir-radio {
+      width:16px;height:16px;border-radius:50%;
+      border:2px solid rgba(255,255,255,.2);flex-shrink:0;transition:all .15s;
+    }
+    .kurir-opt.selected .kurir-radio {
+      border-color:#c084fc;background:#c084fc;box-shadow:0 0 0 3px rgba(192,132,252,.2);
+    }
+
+    /* Summary */
+    .summary-row {
+      display:flex;justify-content:space-between;align-items:center;
+      font-family:'DM Sans',sans-serif;font-size:.9rem;color:#aaa;padding:.45rem 0;
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+    .summary-row:last-child{ border:none; }
+    .summary-row.total{ font-weight:700;font-size:1.05rem;color:#f5c518;margin-top:.25rem; }
+    .summary-row span:last-child{ font-family:'Playfair Display',serif; }
+
+    /* Order items */
+    .order-item {
+      display:flex;gap:.75rem;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.05);align-items:center;
+    }
+    .order-item:last-child { border:none; }
+
+    /* Cover — bisa foto atau gradien */
+    .order-item-cover {
+      width:34px;height:42px;border-radius:6px;flex-shrink:0;
+      overflow:hidden;position:relative;
+    }
+    .order-item-cover img {
+      width:100%;height:100%;object-fit:cover;display:block;
+    }
+    .order-item-cover .cover-initial {
+      width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+      font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#fff;
+    }
+
+    .order-item-name { font-family:'DM Sans',sans-serif;font-size:.83rem;color:#e2d9f3;margin:0 0 .1rem; }
+    .order-item-sub  { font-family:'DM Sans',sans-serif;font-size:.73rem;color:#888;margin:0; }
+    .order-item-price{ font-family:'Playfair Display',serif;font-size:.85rem;color:#f5c518;margin-left:auto;white-space:nowrap; }
+
+    .checkout-note{
+      font-family:'DM Sans',sans-serif;font-size:.75rem;color:#666;
+      text-align:center;margin-top:.75rem;line-height:1.5;
+    }
+
+    /* Gradient cover colors */
+    .nc-1 { background: linear-gradient(135deg,#3b0764,#a855d4); }
+    .nc-2 { background: linear-gradient(135deg,#4c0519,#f08080); }
+    .nc-3 { background: linear-gradient(135deg,#022c22,#20b2aa); }
+    .nc-4 { background: linear-gradient(135deg,#1e1b4b,#818cf8); }
+    .nc-5 { background: linear-gradient(135deg,#431407,#f5c518); }
+    .nc-6 { background: linear-gradient(135deg,#2e1065,#c084fc); }
+    .nc-7 { background: linear-gradient(135deg,#0f172a,#38bdf8); }
+    .nc-8 { background: linear-gradient(135deg,#14532d,#4ade80); }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Customer Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-customer.html" class="sidebar-link" data-page="dashboard-customer.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor</a>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Pengajuan</a>
+      <div class="sidebar-divider"></div>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring</a>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Submit Naskah</a>
+      <a class="sidebar-link locked"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah</a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang</a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi</a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-customer.html" class="sidebar-link" data-page="profile-customer.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout" data-logout><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Checkout ✦</p>
+        <h1 class="topbar-title">Alamat Pengiriman</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="admin-profile">
+          <div class="admin-avatar" id="topbarAvatar" style="background:linear-gradient(135deg,#f5c518,#e07b39);">C</div>
+          <div><strong id="topbarName">Customer</strong><p>Customer</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <!-- Steps -->
+      <div class="pay-steps">
+        <div class="pay-step done"><div class="step-dot">✓</div>Keranjang</div>
+        <div class="step-line"></div>
+        <div class="pay-step active"><div class="step-dot">2</div>Alamat</div>
+        <div class="step-line"></div>
+        <div class="pay-step"><div class="step-dot">3</div>Pembayaran</div>
+        <div class="step-line"></div>
+        <div class="pay-step"><div class="step-dot">4</div>Konfirmasi</div>
+      </div>
+
+      <div class="addr-layout">
+
+        <!-- LEFT: form -->
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div>
+              <p class="card-subtitle">Kirim Ke Mana?</p>
+              <h3 class="card-title">Alamat Pengiriman</h3>
+            </div>
+          </div>
+
+          <!-- banner alamat tersimpan -->
+          <div class="saved-addr-banner" id="savedAddrBanner" style="display:none;">
+            <div class="saved-addr-text" id="savedAddrText"></div>
+            <button class="saved-addr-edit" onclick="useNewAddress()">Ubah</button>
+          </div>
+
+          <form class="addr-form" id="addrForm" onsubmit="return false;">
+            <div class="addr-row">
+              <div class="addr-field">
+                <label class="addr-label">Nama Penerima <span class="req">*</span></label>
+                <input type="text" class="addr-input" id="fNama" placeholder="Nama lengkap penerima" />
+                <div class="addr-error" id="errNama"></div>
+              </div>
+              <div class="addr-field">
+                <label class="addr-label">No. HP <span class="req">*</span></label>
+                <input type="tel" class="addr-input" id="fHp" placeholder="08xxxxxxxxxx" />
+                <div class="addr-error" id="errHp"></div>
+              </div>
+            </div>
+
+            <div class="addr-field">
+              <label class="addr-label">Alamat Lengkap <span class="req">*</span></label>
+              <textarea class="addr-textarea" id="fAlamat" placeholder="Nama jalan, nomor rumah, RT/RW, patokan..."></textarea>
+              <div class="addr-error" id="errAlamat"></div>
+            </div>
+
+            <div class="addr-row">
+              <div class="addr-field">
+                <label class="addr-label">Kota / Kabupaten <span class="req">*</span></label>
+                <input type="text" class="addr-input" id="fKota" placeholder="cth. Surabaya" />
+                <div class="addr-error" id="errKota"></div>
+              </div>
+              <div class="addr-field">
+                <label class="addr-label">Provinsi <span class="req">*</span></label>
+                <input type="text" class="addr-input" id="fProvinsi" placeholder="cth. Jawa Timur" />
+                <div class="addr-error" id="errProvinsi"></div>
+              </div>
+            </div>
+
+            <div class="addr-row">
+              <div class="addr-field">
+                <label class="addr-label">Kode Pos <span class="req">*</span></label>
+                <input type="text" class="addr-input" id="fKodepos" placeholder="cth. 60291" maxlength="6" />
+                <div class="addr-error" id="errKodepos"></div>
+              </div>
+              <div class="addr-field">
+                <label class="addr-label">Catatan (opsional)</label>
+                <input type="text" class="addr-input" id="fCatatan" placeholder="cth. titip ke satpam" />
+              </div>
+            </div>
+          </form>
+
+          <!-- Kurir -->
+          <div class="kurir-group">
+            <div class="kurir-group-title">Pilih Kurir Pengiriman</div>
+            <p class="kurir-zona-hint" id="kurirZonaHint" style="font-family:'DM Sans',sans-serif;font-size:.73rem;color:#888;margin:-.35rem 0 .7rem;"></p>
+            <div class="kurir-options" id="kurirOptions">
+              <div class="kurir-opt selected" data-kurir="reguler" data-base="15000" data-cost="15000" onclick="selectKurir(this)">
+                <span class="kurir-icon">📦</span>
+                <div style="flex:1;"><p class="kurir-name">Reguler</p><p class="kurir-desc">Estimasi tiba 3–5 hari kerja</p></div>
+                <span class="kurir-price">Rp 15.000</span>
+                <div class="kurir-radio"></div>
+              </div>
+              <div class="kurir-opt" data-kurir="express" data-base="28000" data-cost="28000" onclick="selectKurir(this)">
+                <span class="kurir-icon">🚚</span>
+                <div style="flex:1;"><p class="kurir-name">Express</p><p class="kurir-desc">Estimasi tiba 1–2 hari kerja</p></div>
+                <span class="kurir-price">Rp 28.000</span>
+                <div class="kurir-radio"></div>
+              </div>
+              <div class="kurir-opt" data-kurir="sameday" data-base="40000" data-cost="40000" onclick="selectKurir(this)">
+                <span class="kurir-icon">⚡</span>
+                <div style="flex:1;"><p class="kurir-name">Same Day</p><p class="kurir-desc">Tiba hari ini (khusus area tertentu)</p></div>
+                <span class="kurir-price">Rp 40.000</span>
+                <div class="kurir-radio"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: summary -->
+        <div class="dashboard-card" style="position:sticky;top:1.5rem;">
+          <div class="card-header">
+            <div><p class="card-subtitle">Pesananmu</p><h3 class="card-title">Ringkasan</h3></div>
+          </div>
+
+          <div id="orderItems"></div>
+
+          <div style="margin-top:.5rem;">
+            <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal">Rp 0</span></div>
+            <div class="summary-row" id="sumDiscRow" style="display:none;color:#7ecb5f;"><span>Diskon</span><span id="sumDisc">- Rp 0</span></div>
+            <div class="summary-row"><span>Ongkos Kirim</span><span id="sumOngkir">Rp 15.000</span></div>
+            <div class="summary-row"><span>Biaya Admin</span><span>Rp 5.000</span></div>
+            <div class="summary-row total"><span>Total</span><span id="sumTotal">Rp 0</span></div>
+          </div>
+
+          <button class="locked-upgrade-btn" style="width:100%;justify-content:center;margin-top:1rem;border:none;" onclick="goToPayment()">
+            Lanjut ke Pembayaran →
+          </button>
+          <a href="keranjang.html" class="btn-ghost" style="display:block;text-align:center;margin-top:.6rem;font-size:.83rem;text-decoration:none;">← Kembali ke Keranjang</a>
+          <p class="checkout-note">📦 Pastikan alamat sudah benar. Novel fisik akan dikirim ke alamat ini setelah pembayaran terkonfirmasi.</p>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar"><span></span><span></span><span></span></button>
+
+  <script>
+    function fmt(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+    let selectedShippingCost = 15000;
+    let selectedShippingName = 'Reguler';
+    let kodeposAutoFilled = false;
+
+    // ── ZONA ONGKIR ──
+    const ZONA_PROVINSI = {
+      'dki jakarta':1,'jakarta':1,'jawa barat':1,'jawa tengah':1,'jawa timur':1,
+      'banten':1,'di yogyakarta':1,'daerah istimewa yogyakarta':1,'yogyakarta':1,
+      'aceh':2,'sumatera utara':2,'sumatera barat':2,'riau':2,'kepulauan riau':2,
+      'jambi':2,'sumatera selatan':2,'kepulauan bangka belitung':2,'bangka belitung':2,
+      'bengkulu':2,'lampung':2,'bali':2,'nusa tenggara barat':2,'ntb':2,
+      'kalimantan barat':3,'kalimantan tengah':3,'kalimantan selatan':3,'kalimantan timur':3,
+      'kalimantan utara':3,'sulawesi utara':3,'sulawesi tengah':3,'sulawesi selatan':3,
+      'sulawesi tenggara':3,'gorontalo':3,'sulawesi barat':3,'nusa tenggara timur':3,'ntt':3,
+      'maluku':4,'maluku utara':4,'papua':4,'papua barat':4,'papua tengah':4,
+      'papua pegunungan':4,'papua selatan':4,'papua barat daya':4,
+    };
+    const ZONA_MULTIPLIER = { 1:1, 2:1.3, 3:1.6, 4:2 };
+    const ZONA_LABEL = {
+      1:'Zona 1 (Jawa)', 2:'Zona 2 (Sumatera/Bali/NTB)',
+      3:'Zona 3 (Kalimantan/Sulawesi/NTT)', 4:'Zona 4 (Maluku/Papua)'
+    };
+
+    function getZonaInfo(provinsiStr) {
+      const key = (provinsiStr || '').trim().toLowerCase();
+      const zona = ZONA_PROVINSI[key];
+      if (!zona) return null;
+      return { zona, multiplier: ZONA_MULTIPLIER[zona], label: ZONA_LABEL[zona] };
+    }
+
+    // ── KODE POS OTOMATIS ──
+    const KODEPOS_KOTA = {
+      'jakarta pusat':'10110','jakarta utara':'14140','jakarta barat':'11220',
+      'jakarta selatan':'12110','jakarta timur':'13330','jakarta':'10110',
+      'surabaya':'60111','bandung':'40111','semarang':'50111','yogyakarta':'55111',
+      'jogja':'55111','malang':'65111','solo':'57111','surakarta':'57111',
+      'medan':'20111','palembang':'30111','makassar':'90111','denpasar':'80111',
+      'bogor':'16111','depok':'16411','tangerang':'15111','bekasi':'17111',
+      'balikpapan':'76111','manado':'95111','padang':'25111','pekanbaru':'28111',
+      'banjarmasin':'70111','pontianak':'78111','samarinda':'75111','jayapura':'99111',
+      'ambon':'97111','kupang':'85111','mataram':'83111','batam':'29400',
+      'cirebon':'45111','tasikmalaya':'46111','sukabumi':'43111','cimahi':'40511',
+      'serang':'42111','cilegon':'42411','purwokerto':'53111','tegal':'52111',
+      'pekalongan':'51111','kediri':'64111','madiun':'63111','jember':'68111',
+      'banyuwangi':'68411','probolinggo':'67211','mojokerto':'61311','sidoarjo':'61211',
+      'gresik':'61111','lamongan':'62211','bojonegoro':'62111',
+    };
+
+    function normalizeKota(str) {
+      return (str || '').trim().toLowerCase().replace(/^(kota|kabupaten|kab\.?)\s+/i, '');
+    }
+
+    function tryAutoKodepos() {
+      const kotaEl    = document.getElementById('fKota');
+      const kodeposEl = document.getElementById('fKodepos');
+      const key   = normalizeKota(kotaEl.value);
+      const match = KODEPOS_KOTA[key];
+      if (match && (kodeposEl.value.trim() === '' || kodeposAutoFilled)) {
+        kodeposEl.value = match;
+        kodeposAutoFilled = true;
+        document.getElementById('errKodepos').textContent = '';
+        kodeposEl.classList.remove('invalid');
+      }
+    }
+
+    function recalcKurirPrices() {
+      const provinsiEl = document.getElementById('fProvinsi');
+      const info       = getZonaInfo(provinsiEl.value);
+      const hint       = document.getElementById('kurirZonaHint');
+      const multiplier = info ? info.multiplier : 1;
+
+      document.querySelectorAll('.kurir-opt').forEach(opt => {
+        const base = parseInt(opt.dataset.base, 10);
+        const cost = Math.round((base * multiplier) / 500) * 500;
+        opt.dataset.cost = cost;
+        opt.querySelector('.kurir-price').textContent = fmt(cost);
+        if (opt.classList.contains('selected')) selectedShippingCost = cost;
+      });
+
+      if (hint) {
+        hint.textContent = info
+          ? `📍 Ongkir disesuaikan untuk ${info.label} (×${info.multiplier}).`
+          : 'Isi provinsi tujuan untuk estimasi ongkos kirim yang lebih akurat.';
+      }
+      renderSummary();
+    }
+
+    function selectKurir(el) {
+      document.querySelectorAll('.kurir-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedShippingCost = parseInt(el.dataset.cost);
+      selectedShippingName = el.querySelector('.kurir-name').textContent;
+      renderSummary();
+    }
+
+    function itemLabel(i) { return i.title || i.name || 'Item'; }
+    function itemSub(i)   { return i.author || (i.sessions ? `${i.sessions} Sesi` : ''); }
+
+    function loadCheckoutData() {
+      try { return JSON.parse(localStorage.getItem('checkoutData') || 'null'); }
+      catch(e) { return null; }
+    }
+
+    // Helper: render cover — foto jika ada field `img`, fallback gradien+initial
+    function orderCoverHTML(item) {
+      const coverClass = item.cover || '';
+      const fallbackBg = coverClass ? '' : 'background:linear-gradient(135deg,#c084fc,#5b21b6);';
+      if (item.img) {
+        return `<div class="order-item-cover ${coverClass}" style="${fallbackBg}">
+          <img src="${item.img}" alt="${itemLabel(item)}" loading="lazy" />
+        </div>`;
+      }
+      return `<div class="order-item-cover ${coverClass}" style="${fallbackBg}">
+        <div class="cover-initial">${item.initial || itemLabel(item).charAt(0)}</div>
+      </div>`;
+    }
+
+    function renderOrderItems() {
+      const data = loadCheckoutData();
+      if (!data || !data.cart || data.cart.length === 0) {
+        document.getElementById('orderItems').innerHTML =
+          '<p style="font-family:\'DM Sans\',sans-serif;font-size:.85rem;color:#888;">Keranjang kosong.</p>';
+        return;
+      }
+      document.getElementById('orderItems').innerHTML = data.cart.map(i => `
+        <div class="order-item">
+          ${orderCoverHTML(i)}
+          <div>
+            <p class="order-item-name">${itemLabel(i)}${(i.qty||1) > 1 ? ' ×' + i.qty : ''}</p>
+            <p class="order-item-sub">${itemSub(i)}</p>
+          </div>
+          <span class="order-item-price">${fmt(i.price * (i.qty||1))}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderSummary() {
+      const data     = loadCheckoutData();
+      const subtotal = data ? data.subtotal : 0;
+      const discount = data ? (data.discount || 0) : 0;
+      const total    = subtotal - discount + selectedShippingCost + 5000;
+
+      document.getElementById('sumSubtotal').textContent = fmt(subtotal);
+      document.getElementById('sumOngkir').textContent   = fmt(selectedShippingCost);
+      document.getElementById('sumTotal').textContent    = fmt(total);
+
+      const discRow = document.getElementById('sumDiscRow');
+      if (discount > 0) {
+        discRow.style.display = 'flex';
+        document.getElementById('sumDisc').textContent = '- ' + fmt(discount);
+      } else {
+        discRow.style.display = 'none';
+      }
+    }
+
+    // ── ALAMAT TERSIMPAN ──
+    function loadSavedAddress() {
+      try { return JSON.parse(localStorage.getItem('savedAddress') || 'null'); }
+      catch(e) { return null; }
+    }
+
+    function fillForm(addr) {
+      document.getElementById('fNama').value     = addr.nama     || '';
+      document.getElementById('fHp').value       = addr.hp       || '';
+      document.getElementById('fAlamat').value   = addr.alamat   || '';
+      document.getElementById('fKota').value     = addr.kota     || '';
+      document.getElementById('fProvinsi').value = addr.provinsi || '';
+      document.getElementById('fKodepos').value  = addr.kodepos  || '';
+      document.getElementById('fCatatan').value  = addr.catatan  || '';
+    }
+
+    function showSavedBanner(addr) {
+      document.getElementById('savedAddrText').innerHTML = `
+        <strong>${addr.nama} · ${addr.hp}</strong>
+        ${addr.alamat}, ${addr.kota}, ${addr.provinsi} ${addr.kodepos}
+      `;
+      document.getElementById('savedAddrBanner').style.display = 'flex';
+      document.getElementById('addrForm').style.display = 'none';
+    }
+
+    function useNewAddress() {
+      document.getElementById('savedAddrBanner').style.display = 'none';
+      document.getElementById('addrForm').style.display = 'flex';
+    }
+
+    // ── VALIDASI ──
+    function validateForm() {
+      let valid = true;
+      const fields = [
+        { id:'fNama',     err:'errNama',     msg:'Nama penerima wajib diisi.' },
+        { id:'fHp',       err:'errHp',       msg:'No. HP wajib diisi.', extra: v => /^0[0-9]{9,13}$/.test(v.trim()) ? '' : 'Format no. HP tidak valid (cth. 08123456789).' },
+        { id:'fAlamat',   err:'errAlamat',   msg:'Alamat lengkap wajib diisi.' },
+        { id:'fKota',     err:'errKota',     msg:'Kota/kabupaten wajib diisi.' },
+        { id:'fProvinsi', err:'errProvinsi', msg:'Provinsi wajib diisi.' },
+        { id:'fKodepos',  err:'errKodepos',  msg:'Kode pos wajib diisi.', extra: v => /^[0-9]{5}$/.test(v.trim()) ? '' : 'Kode pos harus 5 digit angka.' },
+      ];
+      fields.forEach(f => {
+        const el    = document.getElementById(f.id);
+        const errEl = document.getElementById(f.err);
+        const val   = el.value.trim();
+        let msg = '';
+        if (!val) msg = f.msg;
+        else if (f.extra) msg = f.extra(val);
+
+        if (msg) { errEl.textContent = msg; el.classList.add('invalid'); valid = false; }
+        else     { errEl.textContent = ''; el.classList.remove('invalid'); }
+      });
+      return valid;
+    }
+
+    function goToPayment() {
+      const usingSaved = document.getElementById('savedAddrBanner').style.display === 'flex';
+      let address;
+
+      if (usingSaved) {
+        address = loadSavedAddress();
+      } else {
+        if (!validateForm()) { showToast('Lengkapi data alamat dengan benar ya ✦', 'warning'); return; }
+        address = {
+          nama:     document.getElementById('fNama').value.trim(),
+          hp:       document.getElementById('fHp').value.trim(),
+          alamat:   document.getElementById('fAlamat').value.trim(),
+          kota:     document.getElementById('fKota').value.trim(),
+          provinsi: document.getElementById('fProvinsi').value.trim(),
+          kodepos:  document.getElementById('fKodepos').value.trim(),
+          catatan:  document.getElementById('fCatatan').value.trim(),
+        };
+        localStorage.setItem('savedAddress', JSON.stringify(address));
+      }
+
+      const data = loadCheckoutData();
+      if (!data || !data.cart || data.cart.length === 0) {
+        showToast('Keranjang kosong, tidak bisa lanjut.', 'warning'); return;
+      }
+
+      const newTotal = data.subtotal - (data.discount || 0) + selectedShippingCost + 5000;
+      localStorage.setItem('checkoutData', JSON.stringify({
+        ...data,
+        address,
+        shippingMethod: selectedShippingName,
+        shippingCost:   selectedShippingCost,
+        total:          newTotal,
+      }));
+      window.location.href = 'pembayaran.html';
+    }
+
+    function showToast(msg, type) {
+      const t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style, {
+        position:'fixed',bottom:'1.5rem',right:'1.5rem',padding:'.75rem 1.25rem',
+        borderRadius:'10px',fontFamily:'DM Sans,sans-serif',fontSize:'.88rem',
+        background: type==='warning' ? '#3a2a1a' : '#1a3a2a',
+        color:      type==='warning' ? '#f5c518' : '#7ecb5f',
+        border:`1px solid ${type==='warning' ? 'rgba(245,197,24,.3)' : 'rgba(126,203,95,.3)'}`,
+        zIndex:'9999',transition:'opacity .3s'
+      });
+      document.body.appendChild(t);
+      setTimeout(() => { t.style.opacity='0'; setTimeout(() => t.remove(), 300); }, 2500);
+    }
+
+    (function(){
+      const currentPage = window.location.pathname.split('/').pop();
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(l => {
+        l.classList.toggle('active', l.dataset.page === currentPage);
+      });
+      const userName = localStorage.getItem('userName') || 'Customer';
+      const av = document.getElementById('topbarAvatar');
+      if (av) av.textContent = userName.charAt(0).toUpperCase();
+      const tn = document.getElementById('topbarName');
+      if (tn) tn.textContent = userName;
+
+      const saved = loadSavedAddress();
+      if (saved) { fillForm(saved); showSavedBanner(saved); }
+
+      document.getElementById('fKota').addEventListener('input', tryAutoKodepos);
+      document.getElementById('fKota').addEventListener('blur',  tryAutoKodepos);
+      document.getElementById('fKodepos').addEventListener('input', () => { kodeposAutoFilled = false; });
+      document.getElementById('fProvinsi').addEventListener('input', recalcKurirPrices);
+      document.getElementById('fProvinsi').addEventListener('blur',  recalcKurirPrices);
+
+      renderOrderItems();
+      recalcKurirPrices();
+    })();
+  </script>
+  <script src="../assets/js/user.js"></script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Naskah – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link rel="stylesheet" href="../assets/css/customer.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    .dash-hero { border-radius:20px;padding:2rem 2rem 1.75rem;margin-bottom:1.5rem;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(245,197,24,.08) 0%,rgba(224,123,57,.06) 50%,rgba(13,13,26,0) 100%);border:1px solid rgba(245,197,24,.15); }
+    .dash-hero::before { content:'✍️';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:5rem;opacity:.07;user-select:none; }
+    .dash-hero-eyebrow { font-family:'DM Sans',sans-serif;font-size:.72rem;letter-spacing:.18em;color:rgba(245,197,24,.6);text-transform:uppercase;margin-bottom:.4rem; }
+    .dash-hero-name { font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:.05em;color:#fff;line-height:1;margin-bottom:.4rem; }
+    .dash-hero-name em { font-style:italic;color:#f5c518;font-family:'Playfair Display',serif; }
+    .dash-hero-sub { font-family:'DM Sans',sans-serif;font-size:.88rem;color:rgba(255,255,255,.4);max-width:460px; }
+    .dash-hero-badge { display:inline-flex;align-items:center;gap:.4rem;margin-top:.9rem;padding:.35rem .9rem;border-radius:999px;background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.25);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:700;color:#f5c518; }
+    .stats-bar { display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.85rem;margin-bottom:1.5rem; }
+    .stat-card { border-radius:14px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);padding:1rem 1.1rem; }
+    .stat-num { font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:#fff;margin:0 0 .15rem; }
+    .stat-label { font-family:'DM Sans',sans-serif;font-size:.75rem;color:#666;margin:0; }
+    .edit-dash-grid { display:grid;grid-template-columns:1fr 320px;gap:1.5rem;align-items:start; }
+    @media(max-width:900px){ .edit-dash-grid{ grid-template-columns:1fr; } }
+    .upload-zone { border:none;border-radius:16px;padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:all .2s;background:rgba(245,197,24,.02);margin-bottom:1.1rem; }
+    .upload-zone:hover { border-color:rgba(245,197,24,.45);background:rgba(245,197,24,.05); }
+    .upload-zone-icon { font-size:2.2rem;margin-bottom:.6rem; }
+    .upload-zone-title { font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;color:#e2d9f3;margin:0 0 .25rem; }
+    .upload-zone-sub { font-family:'DM Sans',sans-serif;font-size:.78rem;color:#666;margin:0; }
+    .upload-zone input[type=file] { display:none; }
+    .edit-stepper { display:flex;flex-direction:column;gap:0;margin-bottom:1rem; }
+    .edit-step { display:flex;gap:.85rem;position:relative; }
+    .edit-step:not(:last-child)::before { content:'';position:absolute;left:14px;top:30px;width:2px;height:calc(100% - 8px);background:rgba(255,255,255,.06);z-index:0; }
+    .edit-step.done::before   { background:rgba(245,197,24,.25); }
+    .edit-step.active::before { background:rgba(245,197,24,.1); }
+    .edit-step-dot { width:28px;height:28px;border-radius:50%;flex-shrink:0;z-index:1;border:2px solid rgba(255,255,255,.08);background:#0d0d1a;display:flex;align-items:center;justify-content:center;font-size:.8rem; }
+    .edit-step.done   .edit-step-dot { border-color:#f5c518;background:rgba(245,197,24,.15);color:#f5c518; }
+    .edit-step.active .edit-step-dot { border-color:#c084fc;background:rgba(192,132,252,.15);color:#c084fc;animation:pulse-edit 1.5s ease infinite; }
+    .edit-step.upcoming .edit-step-dot { border-color:rgba(255,255,255,.07);color:#333; }
+    @keyframes pulse-edit { 0%,100%{ box-shadow:0 0 0 0 rgba(192,132,252,.4); } 50%{ box-shadow:0 0 0 6px rgba(192,132,252,0); } }
+    .edit-step-body { padding:.05rem 0 1.2rem; }
+    .edit-step-title { font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;margin:0 0 .1rem; }
+    .edit-step.done     .edit-step-title { color:#e2d9f3; }
+    .edit-step.active   .edit-step-title { color:#c084fc; }
+    .edit-step.upcoming .edit-step-title { color:#3a3a55; }
+    .edit-step-sub { font-family:'DM Sans',sans-serif;font-size:.75rem;color:#555;margin:0; }
+    .naskah-item { display:flex;align-items:center;gap:.85rem;padding:.9rem 1rem;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);margin-bottom:.6rem;transition:border-color .18s; }
+    .naskah-item:hover { border-color:rgba(245,197,24,.2); }
+    .naskah-icon { font-size:1.5rem;flex-shrink:0; }
+    .naskah-name { font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;color:#e2d9f3;margin:0 0 .1rem; }
+    .naskah-meta { font-family:'DM Sans',sans-serif;font-size:.73rem;color:#666;margin:0; }
+    .naskah-status { margin-left:auto;padding:.22rem .7rem;border-radius:999px;font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:700;white-space:nowrap;flex-shrink:0; }
+    .naskah-status.review   { background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.25);color:#f5c518; }
+    .naskah-status.progress { background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.25);color:#c084fc; }
+    .naskah-status.done     { background:rgba(126,203,95,.1);border:1px solid rgba(126,203,95,.25);color:#7ecb5f; }
+    .paket-aktif { padding:1rem 1.1rem;border-radius:14px;background:linear-gradient(135deg,rgba(245,197,24,.06),rgba(224,123,57,.04));border:1px solid rgba(245,197,24,.18);margin-bottom:1rem; }
+    .paket-aktif-label { font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.08em;margin:0 0 .35rem; }
+    .paket-aktif-name { font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.04em;color:#f5c518;margin:0 0 .2rem; }
+    .paket-aktif-sub { font-family:'DM Sans',sans-serif;font-size:.76rem;color:#888;margin:0; }
+    .quick-actions { display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1rem; }
+    .qa-btn { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;padding:.9rem .5rem;border-radius:12px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.02);text-decoration:none;cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif; }
+    .qa-btn:hover { border-color:rgba(245,197,24,.25);background:rgba(245,197,24,.04); }
+    .qa-btn.locked-qa { opacity:.35;cursor:not-allowed;pointer-events:none; }
+    .qa-icon { font-size:1.3rem; }
+    .qa-label { font-size:.75rem;font-weight:600;color:#aaa;text-align:center; }
+    .tips-item { display:flex;gap:.7rem;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-family:'DM Sans',sans-serif; }
+    .tips-item:last-child { border:none; }
+    .tips-icon { font-size:1.1rem;flex-shrink:0;margin-top:.1rem; }
+    .tips-title { font-size:.83rem;font-weight:600;color:#e2d9f3;margin:0 0 .1rem; }
+    .tips-desc  { font-size:.74rem;color:#666;margin:0;line-height:1.5; }
+    .locked-banner { display:flex;align-items:center;gap:.75rem;padding:.9rem 1rem;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);margin-bottom:1rem;opacity:.55; }
+    .locked-banner-icon { font-size:1.3rem; }
+    .locked-banner-text { font-family:'DM Sans',sans-serif;font-size:.78rem;color:#666;line-height:1.4; }
+    .locked-banner-text strong { display:block;color:#aaa;font-size:.82rem;margin-bottom:.1rem; }
+  </style>
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Editing Client</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-userediting.html" class="sidebar-link" data-page="dashboard-userediting.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <!-- ✅ Pilih Mentor TERBUKA -->
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor</a>
+      <a href="submit-naskah-editing.html" class="sidebar-link active" data-page="submit-naskah-editing.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Submit Naskah</a>
+      <a href="revisi-naskah.html" class="sidebar-link" data-page="revisi-naskah.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah</a>
+      <div class="sidebar-divider"></div>
+      <!-- 🔒 Status Mentoring tetap locked -->
+      <a class="sidebar-link locked">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring
+        <span style="margin-left:auto;font-size:.62rem;background:rgba(255,255,255,.06);padding:.1rem .4rem;border-radius:4px;color:#555;">Pro</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang <span class="sl-badge badge-gold" id="sidebarCartCount"></span></a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi</a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-customer.html" class="sidebar-link" data-page="profile-customer.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout" data-logout>
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Editing Client ✦</p>
+        <h1 class="topbar-title">Submit Naskah</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="admin-profile">
+          <div class="admin-avatar" id="topbarAvatar" style="background:linear-gradient(135deg,#f5c518,#e07b39);">C</div>
+          <div><strong id="topbarName">Client</strong><p>Editing Client</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="dash-hero">
+        <p class="dash-hero-eyebrow">— Submit Naskah</p>
+        <h2 class="dash-hero-name">Halo, <em id="heroName">Client</em>!</h2>
+        <p class="dash-hero-sub">Naskahmu ada di tangan yang tepat. Pantau progress editing, upload revisi, dan download hasil di sini.</p>
+        <div class="dash-hero-badge">✍️ Editing Client Aktif</div>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-card"><p class="stat-num" id="statNaskah">0</p><p class="stat-label">Naskah Disubmit</p></div>
+        <div class="stat-card"><p class="stat-num" id="statProgress">0</p><p class="stat-label">Sedang Diproses</p></div>
+        <div class="stat-card"><p class="stat-num" id="statSelesai">0</p><p class="stat-label">Selesai Diedit</p></div>
+        <div class="stat-card"><p class="stat-num" id="statRevisi">0</p><p class="stat-label">Revisi Berjalan</p></div>
+      </div>
+
+      <div class="edit-dash-grid">
+        <div>
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Mulai dari Sini</p><h3 class="card-title">Submit Naskah</h3></div>
+            </div>
+            <label class="upload-zone" id="uploadZone">
+              <input type="file" id="fileInput" accept=".doc,.docx,.pdf,.txt" onchange="handleFile(this)" />
+              <div class="upload-zone-icon">📄</div>
+              <p class="upload-zone-title">Drop naskah di sini atau klik untuk upload</p>
+              <p class="upload-zone-sub">Mendukung .docx, .pdf, .txt · Maks 50MB</p>
+            </label>
+            <p style="font-family:'DM Sans',sans-serif;font-size:.75rem;color:#555;text-align:center;">
+              Atau buka halaman <a href="submit-naskah-editing.html" style="color:#f5c518;text-decoration:none;">Submit Naskah</a> untuk form lengkap dengan detail genre & instruksi editor.
+            </p>
+          </div>
+
+          <div class="dashboard-card" style="margin-top:1.25rem;">
+            <div class="card-header">
+              <div><p class="card-subtitle">Pantau Progress</p><h3 class="card-title">Status Naskah</h3></div>
+            </div>
+            <div id="naskahList">
+              <div class="naskah-item">
+                <span class="naskah-icon">📘</span>
+                <div><p class="naskah-name">Contoh: Sang Penulis Bayangan</p><p class="naskah-meta">Copy Editing · Disubmit 20 Jun 2026 · 58.200 kata</p></div>
+                <span class="naskah-status progress">Sedang Diedit</span>
+              </div>
+              <div class="naskah-item">
+                <span class="naskah-icon">📗</span>
+                <div><p class="naskah-name">Contoh: Bab 1 – Draft Awal</p><p class="naskah-meta">Proofreading · Disubmit 10 Jun 2026 · 12.000 kata</p></div>
+                <span class="naskah-status done">Selesai</span>
+              </div>
+            </div>
+            <a href="submit-naskah-editing.html" class="btn-ghost" style="display:block;text-align:center;margin-top:.75rem;font-size:.82rem;text-decoration:none;">+ Submit Naskah Baru</a>
+          </div>
+
+          <div class="dashboard-card" style="margin-top:1.25rem;">
+            <div class="card-header">
+              <div><p class="card-subtitle">Progress Terkini</p><h3 class="card-title">Alur Editing</h3></div>
+            </div>
+            <div class="edit-stepper">
+              <div class="edit-step done">
+                <div class="edit-step-dot">✓</div>
+                <div class="edit-step-body"><p class="edit-step-title">Naskah Diterima</p><p class="edit-step-sub">20 Jun 2026 · 58.200 kata terverifikasi</p></div>
+              </div>
+              <div class="edit-step done">
+                <div class="edit-step-dot">✓</div>
+                <div class="edit-step-body"><p class="edit-step-title">Penugasan Editor</p><p class="edit-step-sub">21 Jun 2026 · Editor: Sari Dewi</p></div>
+              </div>
+              <div class="edit-step active">
+                <div class="edit-step-dot">✍</div>
+                <div class="edit-step-body"><p class="edit-step-title">Proses Copy Editing</p><p class="edit-step-sub">Estimasi selesai: 4 Jul 2026 (14 hari kerja)</p></div>
+              </div>
+              <div class="edit-step upcoming">
+                <div class="edit-step-dot">○</div>
+                <div class="edit-step-body"><p class="edit-step-title">Review & Revisi Client</p><p class="edit-step-sub">Kamu bisa minta 1 putaran revisi gratis</p></div>
+              </div>
+              <div class="edit-step upcoming">
+                <div class="edit-step-dot">○</div>
+                <div class="edit-step-body"><p class="edit-step-title">Naskah Final Dikirim</p><p class="edit-step-sub">Via email + tersedia di dashboard</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="position:sticky;top:1.5rem;display:flex;flex-direction:column;gap:1rem;">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Langgananmu</p><h3 class="card-title">Paket Aktif</h3></div>
+            </div>
+            <div class="paket-aktif">
+              <p class="paket-aktif-label">Paket Saat Ini</p>
+              <p class="paket-aktif-name" id="paketAktifName">Copy Editing</p>
+              <p class="paket-aktif-sub" id="paketAktifSub">Paket Editing Menyeluruh · Aktif sejak Jun 2026</p>
+            </div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.08em;margin:0 0 .5rem;">Fitur Terkunci</p>
+            <div class="locked-banner">
+              <span class="locked-banner-icon">🔒</span>
+              <div class="locked-banner-text">
+                <strong>Status Mentoring & Pengajuan Sesi</strong>
+                Tidak termasuk di paket editing. Upgrade ke Program Pelatihan untuk akses penuh.
+              </div>
+            </div>
+            <a href="upgrade-member.html" class="locked-upgrade-btn" style="width:100%;justify-content:center;margin-top:.5rem;text-decoration:none;display:block;text-align:center;font-size:.82rem;">Upgrade ke Program Pelatihan →</a>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Aksi Cepat</p><h3 class="card-title">Menu Utama</h3></div>
+            </div>
+            <div class="quick-actions">
+              <a href="submit-naskah-editing.html" class="qa-btn"><span class="qa-icon">📄</span><span class="qa-label">Submit Naskah</span></a>
+              <a href="revisi-naskah.html" class="qa-btn"><span class="qa-icon">✏️</span><span class="qa-label">Revisi Naskah</span></a>
+              <!-- ✅ Pilih Mentor terbuka -->
+              <a href="pilih-mentor.html" class="qa-btn"><span class="qa-icon">👨‍🏫</span><span class="qa-label">Pilih Mentor</span></a>
+              <a href="history-transaksi.html" class="qa-btn"><span class="qa-icon">🧾</span><span class="qa-label">Riwayat</span></a>
+              <a href="profile-customer.html" class="qa-btn"><span class="qa-icon">👤</span><span class="qa-label">Profil</span></a>
+              <!-- 🔒 Status Mentoring tetap locked -->
+              <div class="qa-btn locked-qa" title="Tidak termasuk paket editing"><span class="qa-icon">📊</span><span class="qa-label">Mentoring</span></div>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Dari Tim Kami</p><h3 class="card-title">Tips & Info</h3></div>
+            </div>
+            <div class="tips-item">
+              <span class="tips-icon">📋</span>
+              <div><p class="tips-title">Sertakan brief di naskah</p><p class="tips-desc">Tulis catatan singkat di halaman pertama: genre, target pembaca, dan hal spesifik yang kamu ingin editor perhatikan.</p></div>
+            </div>
+            <div class="tips-item">
+              <span class="tips-icon">⏱️</span>
+              <div><p class="tips-title">Estimasi waktu editing</p><p class="tips-desc">Copy Editing ~10–14 hari kerja per 50.000 kata. Pastikan naskahmu sudah draft final sebelum disubmit.</p></div>
+            </div>
+            <div class="tips-item">
+              <span class="tips-icon">📬</span>
+              <div><p class="tips-title">Hasil via email + dashboard</p><p class="tips-desc">Naskah final akan dikirim ke email terdaftar dan bisa didownload dari halaman Revisi Naskah.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar"><span></span><span></span><span></span></button>
+
+  <script>
+    function handleFile(input) {
+      if (!input.files || !input.files[0]) return;
+      const f = input.files[0];
+      const zone = document.getElementById('uploadZone');
+      zone.innerHTML = `
+        <div style="font-size:2rem;margin-bottom:.5rem;">📄</div>
+        <p style="font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;color:#7ecb5f;margin:0 0 .2rem;">${f.name}</p>
+        <p style="font-family:'DM Sans',sans-serif;font-size:.75rem;color:#888;margin:0;">${(f.size/1024/1024).toFixed(2)} MB · Siap disubmit</p>
+        <a href="submit-naskah-editing.html" style="display:inline-block;margin-top:.75rem;padding:.5rem 1.2rem;border-radius:9px;background:rgba(126,203,95,.15);border:1px solid rgba(126,203,95,.3);color:#7ecb5f;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:700;text-decoration:none;">Lanjut ke Form Submit →</a>
+      `;
+    }
+    const zone = document.getElementById('uploadZone');
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor='rgba(245,197,24,.5)'; });
+    zone.addEventListener('dragleave', () => { zone.style.borderColor=''; });
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.style.borderColor='';
+      const f = e.dataTransfer.files[0];
+      if (f) handleFile({ files: [f] });
+    });
+
+    (function(){
+      const currentPage = window.location.pathname.split('/').pop();
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(l => {
+        l.classList.toggle('active', l.dataset.page === currentPage);
+      });
+      const userName = localStorage.getItem('userName') || 'Client';
+      document.getElementById('topbarAvatar').textContent = userName.charAt(0).toUpperCase();
+      document.getElementById('topbarName').textContent   = userName;
+      document.getElementById('heroName').textContent     = userName.split(' ')[0];
+      try {
+        const history = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+        const editTrx = history.find(t => t.type === 'editing' && t.status === 'success');
+        if (editTrx && editTrx.items[0]) {
+          document.getElementById('paketAktifName').textContent = editTrx.items[0].title || 'Copy Editing';
+          const d = new Date(editTrx.date);
+          document.getElementById('paketAktifSub').textContent = `Aktif sejak ${d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})}`;
+        }
+      } catch(e){}
+      try {
+        const cart  = JSON.parse(localStorage.getItem('novelCart') || '[]');
+        const count = cart.reduce((s,i) => s+(i.qty||1), 0);
+        const badge = document.getElementById('sidebarCartCount');
+        if (badge) badge.textContent = count > 0 ? count : '';
+      } catch(e){}
+      document.getElementById('statNaskah').textContent   = '2';
+      document.getElementById('statProgress').textContent = '1';
+      document.getElementById('statSelesai').textContent  = '1';
+      document.getElementById('statRevisi').textContent   = '0';
+    })();
+  </script>
+  <script src="../assets/js/user.js"></script>
+</body>
+</html>

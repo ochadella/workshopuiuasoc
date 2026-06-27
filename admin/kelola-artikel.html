@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelola Artikel – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+  <link rel="stylesheet" href="../assets/css/dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo">
+        <span class="brand-n">N</span>
+        <span class="brand-rest">ovelCraft</span>
+      </a>
+      <p class="sidebar-role">Admin Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-admin.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+        Dashboard
+      </a>
+      <a href="kelola-user.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg></span>
+        Kelola User
+        <span class="sl-badge">12</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <a href="kelola-transaksi.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+        Kelola Transaksi
+      </a>
+      <a href="kelola-produk.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        Kelola Produk
+      </a>
+      <a href="kelola-artikel.html" class="sidebar-link active">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+        Kelola Artikel
+        <span class="sl-badge badge-purple">3</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <a href="kelola-mentor.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+        Kelola Mentor
+      </a>
+      <a href="profile-admin.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        Profile Admin
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+        Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <!-- TOPBAR -->
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Content Management ✦</p>
+        <h1 class="topbar-title">Kelola Artikel</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <span class="topbar-search-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <input type="text" placeholder="Cari artikel..." />
+        </div>
+        <div class="live-clock">
+          <div class="live-clock-dot"></div>
+          <span id="liveClock">00:00</span>
+        </div>
+        <div class="admin-profile">
+          <div class="admin-avatar">A</div>
+          <div>
+            <strong>Admin NovelCraft</strong>
+            <p>Super Admin</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- STATS -->
+    <section class="dashboard-stats">
+      <div class="stats-card sc-purple">
+        <div class="stats-icon si-purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--purple-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">124</h3>
+          <p class="stats-label">Total Artikel</p>
+        </div>
+      </div>
+      <div class="stats-card sc-teal">
+        <div class="stats-icon si-teal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">42K</h3>
+          <p class="stats-label">Total Views</p>
+        </div>
+      </div>
+      <div class="stats-card sc-gold">
+        <div class="stats-icon si-gold">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">18</h3>
+          <p class="stats-label">Trending</p>
+        </div>
+      </div>
+      <div class="stats-card sc-crimson">
+        <div class="stats-icon si-crimson">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f08080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">7</h3>
+          <p class="stats-label">Draft</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTER BAR -->
+    <div class="admin-filter-bar">
+      <div class="filter-group">
+        <button class="filter-chip active">Semua</button>
+        <button class="filter-chip chip-teal">Publish</button>
+        <button class="filter-chip chip-purple">Draft</button>
+        <button class="filter-chip chip-gold">Trending</button>
+      </div>
+      <button class="btn-primary" id="btnTulisArtikel">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Tulis Artikel
+      </button>
+    </div>
+
+    <!-- TABLE CARD -->
+    <section class="dashboard-card">
+      <div class="card-header">
+        <div>
+          <p class="card-subtitle">Editorial Content</p>
+          <h3 class="card-title">Daftar Artikel</h3>
+        </div>
+        <span style="font-size:.78rem;color:var(--white-muted);">Menampilkan 1–6 dari 124</span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Judul Artikel</th>
+              <th>Kategori</th>
+              <th>Penulis</th>
+              <th>Views</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar av-teal">W</div>
+                  <div><strong>World Building untuk Pemula</strong><p>Dipublish 24 Mei 2026</p></div>
+                </div>
+              </td>
+              <td><span class="role-badge mentor">Tips Menulis</span></td>
+              <td>Reza Nugraha</td>
+              <td style="color:var(--teal);font-weight:500;">12.4K</td>
+              <td><span class="status success">Publish</span></td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar av-purple">P</div>
+                  <div><strong>Plot Twist yang Tidak Cringe</strong><p>Dipublish 21 Mei 2026</p></div>
+                </div>
+              </td>
+              <td><span class="role-badge editor">Storytelling</span></td>
+              <td>Dewi Hartono</td>
+              <td style="color:var(--teal);font-weight:500;">8.2K</td>
+              <td><span class="status success">Publish</span></td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar">C</div>
+                  <div><strong>Cara Menulis Character Arc</strong><p>Draft terbaru</p></div>
+                </div>
+              </td>
+              <td><span class="role-badge" style="background:rgba(212,168,71,.1);color:var(--gold-soft);border-color:rgba(212,168,71,.2);">Character Dev</span></td>
+              <td>Sari Mulyani</td>
+              <td style="color:var(--white-muted);">—</td>
+              <td><span class="status pending">Draft</span></td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar av-crimson">M</div>
+                  <div><strong>Menulis Antagonis yang Manusiawi</strong><p>Dipublish 18 Mei 2026</p></div>
+                </div>
+              </td>
+              <td><span class="role-badge editor">Storytelling</span></td>
+              <td>Bagas Santoso</td>
+              <td style="color:var(--teal);font-weight:500;">6.8K</td>
+              <td><span class="status success">Publish</span></td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar" style="background:rgba(212,168,71,.1);color:var(--gold-soft);">D</div>
+                  <div><strong>Dialog yang Terasa Natural</strong><p>Draft terbaru</p></div>
+                </div>
+              </td>
+              <td><span class="role-badge mentor">Tips Menulis</span></td>
+              <td>Citra Maharani</td>
+              <td style="color:var(--white-muted);">—</td>
+              <td><span class="status pending">Draft</span></td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar av-purple">S</div>
+                  <div><strong>Struktur Tiga Babak dalam Novel</strong><p>Dipublish 10 Mei 2026</p></div>
+                </div>
+              </td>
+              <td><span class="role-badge editor">Storytelling</span></td>
+              <td>Reza Nugraha</td>
+              <td style="color:var(--teal);font-weight:500;">15.1K</td>
+              <td><span class="status success">Publish</span></td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.05);">
+        <span style="font-size:.78rem;color:var(--white-muted);">Halaman 1 dari 21</span>
+        <div style="display:flex;gap:.5rem;">
+          <button class="btn-ghost" style="padding:.4rem .85rem;font-size:.78rem;">← Prev</button>
+          <button class="btn-primary" style="padding:.4rem .85rem;font-size:.78rem;">Next →</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile toggle -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- ================================================
+       MODAL TULIS ARTIKEL
+  ================================================ -->
+  <div class="admin-modal-overlay" id="modalTulisArtikel">
+    <div class="admin-modal modal-purple">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Tulis Artikel Baru</h3>
+          <p class="modal-subtitle">Buat konten edukatif untuk komunitas penulis NovelCraft.</p>
+        </div>
+        <button class="modal-close" id="modalCloseTulis">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-form">
+        <div class="form-group">
+          <label>Judul Artikel</label>
+          <input type="text" id="tulisJudul" placeholder="Masukkan judul yang menarik..." />
+        </div>
+        <div class="form-group">
+          <label>Kategori</label>
+          <select id="tulisKategori">
+            <option>Tips Menulis</option>
+            <option>Storytelling</option>
+            <option>Character Development</option>
+            <option>World Building</option>
+            <option>Publishing</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Penulis</label>
+          <input type="text" id="tulisPenulis" placeholder="Nama penulis artikel..." />
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="tulisStatus">
+            <option value="Draft">Draft</option>
+            <option value="Publish">Publish</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ringkasan</label>
+          <textarea id="tulisDesk" rows="3" placeholder="Deskripsi singkat artikel..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-ghost" id="modalCancelTulis">Batal</button>
+          <button class="btn-primary btn-purple" id="btnSubmitTulis">Simpan Artikel ✦</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       MODAL CRUD (Detail / Edit / Hapus)
+  ================================================ -->
+  <div class="admin-modal-overlay" id="crudModal">
+    <div class="admin-modal">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="crudTitle">—</h3>
+          <p class="modal-subtitle" id="crudSubtitle">—</p>
+        </div>
+        <button class="modal-close" id="crudClose">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-form" id="crudContent"></div>
+      <div class="modal-actions" style="padding:0 1.5rem 1.5rem;">
+        <button class="btn-ghost" id="crudCancel">Batal</button>
+        <button class="btn-primary" id="crudSave" style="display:none;">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="admin-toast toast-purple" id="toast">
+    <div class="admin-toast-dot dot-purple"></div>
+    <span id="toastMsg">Berhasil!</span>
+  </div>
+
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link rel="stylesheet" href="../assets/css/customer.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Editing Client</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-userediting.html" class="sidebar-link" data-page="dashboard-userediting.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard
+      </a>
+      <!-- ✅ Pilih Mentor TERBUKA untuk editing client -->
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor
+      </a>
+      <a href="submit-naskah-editing.html" class="sidebar-link" data-page="submit-naskah-editing.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Submit Naskah
+      </a>
+      <a href="revisi-naskah.html" class="sidebar-link" data-page="revisi-naskah.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah
+      </a>
+      <div class="sidebar-divider"></div>
+      <!-- 🔒 Status Mentoring tetap locked (butuh role user penuh) -->
+      <a class="sidebar-link locked">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring
+        <span style="margin-left:auto;font-size:.62rem;background:rgba(255,255,255,.06);padding:.1rem .4rem;border-radius:4px;color:#555;">Pro</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang <span class="sl-badge badge-gold" id="sidebarCartCount"></span>
+      </a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi
+      </a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-customer.html" class="sidebar-link" data-page="profile-customer.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout" data-logout>
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout
+      </a>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Editing Client ✦</p>
+        <h1 class="topbar-title">Dashboard</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="live-clock">
+          <div class="live-clock-dot"></div>
+          <span id="liveClock">00:00</span>
+        </div>
+        <div class="admin-profile">
+          <div class="admin-avatar" id="topbarAvatar" style="background:linear-gradient(135deg,#f5c518,#e07b39);">C</div>
+          <div>
+            <strong id="topbarName">Client</strong>
+            <p>Editing Client</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-inner">
+        <span>TULIS</span><span class="marquee-dot">✦</span>
+        <span>BERKEMBANG</span><span class="marquee-dot">✦</span>
+        <span>NOVELCRAFT</span><span class="marquee-dot">✦</span>
+        <span>EDITING</span><span class="marquee-dot">✦</span>
+        <span>REVISI</span><span class="marquee-dot">✦</span>
+        <span>TULIS</span><span class="marquee-dot">✦</span>
+        <span>BERKEMBANG</span><span class="marquee-dot">✦</span>
+        <span>NOVELCRAFT</span><span class="marquee-dot">✦</span>
+        <span>EDITING</span><span class="marquee-dot">✦</span>
+        <span>REVISI</span><span class="marquee-dot">✦</span>
+      </div>
+    </div>
+
+    <div class="page-body">
+
+      <div class="user-profile-card">
+        <div class="user-avatar-lg" id="dashAvatarLg" style="background:linear-gradient(135deg,#f5c518,#e07b39);">C</div>
+        <div class="user-profile-info">
+          <h2 id="dashUserName">Client</h2>
+          <p id="dashUserSub">Editing Client Aktif · Naskahmu ada di tangan yang tepat</p>
+          <div class="user-badges">
+            <span class="user-badge customer">✍️ Editing Client</span>
+            <span class="user-badge purple" id="paketBadge">◆ Copy Editing</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPGRADE BANNER -->
+      <div class="upgrade-banner">
+        <div class="upgrade-banner-icon">🎓</div>
+        <div class="upgrade-banner-text">
+          <h4>UPGRADE KE PROGRAM PELATIHAN</h4>
+          <p>Buka akses Pengajuan Mentor, Sesi Mentoring 1-on-1, Status Tracking, dan semua fitur eksklusif penulis NovelCraft.</p>
+        </div>
+        <a href="upgrade-member.html" class="upgrade-banner-btn">Lihat Paket ✦</a>
+      </div>
+
+      <section class="user-stats">
+        <div class="stats-card sc-gold">
+          <div class="stats-icon si-gold">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <div class="stats-text"><h3 class="stats-number" id="statNaskah">0</h3><p class="stats-label">Naskah Disubmit</p></div>
+        </div>
+        <div class="stats-card sc-purple">
+          <div class="stats-icon si-purple">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+          </div>
+          <div class="stats-text"><h3 class="stats-number" id="statProgress">0</h3><p class="stats-label">Sedang Diproses</p></div>
+        </div>
+        <div class="stats-card sc-teal">
+          <div class="stats-icon si-teal">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#20b2aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <div class="stats-text"><h3 class="stats-number" id="statSelesai">0</h3><p class="stats-label">Selesai Diedit</p></div>
+        </div>
+        <div class="stats-card sc-crimson">
+          <div class="stats-icon si-crimson">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f08080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.18-3.36"/>
+            </svg>
+          </div>
+          <div class="stats-text"><h3 class="stats-number" id="statRevisi">0</h3><p class="stats-label">Revisi Berjalan</p></div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="dashboard-left">
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Pantau Progress</p><h3 class="card-title">Status Naskah</h3></div>
+              <a href="submit-naskah-editing.html" class="locked-upgrade-btn btn-sm" style="text-decoration:none;">+ Submit Baru</a>
+            </div>
+            <div class="activity-list" id="naskahList">
+              <div class="activity-item">
+                <span class="activity-dot dot-purple"></span>
+                <div>
+                  <p>Sang Penulis Bayangan</p>
+                  <p class="activity-time">Copy Editing · 58.200 kata · <span style="color:#c084fc;">Sedang Diedit</span></p>
+                </div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-dot dot-teal"></span>
+                <div>
+                  <p>Bab 1 – Draft Awal</p>
+                  <p class="activity-time">Proofreading · 12.000 kata · <span style="color:#20b2aa;">Selesai</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fitur Terkunci — hanya Status Mentoring & Pengajuan -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Eksklusif Program Pelatihan</p><h3 class="card-title">Fitur Terkunci</h3></div>
+              <span class="locked-badge">🔒 Perlu Upgrade</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.6rem;">
+              <div class="locked-feature-item"><span class="lf-icon">📊</span><span>Status Mentoring — tracking progress sesi bimbingan 1-on-1</span></div>
+              <div class="locked-feature-item"><span class="lf-icon">📨</span><span>Pengajuan Sesi — jadwalkan sesi 1-on-1 dengan mentor</span></div>
+              <div class="locked-feature-item"><span class="lf-icon">🎯</span><span>Workshop Eksklusif — akses materi dan event member</span></div>
+            </div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:.74rem;color:#666;margin:.75rem 0 .5rem;">
+              ✅ <strong style="color:#aaa;">Pilih Mentor</strong> sudah terbuka untukmu — lihat profil mentor kapanpun.<br>
+              Upgrade ke Program Pelatihan untuk bisa mengajukan sesi bimbingan.
+            </p>
+            <div style="margin-top:.5rem;">
+              <a href="upgrade-member.html" class="locked-upgrade-btn" style="width:100%;justify-content:center;">Upgrade ke Program Pelatihan ✦</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="dashboard-right">
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Langgananmu</p><h3 class="card-title">Paket Aktif</h3></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.75rem;">
+              <div class="plan-card plan-highlight">
+                <h4>EDITING CLIENT ✍️</h4>
+                <div class="plan-price" id="paketAktifName">Copy Editing <span>/ aktif</span></div>
+                <ul class="plan-feature-list">
+                  <li class="ok">Submit naskah ke editor profesional</li>
+                  <li class="ok">Copy editing & proofreading</li>
+                  <li class="ok">1 putaran revisi gratis</li>
+                  <li class="ok">Hasil via email + dashboard</li>
+                  <li class="ok">Lihat profil mentor (tanpa sesi)</li>
+                  <li class="no">Pengajuan sesi mentoring</li>
+                  <li class="no">Status mentoring & tracking sesi</li>
+                </ul>
+                <a href="upgrade-member.html" class="upgrade-banner-btn" style="width:100%;justify-content:center;margin-top:.5rem;">Upgrade ke Pelatihan ✦</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Aksi Cepat</p><h3 class="card-title">Menu Utama</h3></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.6rem;">
+              <a href="submit-naskah-editing.html" class="btn-primary btn-full">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Submit Naskah
+              </a>
+              <a href="revisi-naskah.html" class="btn-ghost btn-full">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Revisi Naskah
+              </a>
+              <!-- ✅ Pilih Mentor sekarang bisa diklik -->
+              <a href="pilih-mentor.html" class="btn-ghost btn-full">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                Pilih Mentor
+              </a>
+              <!-- 🔒 Status Mentoring tetap locked -->
+              <span class="btn-ghost btn-full btn-locked" style="opacity:.35;cursor:not-allowed;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Status Mentoring
+              </span>
+              <a href="keranjang.html" class="btn-ghost btn-full">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                Keranjang
+              </a>
+              <a href="history-transaksi.html" class="btn-ghost btn-full">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                Riwayat Transaksi
+              </a>
+            </div>
+          </div>
+
+          <div class="deco-quote">
+            "Naskah terbaik bukan yang sempurna sejak awal, melainkan yang terus diperbaiki. Editor kami siap membantumu."
+            <cite>— NovelCraft Studio</cite>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar"><span></span><span></span><span></span></button>
+
+  <script>
+    (function () {
+      const currentPage = window.location.pathname.split('/').pop() || 'dashboard-userediting.html';
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(link => {
+        link.classList.toggle('active', link.dataset.page === currentPage);
+      });
+
+      const userName = localStorage.getItem('userName') || 'Client';
+      const initial  = userName.charAt(0).toUpperCase();
+      ['dashAvatarLg','topbarAvatar'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = initial;
+      });
+      document.getElementById('dashUserName').textContent = userName;
+      document.getElementById('topbarName').textContent   = userName;
+
+      try {
+        const history = JSON.parse(localStorage.getItem('trxHistory') || '[]');
+        const editTrx = history.find(t => t.type === 'editing' && t.status === 'success');
+        if (editTrx && editTrx.items[0]) {
+          const nama = editTrx.items[0].title || 'Copy Editing';
+          document.getElementById('paketAktifName').innerHTML = `${nama} <span>/ aktif</span>`;
+          document.getElementById('paketBadge').textContent = `◆ ${nama}`;
+        }
+      } catch(e){}
+
+      try {
+        const cart  = JSON.parse(localStorage.getItem('novelCart') || '[]');
+        const count = cart.reduce((s, i) => s + (i.qty||1), 0);
+        const badge = document.getElementById('sidebarCartCount');
+        if (badge) badge.textContent = count > 0 ? count : '';
+      } catch(e){}
+
+      document.getElementById('statNaskah').textContent   = '2';
+      document.getElementById('statProgress').textContent = '1';
+      document.getElementById('statSelesai').textContent  = '1';
+      document.getElementById('statRevisi').textContent   = '0';
+    })();
+  </script>
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/user.js"></script>
+</body>
+</html>

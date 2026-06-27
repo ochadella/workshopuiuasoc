@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keranjang – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .cart-layout { grid-template-columns: 1fr; } }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 1.2rem;
+      align-items: center;
+      padding: 1.2rem 1.4rem;
+      background: linear-gradient(145deg, rgba(24,14,20,.96), rgba(10,6,10,.98));
+      border: 1px solid rgba(168,85,212,.15);
+      border-radius: 14px;
+      transition: border-color .25s;
+    }
+    .cart-item:hover { border-color: rgba(245,197,24,.25); }
+
+    .cart-cover {
+      width: 56px; height: 74px;
+      border-radius: 4px 8px 8px 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem; color: #0a0608;
+      flex-shrink: 0;
+    }
+    .nc-1 { background: linear-gradient(135deg,#4a1a6a,#a855d4); }
+    .nc-2 { background: linear-gradient(135deg,#6a1520,#f08080); }
+    .nc-3 { background: linear-gradient(135deg,#0d3a3a,#20b2aa); }
+    .nc-4 { background: linear-gradient(135deg,#1a1a4a,#c084fc); }
+    .nc-5 { background: linear-gradient(135deg,#4a2a1a,#f5c518); }
+    .nc-6 { background: linear-gradient(135deg,#2a1a4a,#c084fc); }
+
+    .cart-item-title   { font-family:'Playfair Display',serif; font-size:1rem; color:#fff; font-weight:700; margin-bottom:.2rem; }
+    .cart-item-author  { font-size:.78rem; color:rgba(255,255,255,.45); margin-bottom:.6rem; }
+    .cart-item-price   { font-size:.95rem; color:var(--gold,#f5c518); font-weight:600; }
+
+    .qty-control {
+      display: flex; align-items: center; gap: .5rem; margin-top: .5rem;
+    }
+    .qty-btn {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      color: #fff; font-size: 1rem; cursor: pointer; transition: all .2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .qty-btn:hover { background: rgba(212,168,71,.15); border-color: rgba(212,168,71,.3); }
+    .qty-num { font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:#fff; min-width:20px; text-align:center; }
+
+    .cart-remove {
+      background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,.25); font-size: 1.2rem;
+      transition: color .2s; padding: .25rem;
+    }
+    .cart-remove:hover { color: var(--crimson,#f08080); }
+
+    .summary-card {
+      background: linear-gradient(145deg, rgba(24,14,20,.98), rgba(10,6,10,.99));
+      border: 1px solid rgba(212,168,71,.18);
+      border-radius: 20px;
+      padding: 1.8rem;
+      position: sticky; top: 6rem;
+    }
+    .summary-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .65rem 0; border-bottom: 1px solid rgba(255,255,255,.05);
+      font-size: .9rem; color: rgba(255,255,255,.65);
+    }
+    .summary-row:last-of-type { border-bottom: none; }
+    .summary-row.total { color: #fff; font-weight: 700; font-size: 1.05rem; padding-top: 1rem; }
+    .summary-row.total span:last-child { color: var(--gold,#f5c518); font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:.04em; }
+
+    .promo-row {
+      display: flex; gap: .5rem; margin: 1rem 0;
+    }
+    .promo-input {
+      flex: 1; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px; padding: .6rem .9rem; color: #fff;
+      font-family:'DM Sans',sans-serif; font-size:.85rem;
+    }
+    .promo-input:focus { outline:none; border-color:rgba(245,197,24,.4); }
+    .promo-btn {
+      padding: .6rem 1rem; border-radius: 8px;
+      background: rgba(212,168,71,.12); border: 1px solid rgba(212,168,71,.3);
+      color: var(--gold,#f5c518); font-size:.82rem; font-weight:600; cursor:pointer;
+      transition: all .2s;
+    }
+    .promo-btn:hover { background:rgba(212,168,71,.22); }
+
+    .cart-empty { text-align:center; padding:4rem 2rem; }
+    .cart-empty svg { opacity:.2; margin-bottom:1.5rem; }
+    .cart-empty h3 { font-family:'Playfair Display',serif; font-size:1.5rem; color:#fff; margin-bottom:.5rem; }
+    .cart-empty p  { color:rgba(255,255,255,.45); margin-bottom:1.5rem; }
+  </style>
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Member Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-user.html" class="sidebar-link" data-page="dashboard-user.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor</a>
+      <a href="pengajuan-mentor.html" class="sidebar-link" data-page="pengajuan-mentor.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Pengajuan <span class="sl-badge" id="sidebarPengajuanCount">1</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="status-mentoring.html" class="sidebar-link" data-page="status-mentoring.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring</a>
+      <a href="submit-naskah.html" class="sidebar-link" data-page="submit-naskah.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Submit Naskah</a>
+      <a href="revisi-naskah.html" class="sidebar-link" data-page="revisi-naskah.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah <span class="sl-badge badge-gold" id="sidebarRevisiCount">2</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang <span class="sl-badge badge-gold" id="sidebarCartCount"></span></a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi</a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-user.html" class="sidebar-link" data-page="profile-user.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout" data-logout><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <!-- TOPBAR — konsisten dengan dashboard -->
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Belanja ✦</p>
+        <h1 class="topbar-title">Keranjang Saya</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="live-clock">
+          <div class="live-clock-dot"></div>
+          <span id="liveClock">00:00</span>
+        </div>
+        <div class="admin-profile">
+          <div class="admin-avatar" style="background:linear-gradient(135deg,#c084fc,#5b21b6);">A</div>
+          <div>
+            <strong>Anisa Putri</strong>
+            <p>Member</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <div class="cart-empty" id="cartEmpty" style="display:none;">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <h3>Keranjang masih kosong</h3>
+        <p>Tambahkan novel dari katalog untuk mulai berbelanja.</p>
+        <a href="/katalog/katalog-user.html" class="btn-primary" style="display:inline-flex;">Lihat Katalog</a>
+      </div>
+
+      <div id="cartContent">
+        <div class="cart-layout">
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;">
+              <h2 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;">Item <span id="itemCount" style="color:rgba(255,255,255,.4);font-size:1rem;font-weight:400;"></span></h2>
+              <button id="clearCart" style="background:none;border:none;color:rgba(255,255,255,.35);font-size:.82rem;cursor:pointer;transition:color .2s;" onmouseover="this.style.color='#f08080'" onmouseout="this.style.color='rgba(255,255,255,.35)'">Hapus Semua</button>
+            </div>
+            <div id="cartItems" style="display:flex;flex-direction:column;gap:.85rem;"></div>
+          </div>
+
+          <div class="summary-card">
+            <p class="card-subtitle" style="margin-bottom:.5rem;">Ringkasan</p>
+            <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;margin-bottom:1.2rem;">Order Summary</h3>
+            <div id="summaryItems"></div>
+            <div class="promo-row">
+              <input class="promo-input" type="text" id="promoInput" placeholder="Kode promo..." />
+              <button class="promo-btn" id="promoBtn">Pakai</button>
+            </div>
+            <div id="promoMsg" style="font-size:.78rem;margin-bottom:.5rem;"></div>
+            <div class="summary-row"><span>Subtotal</span><span id="subtotalEl">—</span></div>
+            <div class="summary-row" id="diskonRow" style="display:none;"><span>Diskon Promo</span><span id="diskonEl" style="color:#20b2aa;">—</span></div>
+            <div class="summary-row"><span>PPN (11%)</span><span id="ppnEl">—</span></div>
+            <div class="summary-row total"><span>Total</span><span id="totalEl">—</span></div>
+            <button class="btn-primary btn-full" id="checkoutBtn" style="margin-top:1.2rem;font-size:.95rem;">Lanjut ke Pembayaran →</button>
+            <a href="/katalog/katalog-user.html" class="btn-ghost btn-full" style="margin-top:.6rem;font-size:.85rem;">+ Tambah Novel</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle"><span></span><span></span><span></span></button>
+
+  <script>
+    // ============================================
+    // SIDEBAR ACTIVE STATE & BADGE SYNC
+    // (sidebar sudah inline di HTML, tidak perlu fetch lagi)
+    // ============================================
+    (function () {
+      const currentPage = window.location.pathname.split('/').pop() || 'dashboard-user.html';
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(link => {
+        if (link.dataset.page === currentPage) link.classList.add('active');
+        else link.classList.remove('active');
+      });
+
+      try {
+        const cart = JSON.parse(localStorage.getItem('novelCart') || '[]');
+        const count = cart.reduce((s, i) => s + i.qty, 0);
+        const badge = document.getElementById('sidebarCartCount');
+        if (badge) badge.textContent = count > 0 ? count : '';
+      } catch (e) {}
+
+      try {
+        const revisi = JSON.parse(localStorage.getItem('revisiNaskah') || 'null');
+        if (revisi) {
+          const needAction = revisi.filter(r => r.status === 'needrev').length;
+          const badge = document.getElementById('sidebarRevisiCount');
+          if (badge) badge.textContent = needAction;
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/user.js"></script>
+  <script>
+    const PROMO_CODES = { 'NOVEL10': 10, 'NC20': 20, 'PENULIS15': 15 };
+    let activeDiscount = 0;
+    function getCart() { return JSON.parse(localStorage.getItem('novelCart') || '[]'); }
+    function saveCart(c) { localStorage.setItem('novelCart', JSON.stringify(c)); }
+    function fmt(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+    function renderCart() {
+      const cart = getCart();
+      const empty = document.getElementById('cartEmpty');
+      const content = document.getElementById('cartContent');
+      if (cart.length === 0) { empty.style.display = ''; content.style.display = 'none'; const badge = document.getElementById('sidebarCartCount'); if (badge) badge.textContent = ''; return; }
+      empty.style.display = 'none'; content.style.display = '';
+      document.getElementById('itemCount').textContent = `(${cart.length} item)`;
+      const badge = document.getElementById('sidebarCartCount');
+      if (badge) badge.textContent = cart.reduce((s,i)=>s+i.qty,0);
+      const itemsEl = document.getElementById('cartItems');
+      itemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item" data-id="${item.id}">
+          <div class="cart-cover ${item.cover}">${item.initial}</div>
+          <div>
+            <div class="cart-item-title">${item.title}</div>
+            <div class="cart-item-author">${item.author}</div>
+            <div class="cart-item-price">${fmt(item.price * item.qty)}</div>
+            <div class="qty-control">
+              <button class="qty-btn" data-action="minus" data-id="${item.id}">−</button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" data-action="plus" data-id="${item.id}">+</button>
+            </div>
+          </div>
+          <button class="cart-remove" data-id="${item.id}" title="Hapus">✕</button>
+        </div>
+      `).join('');
+      const summaryEl = document.getElementById('summaryItems');
+      summaryEl.innerHTML = cart.map(item => `<div class="summary-row"><span style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.title} ×${item.qty}</span><span>${fmt(item.price * item.qty)}</span></div>`).join('');
+      const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      const diskon = Math.round(subtotal * activeDiscount / 100);
+      const afterDis = subtotal - diskon;
+      const ppn = Math.round(afterDis * 0.11);
+      const total = afterDis + ppn;
+      document.getElementById('subtotalEl').textContent = fmt(subtotal);
+      document.getElementById('ppnEl').textContent = fmt(ppn);
+      document.getElementById('totalEl').textContent = fmt(total);
+      const diskonRow = document.getElementById('diskonRow');
+      if (activeDiscount > 0) { diskonRow.style.display = ''; document.getElementById('diskonEl').textContent = `− ${fmt(diskon)} (${activeDiscount}%)`; } else { diskonRow.style.display = 'none'; }
+      localStorage.setItem('orderSummary', JSON.stringify({ subtotal, diskon, ppn, total, activeDiscount }));
+    }
+    document.getElementById('cartItems')?.addEventListener('click', e => {
+      const btn = e.target.closest('[data-action]');
+      const rem = e.target.closest('.cart-remove');
+      if (btn) { const cart = getCart(); const id = btn.dataset.id; const idx = cart.findIndex(i => i.id === id); if (idx === -1) return; if (btn.dataset.action === 'plus') { cart[idx].qty++; } else { cart[idx].qty--; if (cart[idx].qty <= 0) cart.splice(idx, 1); } saveCart(cart); renderCart(); }
+      if (rem) { const cart = getCart().filter(i => i.id !== rem.dataset.id); saveCart(cart); renderCart(); if (typeof showToast === 'function') showToast('Item dihapus dari keranjang', 'info'); }
+    });
+    document.getElementById('clearCart')?.addEventListener('click', () => { if (confirm('Hapus semua item dari keranjang?')) { localStorage.removeItem('novelCart'); renderCart(); } });
+    document.getElementById('promoBtn')?.addEventListener('click', () => {
+      const code = document.getElementById('promoInput').value.trim().toUpperCase();
+      const msg = document.getElementById('promoMsg');
+      if (PROMO_CODES[code]) { activeDiscount = PROMO_CODES[code]; msg.textContent = `✓ Promo ${code} berhasil! Diskon ${activeDiscount}%`; msg.style.color = '#20b2aa'; } else { activeDiscount = 0; msg.textContent = code ? '✗ Kode promo tidak valid' : ''; msg.style.color = '#f08080'; }
+      renderCart();
+    });
+    document.getElementById('checkoutBtn')?.addEventListener('click', () => { const cart = getCart(); if (cart.length === 0) return; window.location.href = 'pembayaran.html'; });
+    renderCart();
+  </script>
+</body>
+</html>

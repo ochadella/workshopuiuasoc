@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Langganan Mentoring – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    .lock-hero {
+      background: linear-gradient(135deg, rgba(168,85,212,.1), rgba(245,197,24,.04));
+      border: 1px solid rgba(212,168,71,.18); border-radius: 20px;
+      padding: 2rem; margin-bottom: 1.8rem; text-align: center;
+    }
+    .lock-hero-icon {
+      width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 1rem;
+      background: rgba(245,197,24,.1); border: 2px solid rgba(245,197,24,.3);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lock-hero h2 { font-family:'Playfair Display',serif; font-size:1.4rem; color:#fff; margin-bottom:.5rem; }
+    .lock-hero p { font-size:.88rem; color:rgba(255,255,255,.5); max-width:520px; margin:0 auto; line-height:1.7; }
+
+    .paket-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; }
+    @media(max-width:900px){ .paket-grid{ grid-template-columns:1fr; } }
+
+    .paket-card {
+      background: linear-gradient(145deg, rgba(24,14,20,.96), rgba(10,6,10,.98));
+      border: 1px solid rgba(168,85,212,.15); border-radius: 18px;
+      padding: 1.8rem; display:flex; flex-direction:column; gap:1rem;
+      transition: border-color .25s, transform .2s; cursor:pointer; position:relative;
+    }
+    .paket-card:hover { border-color: rgba(245,197,24,.3); transform: translateY(-3px); }
+    .paket-card.selected { border-color: rgba(245,197,24,.55); background: linear-gradient(145deg, rgba(245,197,24,.06), rgba(10,6,10,.98)); }
+    .paket-card.popular::before {
+      content: 'PALING DIMINATI';
+      position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg,#d4a847,#f5c518); color:#0a0608;
+      font-size:.62rem; font-weight:800; letter-spacing:.06em;
+      padding:.3rem .8rem; border-radius:20px; white-space:nowrap;
+    }
+    .paket-name { font-family:'Playfair Display',serif; font-size:1.15rem; color:#fff; font-weight:700; }
+    .paket-price { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:#f5c518; letter-spacing:.03em; }
+    .paket-price span { font-family:'DM Sans',sans-serif; font-size:.78rem; color:rgba(255,255,255,.35); letter-spacing:0; }
+    .paket-desc { font-size:.8rem; color:rgba(255,255,255,.45); line-height:1.6; }
+    .paket-features { display:flex; flex-direction:column; gap:.55rem; margin-top:.3rem; }
+    .paket-feature { display:flex; gap:.55rem; font-size:.82rem; color:rgba(255,255,255,.6); align-items:flex-start; }
+    .paket-feature svg { flex-shrink:0; margin-top:.15rem; color:#20b2aa; }
+    .paket-radio {
+      position:absolute; top:1.2rem; right:1.2rem;
+      width:20px; height:20px; border-radius:50%;
+      border:2px solid rgba(255,255,255,.2);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .paket-card.selected .paket-radio { border-color:#f5c518; }
+    .paket-radio-dot { width:9px; height:9px; border-radius:50%; background:#f5c518; display:none; }
+    .paket-card.selected .paket-radio-dot { display:block; }
+
+    .lock-steps { display:flex; flex-direction:column; gap:.9rem; margin-top:1.5rem; }
+    .lock-step { display:flex; gap:.8rem; align-items:flex-start; font-size:.85rem; color:rgba(255,255,255,.5); }
+    .lock-step-num {
+      width:24px; height:24px; border-radius:50%; flex-shrink:0;
+      background:rgba(245,197,24,.1); border:1px solid rgba(245,197,24,.3); color:#f5c518;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Bebas Neue',sans-serif; font-size:.85rem;
+    }
+
+    /* sidebar locked state */
+    .sidebar-link.locked { opacity: .45; cursor: not-allowed; }
+    .sidebar-link.locked:hover { background: none; color: rgba(255,255,255,.5); }
+    .sl-lock { margin-left: auto; font-size: .72rem; }
+  </style>
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Member Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-user.html" class="sidebar-link" data-page="dashboard-user.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor</a>
+      <a href="pengajuan-mentor.html" class="sidebar-link locked" data-page="pengajuan-mentor.html" data-requires="subscribed"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Pengajuan <span class="sl-lock">🔒</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="status-mentoring.html" class="sidebar-link locked" data-page="status-mentoring.html" data-requires="accepted"><span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring <span class="sl-lock">🔒</span></a>
+      <a href="submit-naskah.html" class="sidebar-link locked" data-page="submit-naskah.html" data-requires="accepted"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Submit Naskah <span class="sl-lock">🔒</span></a>
+      <a href="revisi-naskah.html" class="sidebar-link locked" data-page="revisi-naskah.html" data-requires="accepted"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah <span class="sl-lock">🔒</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang <span class="sl-badge badge-gold" id="sidebarCartCount"></span></a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi</a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-user.html" class="sidebar-link" data-page="profile-user.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout" data-logout><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Mulai Bimbingan ✦</p>
+        <h1 class="topbar-title">Langganan Mentoring</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="live-clock"><div class="live-clock-dot"></div><span id="liveClock">00:00</span></div>
+        <div class="admin-profile">
+          <div class="admin-avatar" style="background:linear-gradient(135deg,#c084fc,#5b21b6);">A</div>
+          <div><strong>Anisa Putri</strong><p>Member</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <div class="lock-hero">
+        <div class="lock-hero-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h2>Buka Akses Mentoring</h2>
+        <p>Pilih paket mentoring untuk mulai diajukan ke mentor pilihanmu, submit naskah, dan dapatkan feedback langsung dari penulis berpengalaman.</p>
+      </div>
+
+      <div class="dashboard-card" style="margin-bottom:1.5rem;">
+        <div class="card-header">
+          <div><p class="card-subtitle">Langkah 1</p><h3 class="card-title">Pilih Paket</h3></div>
+        </div>
+
+        <div class="paket-grid" id="paketGrid">
+
+          <div class="paket-card" data-id="dasar" data-name="Paket Dasar" data-price="299000" onclick="selectPaket(this)">
+            <div class="paket-radio"><div class="paket-radio-dot"></div></div>
+            <div class="paket-name">Paket Dasar</div>
+            <div class="paket-price">Rp 299rb<span> /bulan</span></div>
+            <div class="paket-desc">Cocok untuk yang baru mulai dan ingin mencoba bimbingan terstruktur.</div>
+            <div class="paket-features">
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>3 sesi review per bulan</div>
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1 mentor tetap</div>
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Submit naskah unlimited</div>
+            </div>
+          </div>
+
+          <div class="paket-card popular" data-id="intensif" data-name="Paket Intensif" data-price="599000" onclick="selectPaket(this)">
+            <div class="paket-radio"><div class="paket-radio-dot"></div></div>
+            <div class="paket-name">Paket Intensif</div>
+            <div class="paket-price">Rp 599rb<span> /bulan</span></div>
+            <div class="paket-desc">Untuk penulis yang serius ingin menyelesaikan novel dengan cepat.</div>
+            <div class="paket-features">
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>8 sesi review per bulan</div>
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1 mentor tetap + workshop grup</div>
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Submit naskah unlimited</div>
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Prioritas review &lt;24 jam</div>
+            </div>
+          </div>
+
+          <div class="paket-card" data-id="pro" data-name="Paket Pro Penulis" data-price="999000" onclick="selectPaket(this)">
+            <div class="paket-radio"><div class="paket-radio-dot"></div></div>
+            <div class="paket-name">Paket Pro Penulis</div>
+            <div class="paket-price">Rp 999rb<span> /bulan</span></div>
+            <div class="paket-desc">Bimbingan penuh hingga naskah siap dikirim ke penerbit.</div>
+            <div class="paket-features">
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Sesi review unlimited</div>
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Akses semua mentor senior</div>
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Konsultasi naskah ke penerbit</div>
+              <div class="paket-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Prioritas review &lt;12 jam</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="card-header">
+          <div><p class="card-subtitle">Bagaimana Selanjutnya</p><h3 class="card-title">Setelah Berlangganan</h3></div>
+        </div>
+        <div class="lock-steps">
+          <div class="lock-step"><span class="lock-step-num">1</span><span>Selesaikan pembayaran paket yang kamu pilih.</span></div>
+          <div class="lock-step"><span class="lock-step-num">2</span><span>Halaman <strong style="color:#fff;">Pilih Mentor</strong> & <strong style="color:#fff;">Pengajuan</strong> langsung kebuka — ajukan mentor sesuai genre novelmu.</span></div>
+          <div class="lock-step"><span class="lock-step-num">3</span><span>Setelah mentor menerima pengajuanmu, <strong style="color:#fff;">Status Mentoring</strong>, <strong style="color:#fff;">Submit Naskah</strong>, dan <strong style="color:#fff;">Revisi Naskah</strong> ikut terbuka.</span></div>
+        </div>
+        <button class="btn-primary btn-full" style="margin-top:1.5rem;font-size:.95rem;padding:.9rem;" id="lanjutBtn" onclick="lanjutBayar()">Lanjutkan ke Pembayaran →</button>
+      </div>
+
+    </div>
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle"><span></span><span></span><span></span></button>
+  <script>
+    (function () {
+      const currentPage = window.location.pathname.split('/').pop() || 'dashboard-user.html';
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(link => {
+        if (link.dataset.page === currentPage) link.classList.add('active');
+        else link.classList.remove('active');
+      });
+      try {
+        const cart = JSON.parse(localStorage.getItem('novelCart') || '[]');
+        const count = cart.reduce((s, i) => s + i.qty, 0);
+        const badge = document.getElementById('sidebarCartCount');
+        if (badge) badge.textContent = count > 0 ? count : '';
+      } catch (e) {}
+    })();
+  </script>
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/user.js"></script>
+  <script>
+    let selectedPaket = null;
+
+    function selectPaket(card) {
+      document.querySelectorAll('.paket-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedPaket = {
+        id: card.dataset.id,
+        name: card.dataset.name,
+        price: parseInt(card.dataset.price)
+      };
+    }
+
+    // default pilih paket populer
+    document.addEventListener('DOMContentLoaded', () => {
+      selectPaket(document.querySelector('.paket-card.popular'));
+    });
+
+    function lanjutBayar() {
+      if (!selectedPaket) {
+        if (typeof showToast === 'function') showToast('Pilih paket dulu ya!', 'error');
+        return;
+      }
+      // Simpan sebagai "pesanan mentoring" terpisah dari keranjang novel
+      localStorage.setItem('mentoringOrder', JSON.stringify(selectedPaket));
+      window.location.href = 'pembayaran.html?type=mentoring';
+    }
+  </script>
+</body>
+</html>

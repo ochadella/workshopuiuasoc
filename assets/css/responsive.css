@@ -1,0 +1,404 @@
+/* ============================================
+   NOVELCRAFT — responsive.css
+   CONSISTENT ADMIN ECOSYSTEM
+   TANPA MERUBAH LOGIC
+   ============================================ */
+
+/* ============================================
+   LARGE DESKTOP
+============================================ */
+
+@media (max-width: 1400px){
+
+  .dashboard-stats{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.4rem;
+  }
+
+  .mentor-admin-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-grid{
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* ============================================
+   LAPTOP
+============================================ */
+
+@media (max-width: 1200px){
+
+  .admin-sidebar{
+    width: 250px;
+  }
+
+  .admin-main{
+    margin-left: 250px;
+    width: calc(100% - 250px);
+
+    padding: 1.8rem;
+  }
+
+  .topbar-title{
+    font-size: 3.4rem;
+  }
+
+  .topbar-search input{
+    width: 230px;
+  }
+
+  .profile-admin-wrap{
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* ============================================
+   TABLET
+============================================ */
+
+@media (max-width: 992px){
+
+  .admin-sidebar{
+    position: fixed;
+
+    left: -100%;
+
+    width: 280px;
+
+    transition: .35s ease;
+
+    z-index: 2000;
+  }
+
+  .admin-sidebar.show{
+    left: 0;
+  }
+
+  .admin-main{
+    width: 100%;
+    margin-left: 0;
+
+    padding: 1.5rem;
+  }
+
+  .sidebar-toggle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .admin-topbar{
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 1.4rem;
+  }
+
+  .topbar-right{
+    width: 100%;
+
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+
+    gap: 1rem;
+  }
+
+  .topbar-search{
+    flex: 1;
+  }
+
+  .topbar-search input{
+    width: 100%;
+  }
+
+  .mentor-admin-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .analytics-grid{
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* ============================================
+   MOBILE NAVBAR
+============================================ */
+
+@media (max-width: 768px){
+
+  .navbar{
+    padding: 1rem 5vw;
+  }
+
+  .nav-links{
+    display: none;
+
+    flex-direction: column;
+
+    position: absolute;
+
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(8,4,8,.98),
+        rgba(18,8,20,.98)
+      );
+
+    padding: 1.5rem 5vw;
+
+    border-bottom:
+      1px solid rgba(212,168,71,.12);
+
+    z-index: 999;
+  }
+
+  .nav-links.show{
+    display: flex;
+  }
+
+  .nav-actions{
+    display: none !important;
+  }
+
+  .hamburger{
+    display: flex !important;
+  }
+
+}
+
+/* ============================================
+   MOBILE CONTENT
+============================================ */
+
+@media (max-width: 768px){
+
+  .dashboard-stats{
+    grid-template-columns: 1fr;
+  }
+
+  .stats-card{
+    padding: 1.3rem;
+
+    border-radius: 24px;
+  }
+
+  .stats-icon{
+    width: 64px;
+    height: 64px;
+
+    border-radius: 18px;
+
+    font-size: 1.3rem;
+  }
+
+  .stats-number{
+    font-size: 2.3rem;
+  }
+
+  .stats-label{
+    font-size: .82rem;
+  }
+
+  .dashboard-card{
+    padding: 1.3rem;
+
+    border-radius: 26px;
+  }
+
+  .card-header{
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 1rem;
+  }
+
+  .card-title{
+    font-size: 1.4rem;
+  }
+
+  .form-row{
+    grid-template-columns: 1fr;
+  }
+
+  .profile-actions{
+    flex-direction: column;
+  }
+
+  .profile-actions .btn-primary,
+  .profile-actions .btn-ghost{
+    width: 100%;
+  }
+
+  .profile-admin-avatar{
+    width: 100px;
+    height: 100px;
+
+    font-size: 1.6rem;
+  }
+
+  .profile-admin-info h2{
+    font-size: 1.5rem;
+  }
+
+  .mentor-admin-card{
+    padding: 1.3rem;
+  }
+
+  .mentor-meta{
+    flex-direction: column;
+
+    gap: .6rem;
+  }
+
+  .mentor-actions{
+    flex-direction: column;
+  }
+
+  .mentor-actions button{
+    width: 100%;
+  }
+
+  .fake-chart{
+    gap: .6rem;
+  }
+
+  .chart-placeholder{
+    height: 220px;
+  }
+
+}
+
+/* ============================================
+   TABLE RESPONSIVE
+============================================ */
+
+@media (max-width: 700px){
+
+  .table-wrap{
+    overflow-x: auto;
+
+    border-radius: 20px;
+  }
+
+  .admin-table{
+    min-width: 760px;
+  }
+
+  .admin-table th,
+  .admin-table td{
+    padding: 1rem;
+  }
+
+}
+
+/* ============================================
+   SMALL MOBILE
+============================================ */
+
+@media (max-width: 500px){
+
+  .admin-main{
+    padding: 1rem;
+  }
+
+  .topbar-title{
+    font-size: 2.6rem;
+
+    line-height: .95;
+  }
+
+  .topbar-subtitle{
+    font-size: .72rem;
+  }
+
+  .topbar-right{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .topbar-search{
+    width: 100%;
+  }
+
+  .topbar-search input{
+    width: 100%;
+  }
+
+  .live-clock{
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .admin-profile-mini{
+    width: 100%;
+  }
+
+  .stats-card{
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .activity-item{
+    align-items: flex-start;
+  }
+
+  .profile-stats{
+    flex-direction: column;
+
+    gap: 1rem;
+  }
+
+  .sidebar-logout{
+    justify-content: center;
+  }
+
+  .btn-primary{
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .admin-toast{
+    left: 1rem;
+    right: 1rem;
+
+    top: 1rem;
+  }
+
+}
+
+/* ============================================
+   VERY SMALL DEVICE
+============================================ */
+
+@media (max-width: 380px){
+
+  .topbar-title{
+    font-size: 2.2rem;
+  }
+
+  .stats-number{
+    font-size: 2rem;
+  }
+
+  .stats-icon{
+    width: 56px;
+    height: 56px;
+  }
+
+  .dashboard-card{
+    padding: 1.1rem;
+  }
+
+}

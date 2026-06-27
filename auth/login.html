@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+
+  <title>
+    Login – NovelCraft
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet"
+        href="../assets/css/style.css" />
+
+  <link rel="stylesheet"
+        href="../assets/css/auth.css" />
+
+  <link rel="stylesheet"
+        href="../assets/css/responsive.css" />
+
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+
+</head>
+
+<body class="auth-body">
+
+  <!-- BG -->
+  <div class="auth-bg-glow glow-1"></div>
+  <div class="auth-bg-glow glow-2"></div>
+
+  <!-- AUTH -->
+  <section class="auth-section">
+
+    <!-- LEFT -->
+    <div class="auth-left">
+
+      <a href="../index.html"
+         class="auth-logo">
+
+        <span class="brand-n">
+          N
+        </span>
+
+        <span class="brand-rest">
+          ovelCraft
+        </span>
+
+      </a>
+
+      <p class="auth-eyebrow">
+        ✦ Welcome Back
+      </p>
+
+      <h1 class="auth-title">
+
+        MASUK KE <br>
+
+        <em>NOVELCRAFT</em>
+
+      </h1>
+
+      <p class="auth-desc">
+
+        Lanjutkan perjalanan menulismu,
+        pantau status naskah,
+        mentoring,
+        dan seluruh aktivitasmu di NovelCraft.
+
+      </p>
+
+      <div class="auth-features">
+
+        <div class="af-item">
+          ✦ Dashboard Penulis
+        </div>
+
+        <div class="af-item">
+          ✦ Status Review Naskah
+        </div>
+
+        <div class="af-item">
+          ✦ Riwayat Transaksi
+        </div>
+
+        <div class="af-item">
+          ✦ Mentoring & Workshop
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="auth-right">
+
+      <div class="auth-card">
+
+        <p class="auth-card-sub">
+          Login Account
+        </p>
+
+        <h2 class="auth-card-title">
+          Selamat Datang
+        </h2>
+
+        <!-- ALERT -->
+        <div id="loginAlert"
+             class="auth-alert">
+        </div>
+
+        <!-- FORM -->
+        <form class="auth-form"
+              id="loginForm">
+
+          <!-- EMAIL -->
+          <div class="form-group">
+
+            <label>
+              Email
+            </label>
+
+            <input type="email"
+                   id="email"
+                   placeholder="email@gmail.com"
+                   required />
+
+            <small class="field-error"></small>
+
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="form-group">
+
+            <label>
+              Password
+            </label>
+
+            <div class="pw-wrap">
+
+              <input type="password"
+                     id="password"
+                     placeholder="Masukkan password"
+                     required />
+
+              <button type="button"
+                      class="pw-toggle">
+
+                👁
+
+              </button>
+
+            </div>
+
+            <small class="field-error"></small>
+
+          </div>
+
+          <!-- OPTIONS -->
+          <div class="auth-options">
+
+            <label class="remember-wrap">
+
+              <input type="checkbox" />
+
+              <span>
+                Remember me
+              </span>
+
+            </label>
+
+            <a href="forgot-password.html"
+               class="forgot-link">
+
+              Lupa Password?
+
+            </a>
+
+          </div>
+
+          <!-- BUTTON -->
+          <button type="submit"
+                  class="btn-primary btn-full">
+
+            Login ✦
+
+          </button>
+
+        </form>
+
+        <!-- DIVIDER -->
+        <div class="auth-divider">
+
+          <span>
+            atau
+          </span>
+
+        </div>
+
+        <!-- GOOGLE -->
+        <button class="btn-google">
+
+          <span>
+            G
+          </span>
+
+          Login dengan Google
+
+        </button>
+
+        <!-- REGISTER -->
+        <p class="auth-switch">
+
+          Belum punya akun?
+
+          <a href="register.html">
+            Register
+          </a>
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- JS -->
+  <script src="../assets/js/script.js"></script>
+
+  <script src="../assets/js/auth.js"></script>
+
+</body>
+
+</html>

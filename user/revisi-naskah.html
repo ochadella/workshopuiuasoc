@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisi Naskah – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    .revisi-tabs { display: flex; gap: .5rem; margin-bottom: 1.3rem; flex-wrap: wrap; }
+    .revisi-tab {
+      padding: .45rem 1rem; border-radius: 30px; font-size: .8rem; font-weight: 600;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.45); cursor: pointer; transition: all .2s;
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .revisi-tab:hover { border-color: rgba(245,197,24,.3); color: #f5c518; }
+    .revisi-tab.active { background: rgba(245,197,24,.1); border-color: rgba(245,197,24,.4); color: #f5c518; }
+    .revisi-tab .count { background: rgba(255,255,255,.1); border-radius: 10px; padding: .05rem .45rem; font-size: .7rem; }
+    .revisi-tab.active .count { background: rgba(245,197,24,.2); }
+
+    .revisi-card {
+      background: linear-gradient(145deg, rgba(24,14,20,.96), rgba(10,6,10,.98));
+      border: 1px solid rgba(168,85,212,.13); border-radius: 16px;
+      overflow: hidden; margin-bottom: .9rem; transition: border-color .25s;
+    }
+    .revisi-card:hover { border-color: rgba(245,197,24,.2); }
+    .revisi-card.urgent { border-color: rgba(240,128,128,.25); }
+    .revisi-card-header {
+      display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: .7rem;
+      padding: 1.1rem 1.4rem; border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .revisi-chapter-label { font-size: .7rem; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .2rem; }
+    .revisi-title { font-family: 'Playfair Display', serif; font-size: 1.02rem; color: #fff; font-weight: 700; }
+    .revisi-meta { font-size: .78rem; color: rgba(255,255,255,.4); margin-top: .25rem; }
+    .revisi-status-badge { font-size: .7rem; font-weight: 700; padding: .25rem .7rem; border-radius: 20px; flex-shrink: 0; white-space: nowrap; }
+    .status-needrev   { background: rgba(240,128,128,.1); color: #f08080; border: 1px solid rgba(240,128,128,.25); }
+    .status-resubmit  { background: rgba(245,197,24,.1); color: #f5c518; border: 1px solid rgba(245,197,24,.25); }
+    .status-rereview  { background: rgba(192,132,252,.1); color: #c084fc; border: 1px solid rgba(192,132,252,.25); }
+    .status-approved  { background: rgba(32,178,170,.1); color: #20b2aa; border: 1px solid rgba(32,178,170,.25); }
+
+    .revisi-card-body { padding: 1.1rem 1.4rem; }
+    .feedback-box {
+      background: rgba(240,128,128,.04); border: 1px solid rgba(240,128,128,.12);
+      border-radius: 10px; padding: .9rem 1rem; font-size: .83rem;
+      color: rgba(255,255,255,.62); line-height: 1.7; margin-bottom: 1rem;
+    }
+    .feedback-box .fb-label { font-size: .72rem; color: #f08080; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: .45rem; }
+    .feedback-box.resolved { background: rgba(32,178,170,.04); border-color: rgba(32,178,170,.12); }
+    .feedback-box.resolved .fb-label { color: #20b2aa; }
+
+    .revisi-point-list { display: flex; flex-direction: column; gap: .45rem; margin-bottom: 1rem; }
+    .revisi-point { display: flex; gap: .55rem; font-size: .82rem; color: rgba(255,255,255,.55); line-height: 1.6; }
+    .revisi-point .dot { color: #f08080; flex-shrink: 0; margin-top: .15rem; font-size: .65rem; }
+
+    .revisi-history-track {
+      display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1rem;
+      padding-left: .3rem;
+    }
+    .track-item { display: flex; align-items: flex-start; gap: .65rem; font-size: .78rem; color: rgba(255,255,255,.4); }
+    .track-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: .3rem; flex-shrink: 0; }
+    .track-dot.gold { background: #f5c518; }
+    .track-dot.crimson { background: #f08080; }
+    .track-dot.teal { background: #20b2aa; }
+    .track-dot.purple { background: #c084fc; }
+
+    .revisi-actions { display: flex; gap: .6rem; flex-wrap: wrap; }
+
+    .upload-zone {
+      border: 2px dashed rgba(255,255,255,.12); border-radius: 12px;
+      padding: 1.4rem; text-align: center; cursor: pointer;
+      transition: all .2s; background: rgba(255,255,255,.015); margin-bottom: .8rem;
+    }
+    .upload-zone:hover { border-color: rgba(245,197,24,.4); background: rgba(245,197,24,.02); }
+    .upload-zone svg { opacity: .3; margin-bottom: .5rem; }
+    .upload-zone-text { font-size: .82rem; color: rgba(255,255,255,.45); }
+    .upload-zone-text strong { color: #f5c518; }
+    .file-chip {
+      display: flex; align-items: center; gap: .6rem;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px; padding: .6rem .9rem; font-size: .82rem; color: rgba(255,255,255,.7);
+      margin-bottom: .8rem;
+    }
+    .file-chip .fc-remove { margin-left: auto; cursor: pointer; color: rgba(255,255,255,.3); }
+    .file-chip .fc-remove:hover { color: #f08080; }
+
+    .revisi-empty { text-align: center; padding: 3.5rem 2rem; }
+    .revisi-empty svg { opacity: .15; margin-bottom: 1.3rem; display: block; margin-left: auto; margin-right: auto; }
+    .revisi-empty h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: #fff; margin-bottom: .4rem; }
+    .revisi-empty p { color: rgba(255,255,255,.4); font-size: .85rem; }
+  </style>
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Member Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-user.html" class="sidebar-link" data-page="dashboard-user.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor</a>
+      <a href="pengajuan-mentor.html" class="sidebar-link" data-page="pengajuan-mentor.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Pengajuan <span class="sl-badge" id="sidebarPengajuanCount">1</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="status-mentoring.html" class="sidebar-link" data-page="status-mentoring.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring</a>
+      <a href="submit-naskah.html" class="sidebar-link" data-page="submit-naskah.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Submit Naskah</a>
+      <a href="revisi-naskah.html" class="sidebar-link" data-page="revisi-naskah.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah <span class="sl-badge badge-gold" id="sidebarRevisiCount">2</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang <span class="sl-badge badge-gold" id="sidebarCartCount"></span></a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi</a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-user.html" class="sidebar-link" data-page="profile-user.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout" data-logout><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Perbaikan ✦</p>
+        <h1 class="topbar-title">Revisi Naskah</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="live-clock"><div class="live-clock-dot"></div><span id="liveClock">00:00</span></div>
+        <div class="admin-profile">
+          <div class="admin-avatar" style="background:linear-gradient(135deg,#c084fc,#5b21b6);">A</div>
+          <div><strong>Anisa Putri</strong><p>Member</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="dashboard-grid">
+
+        <!-- LEFT: List revisi -->
+        <div class="dashboard-left">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Kerajaan Naga Utara</p><h3 class="card-title">Daftar Revisi</h3></div>
+              <a href="submit-naskah.html" class="btn-ghost btn-sm">+ Submit Bab Baru</a>
+            </div>
+
+            <!-- Tabs -->
+            <div class="revisi-tabs">
+              <button class="revisi-tab active" data-filter="all">Semua <span class="count" id="cAll">0</span></button>
+              <button class="revisi-tab" data-filter="needrev">Perlu Revisi <span class="count" id="cNeedrev">0</span></button>
+              <button class="revisi-tab" data-filter="rereview">Menunggu Review <span class="count" id="cRereview">0</span></button>
+              <button class="revisi-tab" data-filter="approved">Disetujui <span class="count" id="cApproved">0</span></button>
+            </div>
+
+            <div id="revisiList"></div>
+
+            <div class="revisi-empty" id="revisiEmpty" style="display:none;">
+              <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              <h3>Tidak Ada Revisi di Kategori Ini</h3>
+              <p>Semua naskah dalam kategori ini sudah beres ✦</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="dashboard-right">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Bagaimana Cara Kerjanya</p><h3 class="card-title">Flow Revisi</h3></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.9rem;font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.6;">
+              <div style="display:flex;gap:.7rem;">
+                <span style="font-family:'Bebas Neue',sans-serif;color:#f5c518;font-size:1.1rem;flex-shrink:0;">01</span>
+                <span>Kamu submit bab baru lewat halaman <strong style="color:#fff;">Submit Naskah</strong>.</span>
+              </div>
+              <div style="display:flex;gap:.7rem;">
+                <span style="font-family:'Bebas Neue',sans-serif;color:#f5c518;font-size:1.1rem;flex-shrink:0;">02</span>
+                <span>Mentor mengoreksi. Jika ada perbaikan, catatan revisi otomatis muncul di sini.</span>
+              </div>
+              <div style="display:flex;gap:.7rem;">
+                <span style="font-family:'Bebas Neue',sans-serif;color:#f5c518;font-size:1.1rem;flex-shrink:0;">03</span>
+                <span>Kamu upload versi revisian langsung dari kartu revisi — tidak perlu submit form baru.</span>
+              </div>
+              <div style="display:flex;gap:.7rem;">
+                <span style="font-family:'Bebas Neue',sans-serif;color:#f5c518;font-size:1.1rem;flex-shrink:0;">04</span>
+                <span>Status berubah jadi <strong style="color:#c084fc;">Menunggu Review Ulang</strong> sampai mentor mengonfirmasi.</span>
+              </div>
+              <div style="display:flex;gap:.7rem;">
+                <span style="font-family:'Bebas Neue',sans-serif;color:#f5c518;font-size:1.1rem;flex-shrink:0;">05</span>
+                <span>Karena kamu masih berlangganan mentoring, kamu juga bisa minta revisi ulang sendiri kapan saja lewat tombol <strong style="color:#fff;">Ajukan Revisi Ulang</strong>.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="deco-quote">
+            "Revisi bukan tanda kegagalan — itu tanda naskahmu sedang menemukan bentuk terbaiknya."
+            <cite>— Ratna Wulandari</cite>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle"><span></span><span></span><span></span></button>
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/user.js"></script>
+  <script>
+    (function () {
+      const currentPage = window.location.pathname.split('/').pop() || 'dashboard-user.html';
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(link => {
+        if (link.dataset.page === currentPage) link.classList.add('active');
+        else link.classList.remove('active');
+      });
+      try {
+        const cart = JSON.parse(localStorage.getItem('novelCart') || '[]');
+        const count = cart.reduce((s, i) => s + i.qty, 0);
+        const badge = document.getElementById('sidebarCartCount');
+        if (badge) badge.textContent = count > 0 ? count : '';
+      } catch (e) {}
+      try {
+        const revisi = JSON.parse(localStorage.getItem('revisiNaskah') || 'null');
+        if (revisi) {
+          const needAction = revisi.filter(r => r.status === 'needrev').length;
+          const badge = document.getElementById('sidebarRevisiCount');
+          if (badge) badge.textContent = needAction;
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script>
+    // ============================================
+    // DUMMY DATA — disimpan di localStorage agar
+    // konsisten dengan flow submit-naskah → revisi
+    // ============================================
+    function seedRevisi() {
+      return [
+        {
+          id: 'rev-10',
+          chapter: 10,
+          title: 'Sang Penerus Takhta',
+          mentor: 'Ratna Wulandari',
+          status: 'needrev', // needrev | rereview | approved
+          dateMentor: '28 Mei 2025',
+          dateResubmit: null,
+          dateApproved: null,
+          points: [
+            'Motivasi tokoh antagonis di bagian klimaks belum jelas — perkuat alasan ia berkhianat.',
+            'Dialog di halaman 8–12 terasa kaku, coba buat lebih natural.',
+            'Transisi adegan ke flashback kurang halus, perlu kalimat penghubung.'
+          ],
+          history: [
+            { label: 'Disubmit pertama kali', date: '20 Mei 2025', color: 'teal' },
+            { label: 'Direview mentor', date: '28 Mei 2025', color: 'crimson' }
+          ]
+        },
+        {
+          id: 'rev-13',
+          chapter: 13,
+          title: 'Malam Sebelum Pertempuran',
+          mentor: 'Ratna Wulandari',
+          status: 'needrev',
+          dateMentor: '18 Jun 2025',
+          dateResubmit: null,
+          dateApproved: null,
+          points: [
+            'Deskripsi medan pertempuran terlalu panjang, padatkan agar pacing tidak melambat.',
+            'Sistem magic yang dipakai tokoh utama tidak konsisten dengan aturan di Chapter 9.'
+          ],
+          history: [
+            { label: 'Disubmit pertama kali', date: '14 Jun 2025', color: 'teal' },
+            { label: 'Direview mentor', date: '18 Jun 2025', color: 'crimson' }
+          ]
+        },
+        {
+          id: 'rev-09',
+          chapter: 9,
+          title: 'Labirin Bawah Tanah',
+          mentor: 'Ratna Wulandari',
+          status: 'rereview',
+          dateMentor: '20 Mei 2025',
+          dateResubmit: '24 Mei 2025',
+          dateApproved: null,
+          points: [
+            'Sistem magic perlu dokumen aturan tersendiri agar konsisten ke depannya.'
+          ],
+          history: [
+            { label: 'Disubmit pertama kali', date: '15 Mei 2025', color: 'teal' },
+            { label: 'Direview mentor — revisi diminta', date: '20 Mei 2025', color: 'crimson' },
+            { label: 'Versi revisi dikirim ulang', date: '24 Mei 2025', color: 'purple' }
+          ]
+        },
+        {
+          id: 'rev-11',
+          chapter: 11,
+          title: 'Perjanjian Darah',
+          mentor: 'Ratna Wulandari',
+          status: 'approved',
+          dateMentor: '5 Jun 2025',
+          dateResubmit: '7 Jun 2025',
+          dateApproved: '8 Jun 2025',
+          points: [
+            'Alur cerita sudah lebih natural setelah revisi pertama.'
+          ],
+          history: [
+            { label: 'Disubmit pertama kali', date: '1 Jun 2025', color: 'teal' },
+            { label: 'Direview mentor — revisi diminta', date: '5 Jun 2025', color: 'crimson' },
+            { label: 'Versi revisi dikirim ulang', date: '7 Jun 2025', color: 'purple' },
+            { label: 'Disetujui mentor ✓', date: '8 Jun 2025', color: 'gold' }
+          ]
+        }
+      ];
+    }
+
+    let revisiData = JSON.parse(localStorage.getItem('revisiNaskah') || 'null');
+    if (!revisiData) {
+      revisiData = seedRevisi();
+      localStorage.setItem('revisiNaskah', JSON.stringify(revisiData));
+    }
+
+    let currentFilter = 'all';
+
+    function statusBadge(status) {
+      return {
+        needrev:  '<span class="revisi-status-badge status-needrev">⚠ Perlu Revisi</span>',
+        rereview: '<span class="revisi-status-badge status-rereview">⏳ Menunggu Review Ulang</span>',
+        approved: '<span class="revisi-status-badge status-approved">✓ Disetujui</span>'
+      }[status];
+    }
+
+    function renderCounts() {
+      document.getElementById('cAll').textContent = revisiData.length;
+      document.getElementById('cNeedrev').textContent = revisiData.filter(r => r.status === 'needrev').length;
+      document.getElementById('cRereview').textContent = revisiData.filter(r => r.status === 'rereview').length;
+      document.getElementById('cApproved').textContent = revisiData.filter(r => r.status === 'approved').length;
+
+      // update sidebar badge = jumlah yang masih perlu aksi (needrev)
+      const needAction = revisiData.filter(r => r.status === 'needrev').length;
+      const sb = document.getElementById('sidebarRevCount');
+      if (sb) sb.textContent = needAction;
+    }
+
+    function renderList() {
+      const list = document.getElementById('revisiList');
+      const empty = document.getElementById('revisiEmpty');
+      const filtered = currentFilter === 'all' ? revisiData : revisiData.filter(r => r.status === currentFilter);
+
+      if (filtered.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = '';
+        renderCounts();
+        return;
+      }
+      empty.style.display = 'none';
+
+      // urutkan: needrev dulu, lalu rereview, lalu approved
+      const order = { needrev: 0, rereview: 1, approved: 2 };
+      const sorted = [...filtered].sort((a,b) => order[a.status] - order[b.status]);
+
+      list.innerHTML = sorted.map(r => {
+        const isUrgent = r.status === 'needrev';
+        const historyHtml = r.history.map(h => `
+          <div class="track-item">
+            <span class="track-dot ${h.color}"></span>
+            <span>${h.label} <span style="color:rgba(255,255,255,.25);">· ${h.date}</span></span>
+          </div>
+        `).join('');
+
+        const pointsHtml = r.points.map(p => `
+          <div class="revisi-point"><span class="dot">●</span><span>${p}</span></div>
+        `).join('');
+
+        let actionHtml = '';
+        if (r.status === 'needrev') {
+          actionHtml = `
+            <div class="upload-zone" onclick="document.getElementById('file-${r.id}').click()">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
+              <div class="upload-zone-text">Klik untuk upload <strong>versi revisi Bab ${r.chapter}</strong></div>
+            </div>
+            <input type="file" id="file-${r.id}" accept=".pdf,.docx" style="display:none;" onchange="handleFileChosen('${r.id}', this)" />
+            <div id="filechip-${r.id}"></div>
+            <div class="revisi-actions">
+              <button class="btn-primary btn-sm" style="flex:1;" onclick="resubmitRevisi('${r.id}')">Kirim Versi Revisi</button>
+              <a href="pengajuan-mentor.html?mentor=${encodeURIComponent(r.mentor)}&chapter=${r.chapter}&title=${encodeURIComponent(r.title)}" class="btn-ghost btn-sm">Diskusikan dengan Mentor</a>
+            </div>
+          `;
+        } else if (r.status === 'rereview') {
+          actionHtml = `
+            <div class="revisi-actions">
+              <button class="btn-ghost btn-sm" disabled style="opacity:.5;cursor:default;">Menunggu Mentor Mereview...</button>
+            </div>
+          `;
+        } else if (r.status === 'approved') {
+          actionHtml = `
+            <div style="font-size:.8rem;color:#20b2aa;display:flex;align-items:center;gap:.4rem;margin-bottom:.7rem;">✓ Bab ini sudah final!</div>
+            <div class="revisi-actions">
+              <a href="submit-naskah.html" class="btn-primary btn-sm" style="flex:1;">Submit Bab Berikutnya →</a>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="revisi-card ${isUrgent ? 'urgent' : ''}" id="card-${r.id}">
+            <div class="revisi-card-header">
+              <div>
+                <div class="revisi-chapter-label">BAB ${r.chapter}</div>
+                <div class="revisi-title">${r.title}</div>
+                <div class="revisi-meta">Mentor: ${r.mentor}</div>
+              </div>
+              ${statusBadge(r.status)}
+            </div>
+            <div class="revisi-card-body">
+              ${r.points.length ? `
+                <div class="feedback-box ${r.status==='approved' ? 'resolved' : ''}">
+                  <span class="fb-label">${r.status==='approved' ? 'Catatan Terakhir Mentor' : 'Catatan Revisi dari Mentor'}</span>
+                  <div class="revisi-point-list">${pointsHtml}</div>
+                </div>
+              ` : ''}
+              <div class="revisi-history-track">${historyHtml}</div>
+              ${actionHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      renderCounts();
+    }
+
+    function handleFileChosen(id, input) {
+      const file = input.files[0];
+      if (!file) return;
+      document.getElementById(`filechip-${id}`).innerHTML = `
+        <div class="file-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>${file.name}</span>
+          <span style="color:rgba(255,255,255,.3);font-size:.72rem;">${(file.size/1024/1024).toFixed(1)} MB</span>
+          <span class="fc-remove" onclick="document.getElementById('file-${id}').value='';document.getElementById('filechip-${id}').innerHTML=''">✕</span>
+        </div>`;
+    }
+
+    function resubmitRevisi(id) {
+      const fileInput = document.getElementById(`file-${id}`);
+      if (!fileInput.files[0]) {
+        if (typeof showToast === 'function') showToast('Upload file revisi terlebih dahulu', 'error');
+        else alert('Upload file revisi terlebih dahulu');
+        return;
+      }
+      const r = revisiData.find(x => x.id === id);
+      r.status = 'rereview';
+      r.dateResubmit = new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' });
+      r.history.push({ label: 'Versi revisi dikirim ulang', date: r.dateResubmit, color: 'purple' });
+      localStorage.setItem('revisiNaskah', JSON.stringify(revisiData));
+      if (typeof showToast === 'function') showToast(`Revisi Bab ${r.chapter} berhasil dikirim ke mentor!`, 'success');
+      renderList();
+    }
+
+    function requestSelfRevisi(id) {
+      const r = revisiData.find(x => x.id === id);
+      if (!confirm(`Ajukan revisi ulang sendiri untuk Bab ${r.chapter}? Statusnya akan berubah jadi "Perlu Revisi" agar kamu bisa upload versi baru.`)) return;
+      r.status = 'needrev';
+      r.points = ['Permintaan revisi mandiri oleh penulis — belum ada catatan spesifik dari mentor.'];
+      r.history.push({ label: 'Penulis mengajukan revisi mandiri', date: new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}), color: 'gold' });
+      localStorage.setItem('revisiNaskah', JSON.stringify(revisiData));
+      if (typeof showToast === 'function') showToast('Revisi mandiri diajukan, silakan upload versi barumu', 'info');
+      renderList();
+    }
+
+    document.querySelectorAll('.revisi-tab').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.revisi-tab').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+        renderList();
+      });
+    });
+
+    renderList();
+  </script>
+</body>
+</html>

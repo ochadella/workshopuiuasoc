@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pembayaran – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    .pay-layout { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start; }
+    @media(max-width:900px){ .pay-layout { grid-template-columns:1fr; } }
+
+    /* Method cards */
+    .method-group { margin-bottom: 1.4rem; }
+    .method-group-title { font-size: .72rem; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .65rem; }
+    .method-card {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px; cursor: pointer; transition: all .2s; margin-bottom: .5rem;
+    }
+    .method-card:hover { border-color: rgba(245,197,24,.25); background: rgba(245,197,24,.03); }
+    .method-card.selected { border-color: rgba(245,197,24,.5); background: rgba(245,197,24,.06); }
+    .method-radio {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.2); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; transition: all .2s;
+    }
+    .method-card.selected .method-radio { border-color: #f5c518; }
+    .method-radio-dot { width: 8px; height: 8px; border-radius: 50%; background: #f5c518; display: none; }
+    .method-card.selected .method-radio-dot { display: block; }
+    .method-icon {
+      width: 40px; height: 28px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: .75rem; letter-spacing: .04em;
+      flex-shrink: 0;
+    }
+    .mi-bca    { background: #003366; color: #fff; }
+    .mi-bni    { background: #f37021; color: #fff; }
+    .mi-mandiri{ background: #003087; color: #f5c518; }
+    .mi-ovo    { background: #4c2891; color: #fff; }
+    .mi-gopay  { background: #00aed6; color: #fff; }
+    .mi-dana   { background: #108ee9; color: #fff; }
+    .mi-qris   { background: #e11d48; color: #fff; }
+    .mi-visa   { background: #1a1f71; color: #fff; }
+    .method-name { flex: 1; font-size: .9rem; color: #fff; font-weight: 500; }
+    .method-desc { font-size: .72rem; color: rgba(255,255,255,.35); }
+
+    /* Detail section yang muncul saat metode dipilih */
+    .method-detail {
+      background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px; padding: 1rem 1.2rem; margin-top: -.3rem; margin-bottom: .5rem;
+      font-size: .84rem; color: rgba(255,255,255,.6); line-height: 1.8;
+    }
+    .method-detail strong { color: #f5c518; }
+    .copy-btn {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-size: .75rem; color: #20b2aa; background: rgba(32,178,170,.1);
+      border: 1px solid rgba(32,178,170,.25); border-radius: 6px;
+      padding: .2rem .6rem; cursor: pointer; transition: all .2s; margin-left: .5rem;
+    }
+    .copy-btn:hover { background: rgba(32,178,170,.2); }
+
+    /* Order summary sidebar */
+    .order-summary-card {
+      background: linear-gradient(145deg,rgba(24,14,20,.98),rgba(10,6,10,.99));
+      border: 1px solid rgba(212,168,71,.18); border-radius: 20px;
+      padding: 1.8rem; position: sticky; top: 6rem;
+    }
+    .os-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .55rem 0; border-bottom: 1px solid rgba(255,255,255,.05);
+      font-size: .85rem; color: rgba(255,255,255,.6);
+    }
+    .os-item:last-of-type { border-bottom: none; }
+    .os-item-cover {
+      width: 32px; height: 42px; border-radius: 3px 6px 6px 3px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: .95rem;
+      color: rgba(255,255,255,.25); flex-shrink: 0; margin-right: .7rem;
+    }
+    .os-item-info { flex: 1; }
+    .os-item-title { font-size: .82rem; color: #fff; font-weight: 600; line-height: 1.3; }
+    .os-item-qty   { font-size: .72rem; color: rgba(255,255,255,.35); }
+    .os-price { font-size: .85rem; color: #f5c518; font-weight: 600; white-space: nowrap; }
+    .os-divider { border: none; border-top: 1px solid rgba(255,255,255,.07); margin: .75rem 0; }
+    .os-row { display: flex; justify-content: space-between; font-size: .85rem; color: rgba(255,255,255,.55); padding: .3rem 0; }
+    .os-row.total { font-size: 1rem; color: #fff; font-weight: 700; padding-top: .7rem; border-top: 1px solid rgba(255,255,255,.07); margin-top: .3rem; }
+    .os-row.total span:last-child { color: #f5c518; font-family: 'Bebas Neue', sans-serif; font-size: 1.35rem; letter-spacing: .04em; }
+
+    /* Timer */
+    .pay-timer {
+      display: flex; align-items: center; gap: .75rem;
+      background: rgba(240,128,128,.08); border: 1px solid rgba(240,128,128,.2);
+      border-radius: 12px; padding: .85rem 1.1rem; margin-bottom: 1.4rem;
+    }
+    .timer-dot { width: 8px; height: 8px; border-radius: 50%; background: #f08080; animation: pulse 1.2s ease-in-out infinite; flex-shrink: 0; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+    .timer-text { font-size: .83rem; color: rgba(255,255,255,.6); }
+    .timer-count { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: #f08080; letter-spacing: .06em; }
+
+    .form-group { margin-bottom: 1.1rem; }
+    .form-label { display: block; font-size: .8rem; color: rgba(255,255,255,.45); margin-bottom: .45rem; }
+    .form-input {
+      width: 100%; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; padding: .7rem 1rem; color: #fff;
+      font-family: 'DM Sans', sans-serif; font-size: .88rem; box-sizing: border-box;
+    }
+    .form-input:focus { outline: none; border-color: rgba(245,197,24,.4); }
+
+    /* sidebar locked state */
+    .sidebar-link.locked { opacity: .45; cursor: not-allowed; }
+    .sidebar-link.locked:hover { background: none; color: rgba(255,255,255,.5); }
+    .sl-lock { margin-left: auto; font-size: .72rem; }
+  </style>
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Member Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-user.html" class="sidebar-link" data-page="dashboard-user.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor</a>
+      <a href="pengajuan-mentor.html" class="sidebar-link locked" data-page="pengajuan-mentor.html" data-requires="subscribed"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Pengajuan <span class="sl-lock">🔒</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="status-mentoring.html" class="sidebar-link locked" data-page="status-mentoring.html" data-requires="accepted"><span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring <span class="sl-lock">🔒</span></a>
+      <a href="submit-naskah.html" class="sidebar-link locked" data-page="submit-naskah.html" data-requires="accepted"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>Submit Naskah <span class="sl-lock">🔒</span></a>
+      <a href="revisi-naskah.html" class="sidebar-link locked" data-page="revisi-naskah.html" data-requires="accepted"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah <span class="sl-lock">🔒</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang</a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi</a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-user.html" class="sidebar-link" data-page="profile-user.html"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout" data-logout><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle" id="payTopbarSubtitle">Checkout ✦</p>
+        <h1 class="topbar-title" id="payTopbarTitle">Pembayaran</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="live-clock"><div class="live-clock-dot"></div><span id="liveClock">00:00</span></div>
+        <div class="admin-profile">
+          <div class="admin-avatar" style="background:linear-gradient(135deg,#c084fc,#5b21b6);">A</div>
+          <div><strong>Anisa Putri</strong><p>Member</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="pay-layout">
+
+        <!-- LEFT: Metode Pembayaran -->
+        <div>
+
+          <!-- Timer -->
+          <div class="pay-timer">
+            <div class="timer-dot"></div>
+            <div class="timer-text">Selesaikan pembayaran dalam</div>
+            <div class="timer-count" id="payTimer">14:59</div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Step 1</p><h3 class="card-title">Pilih Metode Pembayaran</h3></div>
+            </div>
+
+            <!-- Transfer Bank -->
+            <div class="method-group">
+              <div class="method-group-title">Transfer Bank</div>
+
+              <div class="method-card" data-method="bca" onclick="selectMethod(this)">
+                <div class="method-radio"><div class="method-radio-dot"></div></div>
+                <div class="method-icon mi-bca">BCA</div>
+                <div>
+                  <div class="method-name">Bank BCA</div>
+                  <div class="method-desc">Virtual Account · Instan</div>
+                </div>
+              </div>
+              <div class="method-detail" id="detail-bca" style="display:none;">
+                No. Virtual Account: <strong>8277 0812 3456 7890</strong>
+                <button class="copy-btn" onclick="copyText('8277081234567890')">Salin</button><br/>
+                Atas nama: <strong>NovelCraft / Anisa Putri</strong><br/>
+                Berlaku hingga: <strong id="vaExpiry"></strong>
+              </div>
+
+              <div class="method-card" data-method="bni" onclick="selectMethod(this)">
+                <div class="method-radio"><div class="method-radio-dot"></div></div>
+                <div class="method-icon mi-bni">BNI</div>
+                <div>
+                  <div class="method-name">Bank BNI</div>
+                  <div class="method-desc">Virtual Account · Instan</div>
+                </div>
+              </div>
+              <div class="method-detail" id="detail-bni" style="display:none;">
+                No. Virtual Account: <strong>8800 9912 3456 7890</strong>
+                <button class="copy-btn" onclick="copyText('8800991234567890')">Salin</button><br/>
+                Atas nama: <strong>NovelCraft / Anisa Putri</strong>
+              </div>
+
+              <div class="method-card" data-method="mandiri" onclick="selectMethod(this)">
+                <div class="method-radio"><div class="method-radio-dot"></div></div>
+                <div class="method-icon mi-mandiri">MDR</div>
+                <div>
+                  <div class="method-name">Bank Mandiri</div>
+                  <div class="method-desc">Virtual Account · Instan</div>
+                </div>
+              </div>
+              <div class="method-detail" id="detail-mandiri" style="display:none;">
+                Kode Perusahaan: <strong>70014</strong> &nbsp;|&nbsp; No. VA: <strong>1234 5678 901</strong>
+                <button class="copy-btn" onclick="copyText('70014')">Salin</button>
+              </div>
+            </div>
+
+            <!-- E-Wallet -->
+            <div class="method-group">
+              <div class="method-group-title">E-Wallet</div>
+
+              <div class="method-card" data-method="ovo" onclick="selectMethod(this)">
+                <div class="method-radio"><div class="method-radio-dot"></div></div>
+                <div class="method-icon mi-ovo">OVO</div>
+                <div>
+                  <div class="method-name">OVO</div>
+                  <div class="method-desc">Push notif ke aplikasi OVO</div>
+                </div>
+              </div>
+              <div class="method-detail" id="detail-ovo" style="display:none;">
+                Buka aplikasi OVO → <strong>Notifikasi</strong> akan muncul otomatis.<br/>
+                Atau masukkan nomor: <strong>0812-3456-7890</strong>
+              </div>
+
+              <div class="method-card" data-method="gopay" onclick="selectMethod(this)">
+                <div class="method-radio"><div class="method-radio-dot"></div></div>
+                <div class="method-icon mi-gopay">GP</div>
+                <div>
+                  <div class="method-name">GoPay</div>
+                  <div class="method-desc">Scan QR atau via Gojek</div>
+                </div>
+              </div>
+              <div class="method-detail" id="detail-gopay" style="display:none;">
+                Buka Gojek → <strong>GoPay</strong> → Scan QR atau terima permintaan pembayaran.
+              </div>
+
+              <div class="method-card" data-method="dana" onclick="selectMethod(this)">
+                <div class="method-radio"><div class="method-radio-dot"></div></div>
+                <div class="method-icon mi-dana">DANA</div>
+                <div>
+                  <div class="method-name">DANA</div>
+                  <div class="method-desc">Transfer via DANA</div>
+                </div>
+              </div>
+              <div class="method-detail" id="detail-dana" style="display:none;">
+                Kirim ke nomor DANA: <strong>0821-5678-9012</strong>
+                <button class="copy-btn" onclick="copyText('082156789012')">Salin</button>
+              </div>
+            </div>
+
+            <!-- QRIS & Kartu -->
+            <div class="method-group">
+              <div class="method-group-title">Lainnya</div>
+
+              <div class="method-card" data-method="qris" onclick="selectMethod(this)">
+                <div class="method-radio"><div class="method-radio-dot"></div></div>
+                <div class="method-icon mi-qris">QR</div>
+                <div>
+                  <div class="method-name">QRIS</div>
+                  <div class="method-desc">Scan dengan aplikasi apapun</div>
+                </div>
+              </div>
+              <div class="method-detail" id="detail-qris" style="display:none;">
+                <div style="width:100px;height:100px;background:rgba(255,255,255,.08);border-radius:8px;margin:.5rem 0;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:rgba(255,255,255,.3);">[ QR Code ]</div>
+                Scan kode QR di atas menggunakan mobile banking atau e-wallet apapun.
+              </div>
+
+              <div class="method-card" data-method="visa" onclick="selectMethod(this)">
+                <div class="method-radio"><div class="method-radio-dot"></div></div>
+                <div class="method-icon mi-visa">VISA</div>
+                <div>
+                  <div class="method-name">Kartu Kredit / Debit</div>
+                  <div class="method-desc">Visa, Mastercard, JCB</div>
+                </div>
+              </div>
+              <div class="method-detail" id="detail-visa" style="display:none;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">
+                  <div class="form-group" style="grid-column:1/-1;">
+                    <label class="form-label">Nomor Kartu</label>
+                    <input class="form-input" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Berlaku Hingga</label>
+                    <input class="form-input" type="text" placeholder="MM/YY" maxlength="5" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">CVV</label>
+                    <input class="form-input" type="password" placeholder="•••" maxlength="4" />
+                  </div>
+                  <div class="form-group" style="grid-column:1/-1;">
+                    <label class="form-label">Nama di Kartu</label>
+                    <input class="form-input" type="text" placeholder="ANISA PUTRI" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <button class="btn-primary btn-full" style="font-size:.97rem;padding:.95rem;" id="bayarBtn" onclick="handleBayar()">
+              Bayar Sekarang →
+            </button>
+            <a href="keranjang.html" class="btn-ghost btn-full" style="margin-top:.6rem;font-size:.85rem;" id="backToCartLink">← Kembali ke Keranjang</a>
+          </div>
+        </div>
+
+        <!-- RIGHT: Order Summary -->
+        <div>
+          <div class="order-summary-card">
+            <p class="card-subtitle" style="margin-bottom:.4rem;">Pesanan Kamu</p>
+            <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;margin-bottom:1.1rem;">Ringkasan Order</h3>
+
+            <div id="osSummaryItems"></div>
+            <hr class="os-divider" />
+            <div class="os-row"><span>Subtotal</span><span id="osSubtotal">—</span></div>
+            <div class="os-row" id="osDiskonRow" style="display:none;"><span>Diskon</span><span id="osDiskon" style="color:#20b2aa;">—</span></div>
+            <div class="os-row"><span>PPN (11%)</span><span id="osPpn">—</span></div>
+            <div class="os-row total"><span>Total</span><span id="osTotal">—</span></div>
+
+            <div style="margin-top:1.2rem;padding:.85rem 1rem;background:rgba(32,178,170,.06);border:1px solid rgba(32,178,170,.15);border-radius:10px;font-size:.8rem;color:rgba(255,255,255,.5);line-height:1.7;">
+              🔒 Pembayaran dilindungi enkripsi SSL.<br/>
+              Setelah konfirmasi, novel langsung dapat diunduh.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle"><span></span><span></span><span></span></button>
+  <script>
+    (function () {
+      const currentPage = window.location.pathname.split('/').pop() || 'dashboard-user.html';
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(link => {
+        if (link.dataset.page === currentPage) link.classList.add('active');
+        else link.classList.remove('active');
+      });
+    })();
+  </script>
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/user.js"></script>
+  <script>
+    const orderType = new URLSearchParams(location.search).get('type') || 'novel';
+    if (orderType === 'mentoring') {
+      const backLink = document.getElementById('backToCartLink');
+      if (backLink) { backLink.textContent = '← Kembali ke Pilih Paket'; backLink.href = 'langganan-mentoring.html'; }
+      const sub = document.getElementById('payTopbarSubtitle');
+      const title = document.getElementById('payTopbarTitle');
+      if (sub) sub.textContent = 'Aktivasi Mentoring ✦';
+      if (title) title.textContent = 'Pembayaran Langganan';
+    }
+
+    // ── Load order summary from localStorage ──
+    function fmt(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+
+    (function loadSummary() {
+      if (orderType === 'mentoring') {
+        const paket = JSON.parse(localStorage.getItem('mentoringOrder') || 'null');
+        const itemsEl = document.getElementById('osSummaryItems');
+        if (!paket) {
+          if (itemsEl) itemsEl.innerHTML = '<p style="font-size:.82rem;color:rgba(255,255,255,.4);">Tidak ada paket dipilih.</p>';
+          window._orderItems = [];
+          window._orderTotal = 0; window._orderSubtotal = 0; window._orderPpn = 0; window._orderDiskon = 0;
+          return;
+        }
+        const subtotal = paket.price;
+        const ppn = Math.round(subtotal * 0.11);
+        const total = subtotal + ppn;
+
+        if (itemsEl) {
+          itemsEl.innerHTML = `
+            <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.65rem;">
+              <div class="os-item-cover" style="background:linear-gradient(135deg,#7c3aed,#c084fc);color:#0a0608;">M</div>
+              <div class="os-item-info">
+                <div class="os-item-title">${paket.name}</div>
+                <div class="os-item-qty">Langganan bulanan</div>
+              </div>
+              <div class="os-price">${fmt(subtotal)}</div>
+            </div>
+          `;
+        }
+        document.getElementById('osSubtotal').textContent = fmt(subtotal);
+        document.getElementById('osPpn').textContent = fmt(ppn);
+        document.getElementById('osTotal').textContent = fmt(total);
+
+        window._orderTotal = total;
+        window._orderSubtotal = subtotal;
+        window._orderPpn = ppn;
+        window._orderDiskon = 0;
+        window._orderItems = [{ id: paket.id, title: paket.name, author: 'Paket Mentoring', price: paket.price, cover: 'nc-mentoring', initial: 'M', qty: 1 }];
+        return;
+      }
+
+      // ── default: order novel dari keranjang ──
+      const raw = localStorage.getItem('orderSummary');
+      const cart = JSON.parse(localStorage.getItem('novelCart') || '[]');
+      let subtotal=0, diskon=0, ppn=0, total=0, activeDiscount=0;
+
+      if (raw) {
+        const s = JSON.parse(raw);
+        subtotal = s.subtotal; diskon = s.diskon; ppn = s.ppn; total = s.total; activeDiscount = s.activeDiscount||0;
+      } else if (cart.length) {
+        subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+        ppn = Math.round(subtotal*0.11); total = subtotal+ppn;
+      }
+
+      // Items
+      const itemsEl = document.getElementById('osSummaryItems');
+      if (cart.length) {
+        itemsEl.innerHTML = cart.map(item => `
+          <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.65rem;">
+            <div class="os-item-cover ${item.cover}">${item.initial}</div>
+            <div class="os-item-info">
+              <div class="os-item-title">${item.title}</div>
+              <div class="os-item-qty">×${item.qty}</div>
+            </div>
+            <div class="os-price">${fmt(item.price*item.qty)}</div>
+          </div>
+        `).join('');
+      }
+
+      document.getElementById('osSubtotal').textContent = fmt(subtotal);
+      document.getElementById('osPpn').textContent = fmt(ppn);
+      document.getElementById('osTotal').textContent = fmt(total);
+      if (activeDiscount > 0) {
+        document.getElementById('osDiskonRow').style.display = '';
+        document.getElementById('osDiskon').textContent = `− ${fmt(diskon)} (${activeDiscount}%)`;
+      }
+
+      // Store total for history
+      window._orderTotal = total;
+      window._orderSubtotal = subtotal;
+      window._orderPpn = ppn;
+      window._orderDiskon = diskon;
+      window._orderItems = cart;
+    })();
+
+    // ── VA expiry ──
+    const exp = new Date(Date.now() + 15*60*1000);
+    document.getElementById('vaExpiry').textContent =
+      exp.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}) + ' WIB';
+
+    // ── Payment countdown ──
+    let secs = 14*60+59;
+    const timerEl = document.getElementById('payTimer');
+    const tick = setInterval(() => {
+      secs--;
+      if (secs <= 0) { clearInterval(tick); timerEl.textContent = '00:00'; return; }
+      const m = String(Math.floor(secs/60)).padStart(2,'0');
+      const s = String(secs%60).padStart(2,'0');
+      timerEl.textContent = `${m}:${s}`;
+    }, 1000);
+
+    // ── Method select ──
+    let selectedMethod = null;
+    function selectMethod(card) {
+      document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('.method-detail').forEach(d => d.style.display = 'none');
+      card.classList.add('selected');
+      selectedMethod = card.dataset.method;
+      const det = document.getElementById('detail-' + selectedMethod);
+      if (det) det.style.display = 'block';
+    }
+
+    // ── Copy ──
+    function copyText(txt) {
+      navigator.clipboard.writeText(txt).then(() => {
+        if (typeof showToast === 'function') showToast('Disalin ke clipboard ✦', 'success');
+        else alert('Disalin: ' + txt);
+      });
+    }
+
+    // ── Card format ──
+    function formatCard(el) {
+      let v = el.value.replace(/\D/g,'').substring(0,16);
+      el.value = v.replace(/(.{4})/g,'$1 ').trim();
+    }
+
+    // ── Bayar ──
+    function handleBayar() {
+      if (!selectedMethod) {
+        if (typeof showToast === 'function') showToast('Pilih metode pembayaran dulu!', 'error');
+        else alert('Pilih metode pembayaran dulu!');
+        return;
+      }
+
+      // Simpan transaksi ke history
+      const history = JSON.parse(localStorage.getItem('transaksiHistory') || '[]');
+      const newTrx = {
+        id: 'NC' + Date.now(),
+        date: new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}),
+        time: new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}),
+        items: window._orderItems || [],
+        subtotal: window._orderSubtotal || 0,
+        diskon: window._orderDiskon || 0,
+        ppn: window._orderPpn || 0,
+        total: window._orderTotal || 0,
+        method: selectedMethod.toUpperCase(),
+        status: 'success',
+        type: orderType
+      };
+      history.unshift(newTrx);
+      localStorage.setItem('transaksiHistory', JSON.stringify(history));
+
+      clearInterval(tick);
+
+      if (orderType === 'mentoring') {
+        // Aktifkan akses mentoring
+        localStorage.setItem('mentoringSubscribed', 'true');
+        localStorage.removeItem('mentoringOrder');
+        if (typeof showToast === 'function') showToast('Langganan aktif! Sekarang kamu bisa ajukan mentor ✦', 'success');
+        setTimeout(() => { window.location.href = 'pilih-mentor.html?subscribed=success'; }, 1200);
+        return;
+      }
+
+      // Kosongkan keranjang (untuk order novel)
+      localStorage.removeItem('novelCart');
+      localStorage.removeItem('orderSummary');
+
+      // Redirect ke sukses / history
+      window.location.href = 'history-transaksi.html?status=success&id=' + newTrx.id;
+    }
+  </script>
+</body>
+</html>

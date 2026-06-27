@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/user.css" />
+  <link rel="stylesheet" href="../assets/css/customer.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="userSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Customer Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-customer.html" class="sidebar-link" data-page="dashboard-customer.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard
+      </a>
+      <a href="pilih-mentor.html" class="sidebar-link" data-page="pilih-mentor.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Pilih Mentor
+      </a>
+      <!-- LOCKED -->
+      <a href="upgrade-member.html" class="sidebar-link" data-page="upgrade-member.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Pengajuan
+    </a>
+      <div class="sidebar-divider"></div>
+      <a class="sidebar-link locked" title="Upgrade ke Member untuk akses fitur ini">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>Status Mentoring
+      </a>
+      <a class="sidebar-link locked" title="Upgrade ke Member untuk akses fitur ini">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Submit Naskah
+      </a>
+      <a class="sidebar-link locked" title="Upgrade ke Member untuk akses fitur ini">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>Revisi Naskah
+      </a>
+      <div class="sidebar-divider"></div>
+      <a href="keranjang.html" class="sidebar-link" data-page="keranjang.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Keranjang <span class="sl-badge badge-gold" id="sidebarCartCount"></span>
+      </a>
+      <a href="history-transaksi.html" class="sidebar-link" data-page="history-transaksi.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Riwayat Transaksi
+      </a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-customer.html" class="sidebar-link" data-page="profile-customer.html">
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="/index.html" class="sidebar-logout" data-logout>
+        <span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <!-- TOPBAR -->
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Selamat Datang ✦</p>
+        <h1 class="topbar-title">Dashboard</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="live-clock">
+          <div class="live-clock-dot"></div>
+          <span id="liveClock">00:00</span>
+        </div>
+        <div class="admin-profile">
+          <div class="admin-avatar" id="topbarAvatar" style="background:linear-gradient(135deg,#f5c518,#e07b39);">C</div>
+          <div>
+            <strong id="topbarName">Customer</strong>
+            <p>Customer</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MARQUEE -->
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-inner">
+        <span>TULIS</span><span class="marquee-dot">✦</span>
+        <span>BERKEMBANG</span><span class="marquee-dot">✦</span>
+        <span>NOVELCRAFT</span><span class="marquee-dot">✦</span>
+        <span>PUBLISH</span><span class="marquee-dot">✦</span>
+        <span>UPGRADE</span><span class="marquee-dot">✦</span>
+        <span>TULIS</span><span class="marquee-dot">✦</span>
+        <span>BERKEMBANG</span><span class="marquee-dot">✦</span>
+        <span>NOVELCRAFT</span><span class="marquee-dot">✦</span>
+        <span>PUBLISH</span><span class="marquee-dot">✦</span>
+        <span>UPGRADE</span><span class="marquee-dot">✦</span>
+      </div>
+    </div>
+
+    <div class="page-body">
+
+      <!-- USER PROFILE CARD -->
+      <div class="user-profile-card">
+        <div class="user-avatar-lg" id="dashAvatarLg" style="background:linear-gradient(135deg,#f5c518,#e07b39);">C</div>
+        <div class="user-profile-info">
+          <h2 id="dashUserName">Customer</h2>
+          <p id="dashUserSub">Bergabung baru · Mulai perjalanan menulismu</p>
+          <div class="user-badges">
+            <span class="user-badge customer">✦ Customer</span>
+            <span class="user-badge purple">◆ Belum Ada Genre</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPGRADE BANNER -->
+      <div class="upgrade-banner">
+        <div class="upgrade-banner-icon">🚀</div>
+        <div class="upgrade-banner-text">
+          <h4>UPGRADE KE MEMBER</h4>
+          <p>Buka akses Submit Naskah, Mentoring, Status Revisi, dan semua fitur eksklusif penulis NovelCraft.</p>
+        </div>
+        <a href="pilih-mentor.html" class="upgrade-banner-btn">Lihat Paket ✦</a>
+      </div>
+
+      <!-- STATS -->
+      <section class="user-stats">
+        <div class="stats-card sc-gold">
+          <div class="stats-icon si-gold">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="stats-text">
+            <h3 class="stats-number">0</h3>
+            <p class="stats-label">Mentor Dipilih</p>
+          </div>
+        </div>
+        <div class="stats-card sc-purple">
+          <div class="stats-icon si-purple">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+          </div>
+          <div class="stats-text">
+            <h3 class="stats-number" id="statCartCount">0</h3>
+            <p class="stats-label">Item di Keranjang</p>
+          </div>
+        </div>
+        <div class="stats-card sc-teal">
+          <div class="stats-icon si-teal">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#20b2aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+          </div>
+          <div class="stats-text">
+            <h3 class="stats-number" id="statTrxCount">0</h3>
+            <p class="stats-label">Transaksi</p>
+          </div>
+        </div>
+        <div class="stats-card sc-crimson">
+          <div class="stats-icon si-crimson">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f08080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <div class="stats-text">
+            <h3 class="stats-number">🔒</h3>
+            <p class="stats-label">Submit Naskah</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- MAIN GRID -->
+      <section class="dashboard-grid">
+
+        <!-- LEFT -->
+        <div class="dashboard-left">
+
+          <!-- Fitur Terkunci -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <p class="card-subtitle">Eksklusif Member</p>
+                <h3 class="card-title">Fitur Terkunci</h3>
+              </div>
+              <span class="locked-badge">🔒 Perlu Upgrade</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.6rem;">
+              <div class="locked-feature-item"><span class="lf-icon">📄</span><span>Submit Naskah — kirim bab ke mentor profesional</span></div>
+              <div class="locked-feature-item"><span class="lf-icon">✏️</span><span>Revisi Naskah — terima & tindak lanjut feedback</span></div>
+              <div class="locked-feature-item"><span class="lf-icon">📨</span><span>Pengajuan Mentor — ajukan sesi bimbingan</span></div>
+              <div class="locked-feature-item"><span class="lf-icon">📊</span><span>Status Mentoring — tracking progress real-time</span></div>
+            </div>
+            <div style="margin-top:1rem;">
+              <a href="pilih-mentor.html" class="locked-upgrade-btn" style="width:100%;justify-content:center;">Upgrade Sekarang ✦</a>
+            </div>
+          </div>
+
+          <!-- Apa yang bisa dilakukan -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <p class="card-subtitle">Tersedia Untukmu</p>
+                <h3 class="card-title">Mulai dari Sini</h3>
+              </div>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item">
+                <span class="activity-dot dot-gold"></span>
+                <div>
+                  <p>Jelajahi daftar mentor dan temukan yang sesuai genremu</p>
+                  <p class="activity-time"><a href="pilih-mentor.html" style="color:#c084fc;">→ Pilih Mentor</a></p>
+                </div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-dot dot-purple"></span>
+                <div>
+                  <p>Tambahkan paket mentoring ke keranjang belanja</p>
+                  <p class="activity-time"><a href="keranjang.html" style="color:#c084fc;">→ Lihat Keranjang</a></p>
+                </div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-dot dot-teal"></span>
+                <div>
+                  <p>Lengkapi profil penulismu agar mentor mengenalmu</p>
+                  <p class="activity-time"><a href="profile-customer.html" style="color:#c084fc;">→ Edit Profil</a></p>
+                </div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-dot dot-crimson"></span>
+                <div>
+                  <p>Cek riwayat transaksi pembelian paket</p>
+                  <p class="activity-time"><a href="history-transaksi.html" style="color:#c084fc;">→ Riwayat Transaksi</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="dashboard-right">
+
+          <!-- Pilih Paket -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <p class="card-subtitle">Bandingkan</p>
+                <h3 class="card-title">Paket Tersedia</h3>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.75rem;">
+              <div class="plan-card">
+                <h4>CUSTOMER</h4>
+                <div class="plan-price">Gratis <span>/ selamanya</span></div>
+                <ul class="plan-feature-list">
+                  <li class="ok">Jelajahi daftar mentor</li>
+                  <li class="ok">Keranjang & transaksi</li>
+                  <li class="ok">Profil penulis</li>
+                  <li class="no">Submit naskah</li>
+                  <li class="no">Sesi mentoring</li>
+                  <li class="no">Revisi & feedback</li>
+                </ul>
+              </div>
+              <div class="plan-card plan-highlight">
+                <h4>MEMBER ✦</h4>
+                <div class="plan-price">Premium <span>/ per paket</span></div>
+                <ul class="plan-feature-list">
+                  <li class="ok">Semua fitur Customer</li>
+                  <li class="ok">Submit naskah ke mentor</li>
+                  <li class="ok">Sesi mentoring 1-on-1</li>
+                  <li class="ok">Revisi & feedback langsung</li>
+                  <li class="ok">Status tracking real-time</li>
+                  <li class="ok">Akses workshop eksklusif</li>
+                </ul>
+                <a href="pilih-mentor.html" class="upgrade-banner-btn" style="width:100%;justify-content:center;margin-top:.5rem;">Pilih Mentor & Mulai ✦</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <p class="card-subtitle">Aksi Cepat</p>
+                <h3 class="card-title">Menu Utama</h3>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.6rem;">
+              <a href="pilih-mentor.html" class="btn-primary btn-full">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                Pilih Mentor
+              </a>
+              <a href="keranjang.html" class="btn-ghost btn-full">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                Keranjang
+              </a>
+              <span class="btn-ghost btn-full btn-locked">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Submit Naskah
+              </span>
+              <span class="btn-ghost btn-full btn-locked">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Revisi Naskah
+              </span>
+              <a href="history-transaksi.html" class="btn-ghost btn-full">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                Riwayat Transaksi
+              </a>
+            </div>
+          </div>
+
+          <!-- Quote -->
+          <div class="deco-quote">
+            "Perjalanan seribu bab dimulai dari satu kata. Daftar sebagai Member dan tulis ceritamu hari ini."
+            <cite>— NovelCraft Studio</cite>
+          </div>
+
+        </div>
+      </section>
+
+    </div><!-- /page-body -->
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+    <span></span><span></span><span></span>
+  </button>
+
+  <script>
+    (function () {
+      // Active sidebar
+      const currentPage = window.location.pathname.split('/').pop() || 'dashboard-customer.html';
+      document.querySelectorAll('#userSidebar .sidebar-link[data-page]').forEach(link => {
+        link.classList.toggle('active', link.dataset.page === currentPage);
+      });
+
+      // Cart badge
+      try {
+        const cart = JSON.parse(localStorage.getItem('novelCart') || '[]');
+        const count = cart.reduce((s, i) => s + i.qty, 0);
+        const badge = document.getElementById('sidebarCartCount');
+        if (badge) badge.textContent = count > 0 ? count : '';
+        const stat = document.getElementById('statCartCount');
+        if (stat) stat.textContent = count;
+      } catch (e) {}
+
+      // Sync user name
+      const userName = localStorage.getItem('userName') || 'Customer';
+      const initial  = userName.charAt(0).toUpperCase();
+      ['dashAvatarLg','topbarAvatar'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = initial;
+      });
+      const nameEl = document.getElementById('dashUserName');
+      if (nameEl) nameEl.textContent = userName;
+      const topName = document.getElementById('topbarName');
+      if (topName) topName.textContent = userName;
+    })();
+  </script>
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/user.js"></script>
+</body>
+</html>

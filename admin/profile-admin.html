@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile Admin – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+  <link rel="stylesheet" href="../assets/css/dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo">
+        <span class="brand-n">N</span>
+        <span class="brand-rest">ovelCraft</span>
+      </a>
+      <p class="sidebar-role">Admin Panel</p>
+    </div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard-admin.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+        Dashboard
+      </a>
+
+      <a href="kelola-user.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg></span>
+        Kelola User
+        <span class="sl-badge">12</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+
+      <a href="kelola-transaksi.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+        Kelola Transaksi
+      </a>
+
+      <a href="kelola-produk.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        Kelola Produk
+      </a>
+
+      <a href="kelola-artikel.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+        Kelola Artikel
+        <span class="sl-badge badge-purple">3</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+
+      <a href="kelola-mentor.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+        Kelola Mentor
+      </a>
+
+      <a href="profile-admin.html" class="sidebar-link active">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        Profile Admin
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+        Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <!-- TOPBAR -->
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Administrator Settings ✦</p>
+        <h1 class="topbar-title">Profile Admin</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="live-clock">
+          <div class="live-clock-dot"></div>
+          <span id="liveClock">00:00</span>
+        </div>
+        <div class="admin-profile">
+          <div class="admin-avatar">A</div>
+          <div>
+            <strong>Admin NovelCraft</strong>
+            <p>Super Admin</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- STATS ROW — ringkasan cepat sebelum form -->
+    <section class="dashboard-stats" style="margin-bottom:1.75rem;">
+      <div class="stats-card sc-gold">
+        <div class="stats-icon si-gold">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">1.8K</h3>
+          <p class="stats-label">Total User</p>
+        </div>
+      </div>
+
+      <div class="stats-card sc-purple">
+        <div class="stats-icon si-purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--purple-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">248</h3>
+          <p class="stats-label">Novel Publish</p>
+        </div>
+      </div>
+
+      <div class="stats-card sc-teal">
+        <div class="stats-icon si-teal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">124</h3>
+          <p class="stats-label">Total Artikel</p>
+        </div>
+      </div>
+
+      <div class="stats-card sc-crimson">
+        <div class="stats-icon si-crimson">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f08080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">32</h3>
+          <p class="stats-label">Mentor Aktif</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE WRAP -->
+    <section class="profile-admin-wrap">
+
+      <!-- LEFT — kartu profil -->
+      <div class="profile-admin-card">
+        <div class="profile-cover"></div>
+
+        <div class="profile-avatar-wrap">
+          <div class="profile-admin-avatar">A</div>
+        </div>
+
+        <div class="profile-admin-info">
+          <h2>Admin NovelCraft</h2>
+          <p class="profile-role">Super Administrator</p>
+          <p class="profile-desc">
+            Mengelola seluruh sistem NovelCraft, termasuk user, mentor, artikel, transaksi, dan publikasi platform.
+          </p>
+
+          <!-- badge role -->
+          <div style="display:flex;justify-content:center;gap:.5rem;margin-top:1rem;flex-wrap:wrap;">
+            <span class="role-badge admin">Admin</span>
+            <span class="role-badge mentor">Verified</span>
+            <span class="role-badge editor" style="background:rgba(212,168,71,.1);color:var(--gold-soft);border-color:rgba(212,168,71,.2);">Super</span>
+          </div>
+        </div>
+
+        <div class="profile-stats">
+          <div>
+            <strong>1.8K</strong>
+            <span>User</span>
+          </div>
+          <div>
+            <strong>248</strong>
+            <span>Novel</span>
+          </div>
+          <div>
+            <strong>124</strong>
+            <span>Artikel</span>
+          </div>
+        </div>
+
+        <!-- activity mini -->
+        <div style="padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.05);">
+          <p style="font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.75rem;">Aktivitas Terbaru</p>
+          <div style="display:flex;flex-direction:column;gap:.5rem;">
+            <div style="display:flex;align-items:center;gap:.6rem;font-size:.78rem;color:var(--white-dim);">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;"></span>
+              Login dari Jakarta
+            </div>
+            <div style="display:flex;align-items:center;gap:.6rem;font-size:.78rem;color:var(--white-dim);">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;"></span>
+              Edit produk: Labirin Cahaya
+            </div>
+            <div style="display:flex;align-items:center;gap:.6rem;font-size:.78rem;color:var(--white-dim);">
+              <span style="width:6px;height:6px;border-radius:50%;background:var(--purple-light);flex-shrink:0;"></span>
+              Approve mentor: Sari Mulyani
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT — form edit -->
+      <div class="profile-form-card">
+        <div class="card-header" style="margin-bottom:1.5rem;">
+          <div>
+            <p class="card-subtitle">Account Settings</p>
+            <h3 class="card-title">Informasi Profile</h3>
+          </div>
+          <!-- tab sederhana -->
+          <div style="display:flex;gap:.5rem;">
+            <button class="filter-chip active" id="tabInfo">Info</button>
+            <button class="filter-chip" id="tabSecurity">Keamanan</button>
+          </div>
+        </div>
+
+        <!-- PANEL INFO -->
+        <div id="panelInfo">
+          <form class="profile-form" id="formProfile">
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" value="Admin NovelCraft" />
+              </div>
+              <div class="form-group">
+                <label>Username</label>
+                <input type="text" value="@adminnovelcraft" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" value="admin@novelcraft.id" />
+              </div>
+              <div class="form-group">
+                <label>Nomor WhatsApp</label>
+                <input type="text" value="+62 812-3456-7890" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Bio</label>
+              <textarea rows="4">Administrator utama NovelCraft yang bertanggung jawab atas seluruh pengelolaan platform publikasi dan pelatihan penulis Indonesia.</textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Kota</label>
+                <input type="text" value="Jakarta, Indonesia" />
+              </div>
+              <div class="form-group">
+                <label>Zona Waktu</label>
+                <input type="text" value="WIB (UTC+7)" />
+              </div>
+            </div>
+
+            <div class="profile-actions">
+              <button type="button" class="btn-ghost">Batal</button>
+              <button type="submit" class="btn-primary">Simpan Perubahan ✦</button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- PANEL KEAMANAN -->
+        <div id="panelSecurity" style="display:none;">
+          <form class="profile-form" id="formSecurity">
+
+            <div class="form-group">
+              <label>Password Saat Ini</label>
+              <input type="password" placeholder="Masukkan password saat ini..." />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Password Baru</label>
+                <input type="password" placeholder="Min. 8 karakter..." />
+              </div>
+              <div class="form-group">
+                <label>Konfirmasi Password</label>
+                <input type="password" placeholder="Ulangi password baru..." />
+              </div>
+            </div>
+
+            <!-- info keamanan -->
+            <div style="background:rgba(43,191,168,.07);border:1px solid rgba(43,191,168,.2);border-radius:10px;padding:1rem 1.1rem;margin-top:.25rem;">
+              <p style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem;">Tips Keamanan</p>
+              <div style="display:flex;flex-direction:column;gap:.4rem;">
+                <div style="font-size:.82rem;color:var(--white-dim);display:flex;align-items:center;gap:.5rem;">
+                  <span style="color:var(--teal);">✓</span> Gunakan kombinasi huruf besar, kecil, angka & simbol
+                </div>
+                <div style="font-size:.82rem;color:var(--white-dim);display:flex;align-items:center;gap:.5rem;">
+                  <span style="color:var(--teal);">✓</span> Minimal 8 karakter
+                </div>
+                <div style="font-size:.82rem;color:var(--white-dim);display:flex;align-items:center;gap:.5rem;">
+                  <span style="color:var(--teal);">✓</span> Jangan gunakan password yang sama di platform lain
+                </div>
+              </div>
+            </div>
+
+            <!-- sesi aktif -->
+            <div>
+              <p style="font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--white-muted);margin-bottom:.75rem;">Sesi Aktif</p>
+              <div style="display:flex;flex-direction:column;gap:.6rem;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;background:var(--bg-deep);border:1px solid rgba(43,191,168,.15);border-radius:8px;">
+                  <div>
+                    <p style="font-size:.85rem;color:var(--white);font-weight:500;">Chrome — Jakarta</p>
+                    <p style="font-size:.72rem;color:var(--white-muted);margin-top:.15rem;">Sesi ini • Aktif sekarang</p>
+                  </div>
+                  <span class="status success">Aktif</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;background:var(--bg-deep);border:1px solid rgba(255,255,255,.06);border-radius:8px;">
+                  <div>
+                    <p style="font-size:.85rem;color:var(--white-dim);">Safari — Bandung</p>
+                    <p style="font-size:.72rem;color:var(--white-muted);margin-top:.15rem;">3 hari lalu</p>
+                  </div>
+                  <button class="btn-table delete" style="font-size:.72rem;">Akhiri</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-actions">
+              <button type="button" class="btn-ghost">Batal</button>
+              <button type="submit" class="btn-primary btn-purple">Ubah Password ✦</button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile toggle -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- TOAST -->
+  <div class="admin-toast toast-success" id="toast">
+    <div class="admin-toast-dot dot-teal"></div>
+    <span id="toastMsg">Perubahan berhasil disimpan!</span>
+  </div>
+
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+  <script>
+    // Clock
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('liveClock').textContent =
+        String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    }
+    updateClock(); setInterval(updateClock, 1000);
+
+    // Sidebar toggle
+    document.getElementById('sidebarToggle')?.addEventListener('click', () =>
+      document.getElementById('adminSidebar').classList.toggle('show'));
+
+    // Tab switcher
+    const tabInfo     = document.getElementById('tabInfo');
+    const tabSecurity = document.getElementById('tabSecurity');
+    const panelInfo     = document.getElementById('panelInfo');
+    const panelSecurity = document.getElementById('panelSecurity');
+
+    tabInfo?.addEventListener('click', () => {
+      panelInfo.style.display = 'block';
+      panelSecurity.style.display = 'none';
+      tabInfo.classList.add('active');
+      tabSecurity.classList.remove('active');
+    });
+
+    tabSecurity?.addEventListener('click', () => {
+      panelInfo.style.display = 'none';
+      panelSecurity.style.display = 'block';
+      tabSecurity.classList.add('active');
+      tabInfo.classList.remove('active');
+    });
+
+    // Toast on save
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    document.getElementById('formProfile')?.addEventListener('submit', e => {
+      e.preventDefault();
+      showToast('Profil berhasil diperbarui!');
+    });
+
+    document.getElementById('formSecurity')?.addEventListener('submit', e => {
+      e.preventDefault();
+      showToast('Password berhasil diubah!');
+    });
+
+    // Ripple
+    document.querySelectorAll('.btn-primary, .btn-ghost, .btn-table').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+        this.appendChild(r);
+        setTimeout(() => r.remove(), 700);
+      });
+    });
+  </script>
+</body>
+</html>

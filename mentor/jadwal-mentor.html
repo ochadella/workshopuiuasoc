@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jadwal Sesi – NovelCraft Mentor</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+  <link rel="stylesheet" href="../assets/css/mentor.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar mentor-sidebar" id="mentorSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Mentor Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="jadwal-mentor.html" class="sidebar-link active"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Jadwal Sesi</a>
+      <div class="sidebar-divider"></div>
+      <a href="mentee-list.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg></span>Daftar Mentee<span class="sl-badge">8</span></a>
+      <a href="request-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Permintaan<span class="sl-badge badge-purple">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <header class="admin-topbar">
+      <div><p class="topbar-subtitle">Kelola Sesi ✦</p><h1 class="topbar-title">Jadwal Sesi</h1></div>
+      <div class="topbar-right">
+        <div class="live-clock"><div class="live-clock-dot"></div><span id="liveClock">00:00</span></div>
+        <div class="admin-profile">
+          <div class="admin-avatar" style="background:linear-gradient(135deg,#f5c518,#c084fc);">R</div>
+          <div><strong>Ratna Wulandari</strong><p>Senior Mentor</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard-card" style="margin-bottom:1.5rem;">
+      <div class="card-header">
+        <div><p class="card-subtitle">Semua Sesi</p><h3 class="card-title">Jadwal Mendatang</h3></div>
+        <button class="btn-primary" id="btnTambahJadwal" style="padding:.55rem 1.2rem;font-size:.85rem;">+ Tambah Sesi</button>
+      </div>
+
+      <div class="jadwal-grid" id="jadwalGrid">
+
+        <div class="jadwal-card">
+          <div class="jadwal-tag">Workshop</div>
+          <h3>Plot &amp; Struktur Cerita</h3>
+          <div class="jadwal-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>12 Jun 2026 · 14:00 – 16:00</div>
+          <div class="jadwal-meta">
+            <div class="jadwal-mentees"><div class="jadwal-dot-group"><span class="jadwal-dot"></span><span class="jadwal-dot"></span><span class="jadwal-dot"></span></div>5 mentee</div>
+            <span class="jadwal-status upcoming">Akan Datang</span>
+          </div>
+          <div style="display:flex;gap:.6rem;margin-top:1rem;">
+            <button class="btn-mentee btn-edit-jadwal">Edit</button>
+            <button class="btn-mentee btn-hapus-jadwal" style="color:#f08080;border-color:rgba(240,128,128,.3);">Hapus</button>
+          </div>
+        </div>
+
+        <div class="jadwal-card teal">
+          <div class="jadwal-tag teal">1-on-1</div>
+          <h3>Review Naskah – Caca R.</h3>
+          <div class="jadwal-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>12 Jun 2026 · 19:00 – 20:00</div>
+          <div class="jadwal-meta">
+            <div class="jadwal-mentees"><div class="jadwal-dot-group"><span class="jadwal-dot" style="background:var(--teal)"></span></div>1-on-1</div>
+            <span class="jadwal-status upcoming">Akan Datang</span>
+          </div>
+          <div style="display:flex;gap:.6rem;margin-top:1rem;">
+            <button class="btn-mentee btn-edit-jadwal">Edit</button>
+            <button class="btn-mentee btn-hapus-jadwal" style="color:#f08080;border-color:rgba(240,128,128,.3);">Hapus</button>
+          </div>
+        </div>
+
+        <div class="jadwal-card purple">
+          <div class="jadwal-tag purple">Intensif</div>
+          <h3>Character Development Deep-Dive</h3>
+          <div class="jadwal-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>15 Jun 2026 · 10:00 – 13:00</div>
+          <div class="jadwal-meta">
+            <div class="jadwal-mentees"><div class="jadwal-dot-group"><span class="jadwal-dot" style="background:var(--purple-light)"></span><span class="jadwal-dot" style="background:var(--purple-light)"></span></div>4 mentee</div>
+            <span class="jadwal-status upcoming">Akan Datang</span>
+          </div>
+          <div style="display:flex;gap:.6rem;margin-top:1rem;">
+            <button class="btn-mentee btn-edit-jadwal">Edit</button>
+            <button class="btn-mentee btn-hapus-jadwal" style="color:#f08080;border-color:rgba(240,128,128,.3);">Hapus</button>
+          </div>
+        </div>
+
+        <div class="jadwal-card">
+          <div class="jadwal-tag">Workshop</div>
+          <h3>Alchemy of Words – Sesi 2</h3>
+          <div class="jadwal-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>20 Jun 2026 · 09:00 – 12:00</div>
+          <div class="jadwal-meta">
+            <div class="jadwal-mentees"><div class="jadwal-dot-group"><span class="jadwal-dot"></span><span class="jadwal-dot"></span><span class="jadwal-dot"></span></div>8 mentee</div>
+            <span class="jadwal-status upcoming">Akan Datang</span>
+          </div>
+          <div style="display:flex;gap:.6rem;margin-top:1rem;">
+            <button class="btn-mentee btn-edit-jadwal">Edit</button>
+            <button class="btn-mentee btn-hapus-jadwal" style="color:#f08080;border-color:rgba(240,128,128,.3);">Hapus</button>
+          </div>
+        </div>
+
+        <div class="jadwal-card crimson" style="opacity:.55;">
+          <div class="jadwal-tag" style="background:rgba(240,128,128,.1);color:#f08080;border-color:rgba(240,128,128,.2);">Selesai</div>
+          <h3>Dasar Menulis Fiksi</h3>
+          <div class="jadwal-time"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>5 Jun 2026 · 10:00 – 12:00</div>
+          <div class="jadwal-meta">
+            <div class="jadwal-mentees"><div class="jadwal-dot-group"><span class="jadwal-dot"></span><span class="jadwal-dot"></span></div>6 mentee</div>
+            <span class="jadwal-status done">Selesai</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar"><span></span><span></span><span></span></button>
+
+  <!-- Modal Tambah Jadwal -->
+  <div class="admin-modal-overlay" id="modalTambahJadwal">
+    <div class="admin-modal">
+      <div class="modal-header">
+        <div><p class="modal-subtitle">Buat Sesi Baru</p><h3 class="modal-title">Tambah Jadwal</h3></div>
+        <button class="modal-close" id="modalCloseTambah">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid-2">
+          <div class="form-group full"><label>Judul Sesi</label><input type="text" id="tambahJudul" placeholder="e.g. Workshop Plot &amp; Struktur"></div>
+          <div class="form-group"><label>Tipe</label>
+            <select id="tambahTipe"><option>Workshop</option><option>Intensif</option><option>1-on-1</option></select>
+          </div>
+          <div class="form-group"><label>Tanggal</label><input type="date" id="tambahTgl"></div>
+          <div class="form-group full"><label>Jam (e.g. 14:00 – 16:00)</label><input type="text" id="tambahJam" placeholder="14:00 – 16:00"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="modalCancelTambah">Batal</button>
+        <button class="btn-primary" id="btnSubmitTambah">Simpan Jadwal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRUD Modal -->
+  <div class="admin-modal-overlay" id="crudModal">
+    <div class="admin-modal">
+      <div class="modal-header">
+        <div><p class="modal-subtitle" id="crudSubtitle"></p><h3 class="modal-title" id="crudTitle"></h3></div>
+        <button class="modal-close" id="crudClose">✕</button>
+      </div>
+      <div class="modal-body" id="crudContent"></div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="crudCancel">Batal</button>
+        <button class="btn-primary" id="crudSave">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/mentor.js"></script>
+</body>
+</html>

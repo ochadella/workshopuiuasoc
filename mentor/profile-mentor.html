@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil Saya – NovelCraft Mentor</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+  <link rel="stylesheet" href="../assets/css/mentor.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar mentor-sidebar" id="mentorSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Mentor Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="jadwal-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Jadwal Sesi</a>
+      <div class="sidebar-divider"></div>
+      <a href="mentee-list.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg></span>Daftar Mentee<span class="sl-badge">8</span></a>
+      <a href="request-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Permintaan<span class="sl-badge badge-purple">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-mentor.html" class="sidebar-link active"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <header class="admin-topbar">
+      <div><p class="topbar-subtitle">Akun Saya ✦</p><h1 class="topbar-title">Profil Mentor</h1></div>
+      <div class="topbar-right">
+        <div class="live-clock"><div class="live-clock-dot"></div><span id="liveClock">00:00</span></div>
+        <div class="admin-profile">
+          <div class="admin-avatar" style="background:linear-gradient(135deg,#f5c518,#c084fc);">R</div>
+          <div><strong>Ratna Wulandari</strong><p>Senior Mentor</p></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="profile-grid">
+
+      <!-- Foto & Stats -->
+      <div class="profile-photo-card">
+        <div class="profile-photo-wrap">
+          <div class="mentor-avatar-lg" style="width:100px;height:100px;font-size:2.5rem;">R</div>
+          <div class="photo-change-btn" title="Ganti foto">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0d0d14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+        </div>
+        <h3>Ratna Wulandari</h3>
+        <p>Senior Mentor · Fiksi &amp; Fantasi</p>
+        <div class="mentor-badges" style="justify-content:center;">
+          <span class="mentor-badge gold">✦ Mentor Terbaik</span>
+          <span class="mentor-badge purple">◆ Fiksi Fantasi</span>
+        </div>
+
+        <div class="profile-stats-mini">
+          <div class="psm-item"><strong>8</strong><span>Mentee Aktif</span></div>
+          <div class="psm-item"><strong>32</strong><span>Selesai</span></div>
+          <div class="psm-item"><strong>4.9</strong><span>Rating</span></div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="form-card">
+        <form id="profileMentorForm">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Nama Depan</label>
+              <input type="text" value="Ratna" placeholder="Nama depan">
+            </div>
+            <div class="form-group">
+              <label>Nama Belakang</label>
+              <input type="text" value="Wulandari" placeholder="Nama belakang">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" value="ratna@novelcraft.id" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <label>No. Telepon</label>
+              <input type="text" value="+62 812 3456 7890" placeholder="Nomor telepon">
+            </div>
+            <div class="form-group">
+              <label>Spesialisasi</label>
+              <select>
+                <option selected>Fiksi Fantasi</option>
+                <option>Novel Romansa</option>
+                <option>Thriller</option>
+                <option>Misteri</option>
+                <option>Sastra Kontemporer</option>
+                <option>Horor</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Level</label>
+              <select>
+                <option>Junior Mentor</option>
+                <option selected>Senior Mentor</option>
+                <option>Master Mentor</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>Bio Singkat</label>
+              <textarea rows="4" placeholder="Ceritakan tentang diri kamu...">Penulis dan mentor dengan pengalaman 8 tahun di dunia fiksi fantasi. Telah membimbing lebih dari 30 penulis hingga berhasil menerbitkan karya pertama mereka.</textarea>
+            </div>
+            <div class="form-group full">
+              <label>Link Karya / Portfolio</label>
+              <input type="url" value="https://novelcraft.id/mentor/ratna" placeholder="https://...">
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-ghost">Reset</button>
+            <button type="submit" class="btn-primary">Simpan Perubahan ✦</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Keamanan -->
+    <div class="dashboard-card" style="margin-top:1.5rem;">
+      <div class="card-header">
+        <div><p class="card-subtitle">Akun</p><h3 class="card-title">Keamanan</h3></div>
+      </div>
+      <div class="form-grid-2" style="max-width:600px;">
+        <div class="form-group full">
+          <label>Password Lama</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label>Password Baru</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label>Konfirmasi Password</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+      </div>
+      <div class="form-actions" style="max-width:600px;">
+        <button class="btn-primary" onclick="window.showToast && window.showToast('Password berhasil diubah ✦','success')">Ubah Password</button>
+      </div>
+    </div>
+
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar"><span></span><span></span><span></span></button>
+
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/mentor.js"></script>
+</body>
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelola User – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+  <link rel="stylesheet" href="../assets/css/dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo">
+        <span class="brand-n">N</span>
+        <span class="brand-rest">ovelCraft</span>
+      </a>
+      <p class="sidebar-role">Admin Panel</p>
+    </div>
+
+    <nav class="sidebar-menu">
+      <a href="dashboard-admin.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+        Dashboard
+      </a>
+
+      <a href="kelola-user.html" class="sidebar-link active">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg></span>
+        Kelola User
+        <span class="sl-badge">12</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+
+      <a href="kelola-transaksi.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+        Kelola Transaksi
+      </a>
+
+      <a href="kelola-produk.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        Kelola Produk
+      </a>
+
+      <a href="kelola-artikel.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+        Kelola Artikel
+        <span class="sl-badge badge-purple">3</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+
+      <a href="kelola-mentor.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+        Kelola Mentor
+      </a>
+
+      <a href="profile-admin.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        Profile Admin
+      </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+        Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <!-- TOPBAR -->
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Member Management ✦</p>
+        <h1 class="topbar-title">Kelola User</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <span class="topbar-search-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <input type="text" placeholder="Cari user..." />
+        </div>
+        <div class="live-clock">
+          <div class="live-clock-dot"></div>
+          <span id="liveClock">00:00</span>
+        </div>
+        <div class="admin-profile">
+          <div class="admin-avatar">A</div>
+          <div>
+            <strong>Admin NovelCraft</strong>
+            <p>Super Admin</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- STATS -->
+    <section class="dashboard-stats">
+      <div class="stats-card sc-gold">
+        <div class="stats-icon si-gold">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">1,842</h3>
+          <p class="stats-label">Total User</p>
+        </div>
+      </div>
+
+      <div class="stats-card sc-purple">
+        <div class="stats-icon si-purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--purple-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">214</h3>
+          <p class="stats-label">User Aktif</p>
+        </div>
+      </div>
+
+      <div class="stats-card sc-teal">
+        <div class="stats-icon si-teal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">82</h3>
+          <p class="stats-label">User Baru</p>
+        </div>
+      </div>
+
+      <div class="stats-card sc-crimson">
+        <div class="stats-icon si-crimson">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f08080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">24</h3>
+          <p class="stats-label">Premium</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTER BAR -->
+    <div class="admin-filter-bar">
+      <div class="filter-group">
+        <button class="filter-chip active">Semua</button>
+        <button class="filter-chip chip-teal">Aktif</button>
+        <button class="filter-chip chip-purple">Premium</button>
+        <button class="filter-chip chip-crimson">Banned</button>
+      </div>
+      <button class="btn-primary" id="btnTambahUser">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Tambah User
+      </button>
+    </div>
+
+    <!-- TABLE CARD -->
+    <section class="dashboard-card">
+      <div class="card-header">
+        <div>
+          <p class="card-subtitle">Member Data</p>
+          <h3 class="card-title">Seluruh Pengguna</h3>
+        </div>
+        <span style="font-size:.78rem;color:var(--white-muted);">Menampilkan 1–6 dari 1,842</span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Bergabung</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar">C</div>
+                  <div><strong>Caca Pramudita</strong><p>Penulis Romance</p></div>
+                </div>
+              </td>
+              <td>caca@gmail.com</td>
+              <td><span class="role-badge">Member</span></td>
+              <td>24 Mei 2025</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar av-purple">R</div>
+                  <div><strong>Reza Nugraha</strong><p>Mentor</p></div>
+                </div>
+              </td>
+              <td>reza@novelcraft.id</td>
+              <td><span class="role-badge mentor">Mentor</span></td>
+              <td>12 April 2025</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar av-teal">A</div>
+                  <div><strong>Arini Setiawati</strong><p>Penulis Fantasi</p></div>
+                </div>
+              </td>
+              <td>arini@gmail.com</td>
+              <td><span class="role-badge" style="background:rgba(212,168,71,.1);color:var(--gold-soft);border-color:rgba(212,168,71,.2);">Premium</span></td>
+              <td>3 Maret 2025</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar av-crimson">B</div>
+                  <div><strong>Bagas Purnomo</strong><p>Penulis Thriller</p></div>
+                </div>
+              </td>
+              <td>bagas@gmail.com</td>
+              <td><span class="role-badge">Member</span></td>
+              <td>18 Feb 2025</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar" style="background:rgba(212,168,71,.1);color:var(--gold-soft);">D</div>
+                  <div><strong>Dina Marlina</strong><p>Penulis Drama</p></div>
+                </div>
+              </td>
+              <td>dina@gmail.com</td>
+              <td><span class="role-badge admin">Admin</span></td>
+              <td>1 Jan 2025</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="table-user">
+                  <div class="user-avatar av-purple">S</div>
+                  <div><strong>Sari Dewi</strong><p>Penulis Horor</p></div>
+                </div>
+              </td>
+              <td>sari@gmail.com</td>
+              <td><span class="role-badge">Member</span></td>
+              <td>20 Des 2024</td>
+              <td>
+                <div class="table-actions">
+                  <button class="btn-table view">Detail</button>
+                  <button class="btn-table edit">Edit</button>
+                  <button class="btn-table delete">Hapus</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.05);">
+        <span style="font-size:.78rem;color:var(--white-muted);">Halaman 1 dari 231</span>
+        <div style="display:flex;gap:.5rem;">
+          <button class="btn-ghost" style="padding:.4rem .85rem;font-size:.78rem;">← Prev</button>
+          <button class="btn-primary" style="padding:.4rem .85rem;font-size:.78rem;">Next →</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile toggle -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- ================================================
+       MODAL TAMBAH USER
+  ================================================ -->
+  <div class="admin-modal-overlay" id="modalTambahUser">
+    <div class="admin-modal">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Tambah User Baru</h3>
+          <p class="modal-subtitle">Isi data lengkap pengguna yang akan ditambahkan.</p>
+        </div>
+        <button class="modal-close" id="modalCloseTambah">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-form">
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" id="tambahNama" placeholder="Masukkan nama..." />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="tambahEmail" placeholder="email@contoh.com" />
+        </div>
+        <div class="form-group">
+          <label>Role</label>
+          <select id="tambahRole">
+            <option>Member</option>
+            <option>Premium</option>
+            <option>Mentor</option>
+            <option>Admin</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Password Awal</label>
+          <input type="password" id="tambahPassword" placeholder="Min. 8 karakter..." />
+        </div>
+        <div class="modal-actions">
+          <button class="btn-ghost" id="modalCancelTambah">Batal</button>
+          <button class="btn-primary" id="btnSubmitTambah">Tambah User ✦</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       MODAL CRUD (Detail / Edit / Hapus)
+  ================================================ -->
+  <div class="admin-modal-overlay" id="crudModal">
+    <div class="admin-modal">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="crudTitle">—</h3>
+          <p class="modal-subtitle" id="crudSubtitle">—</p>
+        </div>
+        <button class="modal-close" id="crudClose">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-form" id="crudContent"></div>
+      <div class="modal-actions" style="padding:0 1.5rem 1.5rem;">
+        <button class="btn-ghost" id="crudCancel">Batal</button>
+        <button class="btn-primary" id="crudSave" style="display:none;">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="admin-toast" id="toast">
+    <div class="admin-toast-dot dot-teal"></div>
+    <span id="toastMsg">Berhasil!</span>
+  </div>
+
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+  <script>
+    // ============================================
+    // CLOCK
+    // ============================================
+    function updateClock() {
+      const now = new Date();
+      const el = document.getElementById('liveClock');
+      if (el) el.textContent =
+        String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ============================================
+    // SIDEBAR TOGGLE (mobile)
+    // ============================================
+    document.getElementById('sidebarToggle')?.addEventListener('click', () =>
+      document.getElementById('adminSidebar').classList.toggle('show'));
+
+    // ============================================
+    // TOAST HELPER
+    // ============================================
+    function showToast(msg, type) {
+      const toast = document.getElementById('toast');
+      const msgEl = document.getElementById('toastMsg');
+      if (!toast || !msgEl) return;
+      msgEl.textContent = msg;
+      toast.classList.add('show');
+      if (type === 'error') toast.style.borderColor = 'rgba(192,41,58,.4)';
+      else toast.style.borderColor = '';
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // ============================================
+    // FILTER CHIPS
+    // ============================================
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', function () {
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // ============================================
+    // RIPPLE
+    // ============================================
+    function attachRipple(selector) {
+      document.querySelectorAll(selector).forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          const r = document.createElement('span');
+          r.className = 'ripple';
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px`;
+          this.appendChild(r);
+          setTimeout(() => r.remove(), 700);
+        });
+      });
+    }
+    attachRipple('.btn-primary, .btn-ghost, .btn-table');
+
+    // ============================================
+    // MODAL HELPERS
+    // ============================================
+    function openModal(id) {
+      document.getElementById(id)?.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      document.getElementById(id)?.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    // ============================================
+    // MODAL TAMBAH USER
+    // ============================================
+    const modalTambah = document.getElementById('modalTambahUser');
+
+    document.getElementById('btnTambahUser')?.addEventListener('click', () => openModal('modalTambahUser'));
+    document.getElementById('modalCloseTambah')?.addEventListener('click', () => closeModal('modalTambahUser'));
+    document.getElementById('modalCancelTambah')?.addEventListener('click', () => closeModal('modalTambahUser'));
+    modalTambah?.addEventListener('click', e => { if (e.target === modalTambah) closeModal('modalTambahUser'); });
+
+    document.getElementById('btnSubmitTambah')?.addEventListener('click', () => {
+      const nama     = document.getElementById('tambahNama').value.trim();
+      const email    = document.getElementById('tambahEmail').value.trim();
+      const role     = document.getElementById('tambahRole').value;
+      const password = document.getElementById('tambahPassword').value.trim();
+
+      if (!nama || !email || !password) {
+        showToast('Semua form wajib diisi', 'error');
+        return;
+      }
+
+      const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+      let roleClass = '';
+      if (role === 'Mentor') roleClass = 'mentor';
+      if (role === 'Admin')  roleClass = 'admin';
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <div class="table-user">
+            <div class="user-avatar">${nama.charAt(0).toUpperCase()}</div>
+            <div><strong>${nama}</strong><p>${role}</p></div>
+          </div>
+        </td>
+        <td>${email}</td>
+        <td><span class="role-badge ${roleClass}">${role}</span></td>
+        <td>${today}</td>
+        <td>
+          <div class="table-actions">
+            <button class="btn-table view">Detail</button>
+            <button class="btn-table edit">Edit</button>
+            <button class="btn-table delete">Hapus</button>
+          </div>
+        </td>
+      `;
+      tr.style.opacity = '0';
+      document.querySelector('.admin-table tbody').prepend(tr);
+      requestAnimationFrame(() => {
+        tr.style.transition = '.35s ease';
+        tr.style.opacity = '1';
+      });
+
+      // Reset form
+      ['tambahNama','tambahEmail','tambahPassword'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('tambahRole').value = 'Member';
+
+      closeModal('modalTambahUser');
+      showToast('User berhasil ditambahkan', 'success');
+      attachRipple('.btn-table'); // re-attach ripple to new buttons
+    });
+
+    // ============================================
+    // CRUD MODAL — Detail / Edit / Hapus
+    // ============================================
+    const crudModal    = document.getElementById('crudModal');
+    const crudTitle    = document.getElementById('crudTitle');
+    const crudSubtitle = document.getElementById('crudSubtitle');
+    const crudContent  = document.getElementById('crudContent');
+    const crudSave     = document.getElementById('crudSave');
+    const crudCancel   = document.getElementById('crudCancel');
+
+    document.getElementById('crudClose')?.addEventListener('click', () => closeModal('crudModal'));
+    crudCancel?.addEventListener('click', () => closeModal('crudModal'));
+    crudModal?.addEventListener('click', e => { if (e.target === crudModal) closeModal('crudModal'); });
+
+    // Delegate clicks on table action buttons
+    document.querySelector('.admin-table tbody')?.addEventListener('click', function (e) {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+
+      const row   = btn.closest('tr');
+      if (!row) return;
+
+      const name  = row.querySelector('strong')?.textContent || '';
+      const role  = row.querySelector('.table-user p')?.textContent || '';
+      const email = row.children[1]?.textContent || '';
+
+      // ---- DETAIL ----
+      if (btn.classList.contains('view')) {
+        crudTitle.textContent    = 'Detail User';
+        crudSubtitle.textContent = 'Informasi lengkap pengguna.';
+        crudContent.innerHTML = `
+          <div class="form-group"><label>Nama</label><input type="text" value="${name}" readonly style="opacity:.6;cursor:default;"></div>
+          <div class="form-group"><label>Role</label><input type="text" value="${role}" readonly style="opacity:.6;cursor:default;"></div>
+          <div class="form-group"><label>Email</label><input type="email" value="${email}" readonly style="opacity:.6;cursor:default;"></div>
+        `;
+        crudSave.style.display   = 'none';
+        crudCancel.textContent   = 'Tutup';
+        openModal('crudModal');
+      }
+
+      // ---- EDIT ----
+      if (btn.classList.contains('edit')) {
+        crudTitle.textContent    = 'Edit User';
+        crudSubtitle.textContent = 'Perbarui data pengguna.';
+        crudContent.innerHTML = `
+          <div class="form-group"><label>Nama</label><input type="text" id="editName" value="${name}"></div>
+          <div class="form-group"><label>Role</label><input type="text" id="editRole" value="${role}"></div>
+          <div class="form-group"><label>Email</label><input type="email" id="editEmail" value="${email}"></div>
+        `;
+        crudSave.style.display = 'inline-flex';
+        crudSave.textContent   = 'Simpan';
+        crudCancel.textContent = 'Batal';
+        openModal('crudModal');
+
+        crudSave.onclick = () => {
+          const newName  = document.getElementById('editName').value.trim();
+          const newRole  = document.getElementById('editRole').value.trim();
+          const newEmail = document.getElementById('editEmail').value.trim();
+          if (!newName || !newEmail) { showToast('Nama & email wajib diisi', 'error'); return; }
+
+          row.querySelector('strong').textContent = newName;
+          row.querySelector('.table-user p').textContent = newRole;
+          row.children[1].textContent = newEmail;
+
+          closeModal('crudModal');
+          showToast('User berhasil diupdate', 'success');
+        };
+      }
+
+      // ---- HAPUS ----
+      if (btn.classList.contains('delete')) {
+        crudTitle.textContent    = 'Hapus User';
+        crudSubtitle.textContent = 'Tindakan ini tidak bisa dibatalkan.';
+        crudContent.innerHTML    = `<p style="color:var(--white-muted);line-height:1.6;">Yakin ingin menghapus <strong style="color:var(--white);">${name}</strong>? Data akan dihapus permanen.</p>`;
+        crudSave.style.display   = 'inline-flex';
+        crudSave.textContent     = 'Ya, Hapus';
+        crudSave.style.background = 'rgba(192,41,58,.8)';
+        crudCancel.textContent   = 'Batal';
+        openModal('crudModal');
+
+        crudSave.onclick = () => {
+          row.style.transition = '.3s ease';
+          row.style.opacity    = '0';
+          row.style.transform  = 'translateX(40px)';
+          setTimeout(() => row.remove(), 300);
+          crudSave.style.background = '';
+          closeModal('crudModal');
+          showToast(`${name} berhasil dihapus`, 'success');
+        };
+      }
+    });
+  </script>
+</body>
+</html>

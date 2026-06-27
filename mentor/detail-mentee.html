@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Mentee – NovelCraft Mentor</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+  <link rel="stylesheet" href="../assets/css/mentor.css" />
+  <link rel="stylesheet" href="../assets/css/mentor-shared.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body class="admin-body">
+
+  <!-- SIDEBAR — konsisten dengan halaman lain -->
+  <aside class="admin-sidebar mentor-sidebar" id="mentorSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo"><span class="brand-n">N</span><span class="brand-rest">ovelCraft</span></a>
+      <p class="sidebar-role">Mentor Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Dashboard</a>
+      <a href="jadwal-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Jadwal Sesi</a>
+      <div class="sidebar-divider"></div>
+      <a href="mentee-list.html" class="sidebar-link active"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg></span>Daftar Mentee<span class="sl-badge">8</span></a>
+      <a href="request-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>Permintaan<span class="sl-badge badge-purple">3</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="profile-mentor.html" class="sidebar-link"><span class="sl-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>Profil Saya</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout"><span class="sl-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <header class="admin-topbar">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <a href="mentee-list.html" class="btn-ghost" style="padding:.5rem .9rem;font-size:.8rem;display:inline-flex;align-items:center;gap:.4rem;flex-shrink:0;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Kembali
+        </a>
+        <div>
+          <p class="topbar-subtitle">Detail Mentee ✦</p>
+          <h1 class="topbar-title" id="pageTitle">—</h1>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="live-clock"><div class="live-clock-dot"></div><span id="liveClock">00:00</span></div>
+        <div class="admin-profile">
+          <div class="admin-avatar" style="background:linear-gradient(135deg,#f5c518,#c084fc);">R</div>
+          <div><strong>Ratna Wulandari</strong><p>Senior Mentor</p></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MARQUEE -->
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-inner">
+        <span>TULIS</span><span class="marquee-dot">✦</span>
+        <span>BIMBING</span><span class="marquee-dot">✦</span>
+        <span>BERKEMBANG</span><span class="marquee-dot">✦</span>
+        <span>NOVELCRAFT</span><span class="marquee-dot">✦</span>
+        <span>TULIS</span><span class="marquee-dot">✦</span>
+        <span>BIMBING</span><span class="marquee-dot">✦</span>
+        <span>BERKEMBANG</span><span class="marquee-dot">✦</span>
+        <span>NOVELCRAFT</span><span class="marquee-dot">✦</span>
+        <span>TULIS</span><span class="marquee-dot">✦</span>
+        <span>BIMBING</span><span class="marquee-dot">✦</span>
+        <span>BERKEMBANG</span><span class="marquee-dot">✦</span>
+        <span>NOVELCRAFT</span><span class="marquee-dot">✦</span>
+      </div>
+    </div>
+
+    <div class="page-body" id="pageBody" style="display:none;">
+
+      <!-- PROFILE CARD -->
+      <div class="mentor-profile-card">
+        <div class="mentor-avatar-lg" id="detailAvatar">?</div>
+        <div class="mentor-profile-info">
+          <h2 id="detailName">—</h2>
+          <p id="detailSubtitle">—</p>
+          <div class="mentor-badges">
+            <span class="mentor-badge gold" id="badgeProgress">Progress 0%</span>
+            <span class="mentor-badge purple" id="badgeLevel">—</span>
+            <span class="mentor-badge teal" id="badgeSesi">— Sesi Selesai</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <section class="mentor-stats">
+        <div class="stats-card sc-gold">
+          <div class="stats-icon si-gold">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f5c518" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="stats-text"><h3 class="stats-number" id="statProgress">0%</h3><p class="stats-label">Progress Novel</p></div>
+        </div>
+        <div class="stats-card sc-purple">
+          <div class="stats-icon si-purple">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="stats-text"><h3 class="stats-number" id="statSesi">0</h3><p class="stats-label">Total Sesi</p></div>
+        </div>
+        <div class="stats-card sc-teal">
+          <div class="stats-icon si-teal">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#20b2aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="stats-text"><h3 class="stats-number" id="statBab">0</h3><p class="stats-label">Bab Selesai</p></div>
+        </div>
+        <div class="stats-card sc-crimson">
+          <div class="stats-icon si-crimson">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f08080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="stats-text"><h3 class="stats-number" id="statRating">—</h3><p class="stats-label">Rating</p></div>
+        </div>
+      </section>
+
+      <!-- GRID -->
+      <section class="dashboard-grid">
+        <div class="dashboard-left">
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Informasi Novel</p><h3 class="card-title">Novel Saat Ini</h3></div>
+            </div>
+            <div class="activity-list" id="novelInfo">
+              <div class="activity-item"><span class="activity-dot dot-gold"></span><p>Judul : <strong style="color:#fff;" id="novelJudul">—</strong></p></div>
+              <div class="activity-item"><span class="activity-dot dot-purple"></span><p>Genre : <strong style="color:#fff;" id="novelGenre">—</strong></p></div>
+              <div class="activity-item"><span class="activity-dot dot-teal"></span><p>Target : <strong style="color:#fff;" id="novelTarget">—</strong></p></div>
+              <div class="activity-item"><span class="activity-dot dot-crimson"></span><p>Chapter Saat Ini : <strong style="color:#fff;" id="novelChapter">—</strong></p></div>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Jadwal Mendatang</p><h3 class="card-title">Sesi Berikutnya</h3></div>
+            </div>
+            <div class="jadwal-card">
+              <div class="jadwal-tag">Review</div>
+              <h3 id="nextSesiTitle">—</h3>
+              <div class="jadwal-time">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span id="nextSesiTime">—</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="dashboard-right">
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Aksi Cepat</p><h3 class="card-title">Kelola Mentee</h3></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.75rem;">
+              <a href="jadwal-mentor.html" class="btn-ghost" style="width:100%;">Buat Jadwal</a>
+              <a href="riwayat-sesi.html"  class="btn-ghost" style="width:100%;">Riwayat Sesi</a>
+              <a href="catatan-mentor.html" class="btn-primary" style="width:100%;">Catatan Mentor</a>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div><p class="card-subtitle">Aktivitas</p><h3 class="card-title">Aktivitas Terakhir</h3></div>
+            </div>
+            <div class="activity-list" id="activityList"></div>
+          </div>
+
+        </div>
+      </section>
+
+    </div><!-- /page-body -->
+
+    <!-- Not found state -->
+    <div class="page-body" id="notFound" style="display:none;">
+      <div class="empty-state">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <h3>Mentee tidak ditemukan</h3>
+        <p>Data mentee dengan ID ini tidak tersedia.</p>
+        <a href="mentee-list.html" class="btn-primary" style="margin-top:1rem;display:inline-flex;">← Kembali ke Daftar</a>
+      </div>
+    </div>
+
+  </main>
+
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar"><span></span><span></span><span></span></button>
+
+  <script src="../assets/js/toast.js"></script>
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/mentor.js"></script>
+
+  <script>
+  // ============================================
+  // DATA MENTEE — tambah entry baru di sini
+  // ============================================
+  const MENTEE_DATA = {
+    'caca': {
+      name: 'Caca Ramadhani',
+      avatar: 'C',
+      genre: 'Fiksi Fantasi',
+      joined: 'Bergabung 2 bulan lalu',
+      progress: 78,
+      level: 'Level Menengah',
+      sesi: 5,
+      bab: 12,
+      rating: '4.8',
+      novel: { judul: 'Kerajaan Naga Utara', genre: 'High Fantasy', target: '25 Chapter', chapter: '12' },
+      nextSesi: { title: 'Review Chapter 13', time: '20 Juni 2026 · 19.00 – 20.30' },
+      activity: ['Upload Chapter 12', 'Menyelesaikan tugas world building', 'Mengikuti sesi mentoring minggu lalu']
+    },
+    'arini': {
+      name: 'Arini Setiawati',
+      avatar: 'A',
+      genre: 'Novel Romansa',
+      joined: 'Bergabung 1 bulan lalu',
+      progress: 55,
+      level: 'Level Pemula',
+      sesi: 3,
+      bab: 7,
+      rating: '4.6',
+      novel: { judul: 'Antara Dua Musim', genre: 'Romansa Kontemporer', target: '20 Chapter', chapter: '7' },
+      nextSesi: { title: 'Review Plot Twist Chapter 8', time: '22 Juni 2026 · 15.00 – 16.00' },
+      activity: ['Menyelesaikan outline bab 8', 'Upload revisi chapter 6', 'Diskusi karakter utama']
+    },
+    'bagas': {
+      name: 'Bagas Purnomo',
+      avatar: 'B',
+      genre: 'Thriller',
+      joined: 'Bergabung 3 bulan lalu',
+      progress: 92,
+      level: 'Level Lanjutan',
+      sesi: 9,
+      bab: 22,
+      rating: '4.9',
+      novel: { judul: 'Jejak yang Terhapus', genre: 'Thriller Psikologis', target: '24 Chapter', chapter: '22' },
+      nextSesi: { title: 'Final Review Chapter 23', time: '18 Juni 2026 · 20.00 – 21.00' },
+      activity: ['Upload Chapter 22 — hampir selesai!', 'Revisi ending bab 21', 'Sesi intensif plot konsistensi']
+    },
+    'dina': {
+      name: 'Dina Marlina',
+      avatar: 'D',
+      genre: 'Misteri',
+      joined: 'Bergabung 2 minggu lalu',
+      progress: 20,
+      level: 'Level Pemula',
+      sesi: 2,
+      bab: 3,
+      rating: '4.5',
+      novel: { judul: 'Rumah di Ujung Jalan', genre: 'Misteri', target: '18 Chapter', chapter: '3' },
+      nextSesi: { title: 'Sesi Orientasi Chapter 4', time: '25 Juni 2026 · 16.00 – 17.00' },
+      activity: ['Upload draft chapter 3', 'Menyelesaikan character sheet', 'Konsultasi premis cerita']
+    },
+    'reza': {
+      name: 'Reza Firmansyah',
+      avatar: 'R',
+      genre: 'Sastra Kontemporer',
+      joined: '1 bulan lalu',
+      progress: 65,
+      level: 'Level Menengah',
+      sesi: 6,
+      bab: 10,
+      rating: '5.0',
+      novel: { judul: 'Kota yang Berdiam', genre: 'Sastra Kontemporer', target: '16 Chapter', chapter: '10' },
+      nextSesi: { title: 'Review Bab 11 & 12', time: '21 Juni 2026 · 18.00 – 19.30' },
+      activity: ['Upload chapter 10', 'Rating ★ 5.0 untuk sesi terakhir', 'Revisi besar chapter 9']
+    },
+    'nadya': {
+      name: 'Nadya Permata',
+      avatar: 'N',
+      genre: 'Fiksi Fantasi',
+      joined: 'Selesai mentoring',
+      progress: 100,
+      level: 'Level Lanjutan',
+      sesi: 12,
+      bab: 20,
+      rating: '5.0',
+      novel: { judul: 'Sang Penjaga Langit', genre: 'Fiksi Fantasi', target: '20 Chapter', chapter: '20' },
+      nextSesi: { title: 'Sesi selesai ✦', time: 'Mentoring telah berakhir' },
+      activity: ['Novel selesai ditulis 🎉', 'Submit ke penerbit', 'Sesi penutup & evaluasi']
+    }
+  };
+
+  // ============================================
+  // LOAD DATA BERDASARKAN ?id=
+  // ============================================
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id') || '';
+
+    // Cek data statis dulu, lalu localStorage
+    let data = MENTEE_DATA[id];
+
+    if (!data) {
+      // coba dari localStorage (mentee baru diterima)
+      const newMentees = JSON.parse(localStorage.getItem('newMentees') || '[]');
+      const found = newMentees.find(m => m.id === id);
+      if (found) {
+        data = {
+          name: found.name,
+          avatar: found.avatar,
+          genre: found.genre,
+          joined: found.joinedLabel,
+          progress: 0,
+          level: `Level ${found.level}`,
+          sesi: 0,
+          bab: 0,
+          rating: '—',
+          novel: { judul: 'Belum diisi', genre: found.genre, target: 'Belum ditentukan', chapter: '0' },
+          nextSesi: { title: 'Belum ada jadwal', time: 'Mentor akan segera menjadwalkan sesi pertama' },
+          activity: [`${found.name} baru bergabung sebagai mentee`, `Genre: ${found.genre}`, `Level: ${found.level}`]
+        };
+      }
+    }
+
+    if (!data) {
+      document.getElementById('notFound').style.display = '';
+      return;
+    }
+
+    // Isi semua elemen
+    document.title = `${data.name} – Detail Mentee NovelCraft`;
+    document.getElementById('pageTitle').textContent   = data.name;
+    document.getElementById('detailAvatar').textContent = data.avatar;
+    document.getElementById('detailName').textContent   = data.name;
+    document.getElementById('detailSubtitle').textContent = `${data.genre} · ${data.joined}`;
+    document.getElementById('badgeProgress').textContent  = `Progress ${data.progress}%`;
+    document.getElementById('badgeLevel').textContent     = data.level;
+    document.getElementById('badgeSesi').textContent      = `${data.sesi} Sesi Selesai`;
+
+    document.getElementById('statProgress').textContent = data.progress + '%';
+    document.getElementById('statSesi').textContent     = data.sesi;
+    document.getElementById('statBab').textContent      = data.bab;
+    document.getElementById('statRating').textContent   = data.rating;
+
+    document.getElementById('novelJudul').textContent  = data.novel.judul;
+    document.getElementById('novelGenre').textContent  = data.novel.genre;
+    document.getElementById('novelTarget').textContent = data.novel.target;
+    document.getElementById('novelChapter').textContent = data.novel.chapter;
+
+    document.getElementById('nextSesiTitle').textContent = data.nextSesi.title;
+    document.getElementById('nextSesiTime').textContent  = data.nextSesi.time;
+
+    // Activity
+    const actEl = document.getElementById('activityList');
+    const dotColors = ['dot-gold', 'dot-teal', 'dot-purple', 'dot-crimson'];
+    data.activity.forEach((act, i) => {
+      actEl.innerHTML += `
+        <div class="activity-item">
+          <span class="activity-dot ${dotColors[i % dotColors.length]}"></span>
+          <p>${act}</p>
+        </div>`;
+    });
+
+    document.getElementById('pageBody').style.display = '';
+  })();
+  </script>
+
+</body>
+</html>

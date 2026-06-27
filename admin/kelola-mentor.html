@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelola Mentor – NovelCraft</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+  <link rel="stylesheet" href="../assets/css/dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-top">
+      <a href="../index.html" class="sidebar-logo">
+        <span class="brand-n">N</span>
+        <span class="brand-rest">ovelCraft</span>
+      </a>
+      <p class="sidebar-role">Admin Panel</p>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="dashboard-admin.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+        Dashboard
+      </a>
+      <a href="kelola-user.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></svg></span>
+        Kelola User
+        <span class="sl-badge">12</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <a href="kelola-transaksi.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+        Kelola Transaksi
+      </a>
+      <a href="kelola-produk.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        Kelola Produk
+      </a>
+      <a href="kelola-artikel.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+        Kelola Artikel
+        <span class="sl-badge badge-purple">3</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <a href="kelola-mentor.html" class="sidebar-link active">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+        Kelola Mentor
+      </a>
+      <a href="profile-admin.html" class="sidebar-link">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        Profile Admin
+      </a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="../auth/logout.html" class="sidebar-logout">
+        <span class="sl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+        Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+
+    <!-- TOPBAR -->
+    <header class="admin-topbar">
+      <div>
+        <p class="topbar-subtitle">Mentor Management ✦</p>
+        <h1 class="topbar-title">Kelola Mentor</h1>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <span class="topbar-search-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <input type="text" placeholder="Cari mentor..." />
+        </div>
+        <div class="live-clock">
+          <div class="live-clock-dot"></div>
+          <span id="liveClock">00:00</span>
+        </div>
+        <div class="admin-profile">
+          <div class="admin-avatar">A</div>
+          <div>
+            <strong>Admin NovelCraft</strong>
+            <p>Super Admin</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- STATS -->
+    <section class="dashboard-stats">
+      <div class="stats-card sc-teal">
+        <div class="stats-icon si-teal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">32</h3>
+          <p class="stats-label">Mentor Aktif</p>
+        </div>
+      </div>
+      <div class="stats-card sc-gold">
+        <div class="stats-icon si-gold">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">12</h3>
+          <p class="stats-label">Mentor Baru</p>
+        </div>
+      </div>
+      <div class="stats-card sc-purple">
+        <div class="stats-icon si-purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--purple-light)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">84</h3>
+          <p class="stats-label">Program Mentoring</p>
+        </div>
+      </div>
+      <div class="stats-card sc-crimson">
+        <div class="stats-icon si-crimson">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f08080" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <h3 class="stats-number">5</h3>
+          <p class="stats-label">Pending Review</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTER BAR -->
+    <div class="admin-filter-bar">
+      <div class="filter-group">
+        <button class="filter-chip active">Semua</button>
+        <button class="filter-chip chip-teal">Aktif</button>
+        <button class="filter-chip chip-purple">Pending</button>
+        <button class="filter-chip chip-crimson">Nonaktif</button>
+      </div>
+      <button class="btn-primary" id="btnTambahMentor">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Tambah Mentor
+      </button>
+    </div>
+
+    <!-- MENTOR GRID -->
+    <section class="mentor-admin-grid" id="mentorGrid">
+
+      <div class="mentor-admin-card mc-teal">
+        <div class="mentor-admin-top">
+          <div class="mentor-avatar ma-teal">RN</div>
+          <span class="mentor-status active">Active</span>
+        </div>
+        <h3>Reza Nugraha</h3>
+        <p class="mentor-role">Lead Writing Mentor</p>
+        <p class="mentor-desc">Spesialis storytelling, character arc, dan world building untuk novel fantasi & drama.</p>
+        <div class="mentor-meta">
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+            120 mentee
+          </span>
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            4.9
+          </span>
+        </div>
+        <div class="mentor-actions">
+          <button class="btn-table view">Detail</button>
+          <button class="btn-table edit">Edit</button>
+          <button class="btn-table delete">Hapus</button>
+        </div>
+      </div>
+
+      <div class="mentor-admin-card mc-gold">
+        <div class="mentor-admin-top">
+          <div class="mentor-avatar ma-gold">DH</div>
+          <span class="mentor-status active">Active</span>
+        </div>
+        <h3>Dewi Hartono</h3>
+        <p class="mentor-role">Founder & Chief Editor</p>
+        <p class="mentor-desc">Mentor premium untuk editorial, publishing strategy, dan revisi naskah profesional.</p>
+        <div class="mentor-meta">
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+            89 mentee
+          </span>
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            5.0
+          </span>
+        </div>
+        <div class="mentor-actions">
+          <button class="btn-table view">Detail</button>
+          <button class="btn-table edit">Edit</button>
+          <button class="btn-table delete">Hapus</button>
+        </div>
+      </div>
+
+      <div class="mentor-admin-card mc-crimson">
+        <div class="mentor-admin-top">
+          <div class="mentor-avatar ma-crimson">SM</div>
+          <span class="mentor-status pending">Pending</span>
+        </div>
+        <h3>Sari Mulyani</h3>
+        <p class="mentor-role">Creative Writing Mentor</p>
+        <p class="mentor-desc">Fokus pada pengembangan ide, narasi emosional, dan literary fiction.</p>
+        <div class="mentor-meta">
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+            54 mentee
+          </span>
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            4.8
+          </span>
+        </div>
+        <div class="mentor-actions">
+          <button class="btn-table view">Detail</button>
+          <button class="btn-table edit">Edit</button>
+          <button class="btn-table delete">Hapus</button>
+        </div>
+      </div>
+
+      <div class="mentor-admin-card mc-purple">
+        <div class="mentor-admin-top">
+          <div class="mentor-avatar ma-purple">BP</div>
+          <span class="mentor-status active">Active</span>
+        </div>
+        <h3>Budi Pratama</h3>
+        <p class="mentor-role">Plot & Structure Mentor</p>
+        <p class="mentor-desc">Ahli dalam struktur tiga babak, pacing cerita, dan penulisan genre thriller.</p>
+        <div class="mentor-meta">
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+            67 mentee
+          </span>
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            4.7
+          </span>
+        </div>
+        <div class="mentor-actions">
+          <button class="btn-table view">Detail</button>
+          <button class="btn-table edit">Edit</button>
+          <button class="btn-table delete">Hapus</button>
+        </div>
+      </div>
+
+      <div class="mentor-admin-card mc-teal">
+        <div class="mentor-admin-top">
+          <div class="mentor-avatar ma-teal">NA</div>
+          <span class="mentor-status active">Active</span>
+        </div>
+        <h3>Nadia Aziz</h3>
+        <p class="mentor-role">Worldbuilding Specialist</p>
+        <p class="mentor-desc">Spesialis membangun dunia fiksi yang konsisten dan imersif untuk novel fantasi & sci-fi.</p>
+        <div class="mentor-meta">
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+            43 mentee
+          </span>
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            4.9
+          </span>
+        </div>
+        <div class="mentor-actions">
+          <button class="btn-table view">Detail</button>
+          <button class="btn-table edit">Edit</button>
+          <button class="btn-table delete">Hapus</button>
+        </div>
+      </div>
+
+      <div class="mentor-admin-card mc-crimson">
+        <div class="mentor-admin-top">
+          <div class="mentor-avatar ma-crimson">LK</div>
+          <span class="mentor-status pending">Pending</span>
+        </div>
+        <h3>Lina Kusuma</h3>
+        <p class="mentor-role">Romance Writing Mentor</p>
+        <p class="mentor-desc">Mentor khusus genre romance, slow burn, dan character chemistry yang terasa natural.</p>
+        <div class="mentor-meta">
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+            0 mentee
+          </span>
+          <span class="mentor-meta-item">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            —
+          </span>
+        </div>
+        <div class="mentor-actions">
+          <button class="btn-table view">Detail</button>
+          <button class="btn-table edit">Edit</button>
+          <button class="btn-table delete">Hapus</button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Mobile toggle -->
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- ================================================
+       MODAL TAMBAH MENTOR
+  ================================================ -->
+  <div class="admin-modal-overlay" id="modalTambahMentor">
+    <div class="admin-modal modal-teal">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Tambah Mentor Baru</h3>
+          <p class="modal-subtitle">Daftarkan mentor baru ke platform NovelCraft.</p>
+        </div>
+        <button class="modal-close" id="modalCloseTambah">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-form">
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <input type="text" id="tambahNama" placeholder="Nama mentor..." />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="tambahEmail" placeholder="email@contoh.com" />
+        </div>
+        <div class="form-group">
+          <label>Role / Jabatan</label>
+          <input type="text" id="tambahRole" placeholder="cth. Storytelling Mentor..." />
+        </div>
+        <div class="form-group">
+          <label>Spesialisasi</label>
+          <select id="tambahSpesialis">
+            <option>Storytelling</option>
+            <option>Character Development</option>
+            <option>World Building</option>
+            <option>Plot & Structure</option>
+            <option>Editorial</option>
+            <option>Publishing Strategy</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="tambahStatus">
+            <option value="Active">Active</option>
+            <option value="Pending">Pending</option>
+            <option value="On Leave">On Leave</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Bio Singkat</label>
+          <textarea id="tambahBio" rows="3" placeholder="Deskripsi singkat mentor..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-ghost" id="modalCancelTambah">Batal</button>
+          <button class="btn-primary btn-teal" id="btnSubmitTambah">Tambah Mentor ✦</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       MODAL CRUD (Detail / Edit / Hapus)
+  ================================================ -->
+  <div class="admin-modal-overlay" id="crudModal">
+    <div class="admin-modal">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" id="crudTitle">—</h3>
+          <p class="modal-subtitle" id="crudSubtitle">—</p>
+        </div>
+        <button class="modal-close" id="crudClose">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-form" id="crudContent"></div>
+      <div class="modal-actions" style="padding:0 1.5rem 1.5rem;">
+        <button class="btn-ghost" id="crudCancel">Batal</button>
+        <button class="btn-primary" id="crudSave" style="display:none;">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="admin-toast toast-success" id="toast">
+    <div class="admin-toast-dot dot-teal"></div>
+    <span id="toastMsg">Berhasil!</span>
+  </div>
+
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>
