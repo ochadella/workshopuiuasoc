@@ -172,10 +172,8 @@
 </head>
 <body>
 
-  <!-- =========================================
-       NAVBAR COMPONENT
-  ========================================== -->
-  <div id="navbar-container"></div>
+  <!-- NAVBAR -->
+  <div id="navbar-placeholder"></div>
 
   <!-- HERO -->
   <section class="berita-hero">
@@ -232,38 +230,13 @@
     </div>
   </div>
 
-  <!-- =========================================
-       FOOTER COMPONENT
-  ========================================== -->
-  <div id="footer-container"></div>
+  <!-- FOOTER -->
+  <div id="footer-placeholder"></div>
 
-  <!-- =========================================
-       MAIN SCRIPT
-  ========================================== -->
+  <!-- GLOBAL JS — handles navbar + footer otomatis -->
   <script src="../assets/js/script.js"></script>
 
-  <!-- =========================================
-       LOAD COMPONENTS
-  ========================================== -->
-  <script>
-
-    fetch('../components/navbar.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('navbar-container').innerHTML = data;
-      });
-
-    fetch('../components/footer.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('footer-container').innerHTML = data;
-      });
-
-  </script>
-
-  <!-- =========================================
-       PAGE SCRIPT
-  ========================================== -->
+  <!-- PAGE SCRIPT -->
   <script>
     const BERITA_DATA = [
       {
