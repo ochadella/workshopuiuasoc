@@ -402,6 +402,13 @@
   <script src="assets/js/script.js"></script>
 
   <!-- =========================================
+       MOBILE NAV SCRIPT
+       (definisi function-nya saja, dipanggil
+       manual setelah navbar selesai di-fetch)
+  ========================================= -->
+  <script src="assets/js/mobile-nav.js"></script>
+
+  <!-- =========================================
        LOAD COMPONENTS
   ========================================= -->
   <script>
@@ -410,6 +417,10 @@
       .then(response => response.text())
       .then(data => {
         document.getElementById("navbar-container").innerHTML = data;
+        // PENTING: panggil ulang setelah navbar masuk ke DOM,
+        // karena saat DOMContentLoaded fetch ini belum selesai
+        // sehingga #hamburger belum ada untuk di-bind event-nya.
+        if (typeof initMobileNav === 'function') initMobileNav();
       });
 
     fetch("components/footer.html")
